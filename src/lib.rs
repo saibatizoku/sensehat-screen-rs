@@ -1,3 +1,6 @@
+extern crate framebuffer;
+extern crate glob;
+
 #[cfg(test)]
 mod tests {
     #[test]

@@ -5,3 +5,5 @@ version = "0.1.0"
 authors = ["Joaquin Rosales <globojorro@gmail.com>"]
 
 [dependencies]
+framebuffer = "0.1"
+glob = "0.2"
