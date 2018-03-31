@@ -1,6 +1,40 @@
 extern crate framebuffer;
 extern crate glob;
 
+/// A single LED pixel color, with RGB565 rendering.
+#[derive(Debug, Default, PartialEq)]
+pub struct PixelColor {
+    red: u8,
+    green: u8,
+    blue: u8,
+}
+
+impl PixelColor {
+    /// Create a new LED pixel color.
+    pub fn new(red: u8, green: u8, blue: u8) -> Self {
+        Self { red, green, blue }
+    }
+
+    /// Create a new LED pixel color from a pair of RGB565-encoded bytes.
+    pub fn from_rgb565(color: [u8; 2]) -> Self {
+        let red = ((color[0] >> 3) & 0x1F) << 3;
+        let green = (color[0] & 0b0000_0111) << 5 | (color[1] & 0b1110_0000) >> 3;
+        let blue = (color[1] & 0b0001_1111) << 3;
+        PixelColor::new(red, green, blue)
+    }
+
+    /// Encodes the current LED pixel color into a pair of RGB565-encoded bytes.
+    pub fn rgb565(&self) -> [u8; 2] {
+        let r = u16::from((self.red >> 3) & 0x1F);
+        let g = u16::from((self.green >> 2) & 0x3F);
+        let b = u16::from((self.blue >> 3) & 0x1F);
+        let rgb = (r << 11) + (g << 5) + b;
+        let lsb = (rgb & 0x00FF) as u8;
+        let msb = (rgb.swap_bytes() & 0x00FF) as u8;
+        [msb, lsb]
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
