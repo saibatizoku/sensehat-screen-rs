@@ -44,7 +44,7 @@ impl FontCollection {
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
         let valid = s.encode_utf16()
-            .filter(|c| self.0.contains_key(&c))
+            .filter(|c| self.0.contains_key(c))
             .collect::<Vec<u16>>();
         Ok(FontString(valid))
     }
@@ -60,6 +60,12 @@ impl Default for FontCollection {
 pub struct FontString(Vec<u16>);
 
 impl FontString {
+    /// Render the font string as unicode slice, `&[u16]`.
+    pub fn to_slice(&self) -> &[u16] {
+        &self.0
+    }
+
+    /// Render the font string as a `String`.
     pub fn to_string(&self) -> String {
         String::from_utf16(&self.0).unwrap()
     }
