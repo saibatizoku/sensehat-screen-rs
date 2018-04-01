@@ -65,6 +65,17 @@ impl FontString {
     }
 }
 
+/// Display the contents of a `FontCollection` on `stdout`.
+pub fn print_collection(collection: &FontCollection) {
+    for key in collection.0.keys() {
+        println!(
+            "'\\u{{{:04x}}}' {:?}",
+            key,
+            String::from_utf16_lossy(&[*key])
+        );
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
