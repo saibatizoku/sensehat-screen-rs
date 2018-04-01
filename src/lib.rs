@@ -1,6 +1,8 @@
 extern crate framebuffer;
 extern crate glob;
 
+use framebuffer::{Framebuffer, FramebufferError};
+
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Debug, Default, PartialEq)]
 pub struct PixelColor {
@@ -75,6 +77,26 @@ impl FrameLine {
 impl Default for FrameLine {
     fn default() -> Self {
         FrameLine::new()
+    }
+}
+
+/// Framebuffered 8x8 LED screen.
+#[derive(Debug)]
+pub struct Screen {
+    framebuffer: Framebuffer,
+}
+
+impl Screen {
+    /// Open the framebuffer to the screen at the given file-system path.
+    pub fn open(path: &str) -> Result<Self, FramebufferError> {
+        let framebuffer = Framebuffer::new(path)?;
+        Ok(Screen { framebuffer })
+    }
+
+    /// Write the contents of a `FrameLine` into the framebuffer. This will
+    /// render the frameline on the screen.
+    pub fn write_frame(&mut self, frame: &FrameLine) {
+        self.framebuffer.write_frame(frame.as_slice());
     }
 }
 
