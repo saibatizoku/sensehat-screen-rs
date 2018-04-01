@@ -75,4 +75,18 @@ mod tests {
         let blue_pixel = PixelColor::new(0x00, 0x00, 0xFF);
         assert_eq!(blue_pixel.rgb565(), [0x1F, 0x00]);
     }
+
+    #[test]
+    fn frame_line_is_created_from_slice_of_bytes() {
+        let green: [u8; 8] = [0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07];
+        let frame_line = FrameLine::from_slice(&green);
+        assert_eq!(frame_line.as_slice(), &green);
+    }
+
+    #[test]
+    fn frame_line_is_created_from_slice_of_pixel_color_reference() {
+        let blue  = PixelColor::from_rgb565([0x1F, 0x00]);
+        let frame_line = FrameLine::from_pixels(&[&blue, &blue]);
+        assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
+    }
 }
