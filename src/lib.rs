@@ -9,6 +9,12 @@ use framebuffer::{Framebuffer, FramebufferError};
 
 pub use self::fonts::*;
 
+const BLACK: PixelColor = PixelColor {
+    red: 0,
+    green: 0,
+    blue: 0,
+};
+
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Debug, Default, PartialEq)]
 pub struct PixelColor {
