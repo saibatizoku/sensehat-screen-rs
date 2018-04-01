@@ -2,7 +2,12 @@ extern crate font8x8;
 extern crate framebuffer;
 extern crate glob;
 
+// 8x8 fonts
+mod fonts;
+
 use framebuffer::{Framebuffer, FramebufferError};
+
+pub use self::fonts::*;
 
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Debug, Default, PartialEq)]
