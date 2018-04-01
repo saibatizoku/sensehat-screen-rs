@@ -106,6 +106,21 @@ impl Screen {
     }
 }
 
+/// Render a font symbol with a `PixelColor` into a `FrameLine`.
+#[cfg(feature = "fonts")]
+pub fn font_to_frame(symbol: &[u8; 8], color: &PixelColor) -> FrameLine {
+    let pixels: Vec<&PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
+        for bit in 0..8 {
+            match *x & 1 << bit {
+                0 => px.push(&BLACK),
+                _ => px.push(color),
+            }
+        }
+        px
+    });
+    FrameLine::from_pixels(&pixels)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
