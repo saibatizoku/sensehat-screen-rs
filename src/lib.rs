@@ -57,7 +57,7 @@ impl FrameLine {
     pub fn from_pixels(pixels: &[&PixelColor]) -> Self {
         pixels
             .iter()
-            .fold(FrameLine::new(), |frame, px| frame.extend(&px))
+            .fold(FrameLine::new(), |frame, px| frame.extend(px))
     }
 
     // Extend the inner vector of bytes by one `PixelColor`. This method
@@ -106,7 +106,7 @@ mod tests {
 
     #[test]
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
-        // black 5-bit, 6-bit, 5-bit resolution 
+        // black 5-bit, 6-bit, 5-bit resolution
         assert_eq!(
             PixelColor::from_rgb565([0x00, 0x00]),
             PixelColor::new(0x00, 0x00, 0x00)
@@ -150,7 +150,7 @@ mod tests {
 
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color_reference() {
-        let blue  = PixelColor::from_rgb565([0x1F, 0x00]);
+        let blue = PixelColor::from_rgb565([0x1F, 0x00]);
         let frame_line = FrameLine::from_pixels(&[&blue, &blue]);
         assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
     }
