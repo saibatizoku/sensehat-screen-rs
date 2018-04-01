@@ -1,12 +1,15 @@
+#[cfg(feature = "fonts")]
 extern crate font8x8;
 extern crate framebuffer;
 extern crate glob;
 
 // 8x8 fonts
+#[cfg(feature = "fonts")]
 mod fonts;
 
 use framebuffer::{Framebuffer, FramebufferError};
 
+#[cfg(feature = "fonts")]
 pub use self::fonts::*;
 
 const BLACK: PixelColor = PixelColor {
