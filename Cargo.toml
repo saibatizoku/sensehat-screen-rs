@@ -6,4 +6,5 @@ authors = ["Joaquin Rosales <globojorro@gmail.com>"]
 
 [dependencies]
 framebuffer = "0.1"
+font8x8 = "0.1"
 glob = "0.2"

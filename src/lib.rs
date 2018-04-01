@@ -1,3 +1,4 @@
+extern crate font8x8;
 extern crate framebuffer;
 extern crate glob;
 
