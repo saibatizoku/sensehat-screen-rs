@@ -33,17 +33,21 @@ use sensehat_screen::{FontCollection, FrameLine, PixelColor, Screen};
 
 # Features
 
-"default"
+`default`
 ---------
-By default, the "fonts" feature is included.
+By default, the `fonts` feature is included.
 
-
-"fonts"
+`fonts`
 -------
 A collection of legacy 8x8 fonts, renderable on the LED matrix.
+
+`serde-support`
+---------------
+Enables support for serialization/deserialization with `serde`.
 
 Feature Wish List
 =================
 * [X] `fonts` - A collection of legacy 8x8 fonts, renderable on the LED matrix.
-* [ ] `images` - Load 8x8 images to the LED matrix.
+* [X] `serde-support` - Enables support for serialization/deserialization with `serde`.
+* [ ] `images` - Load 8x8 images to the LED matrix with `image`.
 * [ ] `cgmath` - Computer-graphics utilities for manipulating the matrix mathematically.

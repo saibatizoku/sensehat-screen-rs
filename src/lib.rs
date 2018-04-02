@@ -2,6 +2,11 @@
 extern crate font8x8;
 extern crate framebuffer;
 extern crate glob;
+#[cfg(feature = "serde-support")]
+extern crate serde;
+#[cfg(feature = "serde-support")]
+#[macro_use]
+extern crate serde_derive;
 
 // 8x8 fonts
 #[cfg(feature = "fonts")]
@@ -20,6 +25,7 @@ const BLACK: PixelColor = PixelColor {
 
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Debug, Default, PartialEq)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
     red: u8,
     green: u8,
@@ -55,6 +61,7 @@ impl PixelColor {
 /// A single frame on the screen.
 /// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct FrameLine(Vec<u8>);
 
 impl FrameLine {

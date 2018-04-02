@@ -16,6 +16,8 @@ fn default_hashmap() -> HashMap<u16, [u8; 8]> {
 }
 
 /// A set of font symbols that can be printed on a `Screen`.
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct FontCollection(HashMap<u16, [u8; 8]>);
 
 impl FontCollection {
