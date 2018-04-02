@@ -11,10 +11,17 @@ This library provides a thread-safe implementation for using the LED matrix by w
 
 # Usage
 
-Add this to your `Cargo.toml`:
+To use this crate with the default features, add this to your `Cargo.toml`:
 ```cargo
 [dependencies]
 sensehat-screen = "0.1"
+```
+
+or, to manually specify the features::
+
+```cargo
+[dependencies]
+sensehat-screen = { version = "0.1", default-features = false, features = ["fonts"] }
 ```
 
 Then you can use it with your crate:
@@ -35,7 +42,11 @@ use sensehat_screen::{FontCollection, FrameLine, PixelColor, Screen};
 
 `default`
 ---------
-By default, the `fonts` feature is included.
+By default, the `linux-framebuffer`, `fonts`, and `serde-support` features are included.
+
+`linux-framebuffer`
+-------------------
+Use the Linux framebuffer to write to the LED matrix.
 
 `fonts`
 -------
@@ -47,6 +58,7 @@ Enables support for serialization/deserialization with `serde`.
 
 Feature Wish List
 =================
+* [X] `linux-framebuffer` - Use the Linux framebuffer to write to the LED matrix.
 * [X] `fonts` - A collection of legacy 8x8 fonts, renderable on the LED matrix.
 * [X] `serde-support` - Enables support for serialization/deserialization with `serde`.
 * [ ] `images` - Load 8x8 images to the LED matrix with `image`.

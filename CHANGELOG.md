@@ -1,3 +1,7 @@
+## [0.1.2] - 2018-04-02
+### Changed
+- updated `README.md` with the newest features
+
 ## [0.1.1] - 2018-04-02
 ### Added
 - `serde-support` feature in Cargo.toml to enable `serde` support.
