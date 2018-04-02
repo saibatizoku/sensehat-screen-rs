@@ -1,5 +1,6 @@
 #[cfg(feature = "fonts")]
 extern crate font8x8;
+#[cfg(feature = "linux-framebuffer")]
 extern crate framebuffer;
 extern crate glob;
 #[cfg(feature = "serde-support")]
@@ -12,6 +13,7 @@ extern crate serde_derive;
 #[cfg(feature = "fonts")]
 mod fonts;
 
+#[cfg(feature = "linux-framebuffer")]
 use framebuffer::{Framebuffer, FramebufferError};
 
 #[cfg(feature = "fonts")]
@@ -102,12 +104,14 @@ impl Default for FrameLine {
     }
 }
 
+#[cfg(feature = "linux-framebuffer")]
 /// Framebuffered 8x8 LED screen.
 #[derive(Debug)]
 pub struct Screen {
     framebuffer: Framebuffer,
 }
 
+#[cfg(feature = "linux-framebuffer")]
 impl Screen {
     /// Open the framebuffer to the screen at the given file-system path.
     pub fn open(path: &str) -> Result<Self, FramebufferError> {
