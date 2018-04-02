@@ -1,4 +1,4 @@
-## [0.1.2] - 2018-04-02
+## [0.1.1] - 2018-04-02
 ### Added
 - `serde-support` feature in Cargo.toml to enable `serde` support.
 - `linux-framebuffer` feature in Cargo.toml to optionally use the Screen.
