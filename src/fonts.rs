@@ -16,7 +16,7 @@ fn default_hashmap() -> HashMap<u16, [u8; 8]> {
 }
 
 /// A set of font symbols that can be printed on a `Screen`.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct FontCollection(HashMap<u16, [u8; 8]>);
 
@@ -59,6 +59,7 @@ impl Default for FontCollection {
 }
 
 /// A string of font symbols valid for rendering. `FontString` instances can only be created by a `FontCollection` instance.
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct FontString(Vec<u16>);
 
 impl FontString {

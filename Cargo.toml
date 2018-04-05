@@ -1,7 +1,7 @@
 [package]
 name = "sensehat-screen"
 description = "A Rust library for using the 8x8-LED RGB565 screen on the Raspberry SenseHat device."
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Joaquin Rosales <globojorro@gmail.com>"]
 keywords = ["sensehat", "screen", "8x8", "raspberry-pi", "framebuffer"]
 categories = ["embedded", "rendering", "visualization", "encoding"]

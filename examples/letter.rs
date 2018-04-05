@@ -12,9 +12,7 @@ fn main() {
 
     let letter = "Dear Toño, I am well. Thank you. Bye. - ゆにち";
 
-    let screen_text = fonts
-        .sanitize_str(letter)
-        .unwrap();
+    let screen_text = fonts.sanitize_str(letter).unwrap();
 
     for unicode in screen_text.to_slice() {
         if let Some(symbol) = fonts.get(*unicode) {
