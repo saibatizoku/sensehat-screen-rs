@@ -27,7 +27,7 @@
 //!
 //!     let red_pixel = PixelColor::new(255, 0, 0); // rgb colors are in the range of 0 <= c < 256.
 //!
-//!     let all_64_pixels = vec![&red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
+//!     let all_64_pixels = vec![red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
 //!
 //!     let all_red_screen = FrameLine::from_pixels(&all_64_pixels); // a screen frame
 //!
@@ -82,7 +82,7 @@ const LED_OFF: PixelColor = PixelColor {
 };
 
 /// A single LED pixel color, with RGB565 rendering.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
     red: u8,
@@ -133,11 +133,11 @@ impl FrameLine {
         FrameLine(bytes.to_vec())
     }
 
-    /// Create a new `FrameLine` instance, given a slice of `&PixelColor`.
-    pub fn from_pixels(pixels: &[&PixelColor]) -> Self {
+    /// Create a new `FrameLine` instance, given a slice of `PixelColor`.
+    pub fn from_pixels(pixels: &[PixelColor]) -> Self {
         pixels
             .iter()
-            .fold(FrameLine::new(), |frame, px| frame.extend(px))
+            .fold(FrameLine::new(), |frame, px| frame.extend(&px))
     }
 
     // Extend the inner vector of bytes by one `PixelColor`. This method
@@ -184,11 +184,11 @@ impl Screen {
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 #[cfg(feature = "fonts")]
-pub fn font_to_frame(symbol: &[u8; 8], color: &PixelColor) -> FrameLine {
-    let pixels: Vec<&PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
+pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
+    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
         for bit in 0..8 {
             match *x & 1 << bit {
-                0 => px.push(&LED_OFF),
+                0 => px.push(LED_OFF),
                 _ => px.push(color),
             }
         }
@@ -248,7 +248,7 @@ mod tests {
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color_reference() {
         let blue = PixelColor::from_rgb565([0x1F, 0x00]);
-        let frame_line = FrameLine::from_pixels(&[&blue, &blue]);
+        let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
     }
 }
