@@ -75,22 +75,64 @@ use framebuffer::{Framebuffer, FramebufferError};
 #[cfg(feature = "fonts")]
 pub use self::fonts::*;
 
-const LED_OFF: PixelColor = PixelColor {
-    red: 0,
-    green: 0,
-    blue: 0,
-};
-
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
-    red: u8,
-    green: u8,
-    blue: u8,
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8,
 }
 
 impl PixelColor {
+    pub const BLACK: PixelColor = PixelColor {
+        red: 0,
+        green: 0,
+        blue: 0,
+    };
+
+    pub const RED: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0,
+        blue: 0
+    };
+
+    pub const BLUE: PixelColor = PixelColor {
+        red: 0,
+        green: 0,
+        blue: 0xFF
+    };
+
+    pub const GREEN: PixelColor = PixelColor {
+        red: 0,
+        green: 0xFF,
+        blue: 0
+    };
+
+    pub const WHITE: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0xFF,
+        blue: 0xFF
+    };
+
+    pub const YELLOW: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0xFF,
+        blue: 0
+    };
+
+    pub const CYAN: PixelColor = PixelColor {
+        red: 0,
+        green: 0xFF,
+        blue: 0xFF
+    };
+
+    pub const MAGENTA: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0,
+        blue: 0xFF
+    };
+
     /// Create a new LED pixel color.
     pub fn new(red: u8, green: u8, blue: u8) -> Self {
         Self { red, green, blue }
@@ -113,6 +155,27 @@ impl PixelColor {
         let lsb = (rgb & 0x00FF) as u8;
         let msb = (rgb.swap_bytes() & 0x00FF) as u8;
         [lsb, msb]
+    }
+
+    /// Sets the brightness of this colour.
+    ///
+    /// The `scale` value should be between 0 and 1. Values outside this range
+    /// are clamped.
+    pub fn dim(self, mut scale: f32) -> PixelColor {
+        if scale > 1.0 {
+            scale = 1.0;
+        }
+        if scale < 0.0 {
+            scale = 0.0;
+        }
+        fn scale_byte(b: u8, scale: f32) -> u8 {
+            (f32::from(b) * scale) as u8
+        }
+        PixelColor {
+            red: scale_byte(self.red, scale),
+            green: scale_byte(self.green, scale),
+            blue: scale_byte(self.blue, scale)
+        }
     }
 }
 
@@ -188,7 +251,7 @@ pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
     let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
         for bit in 0..8 {
             match *x & 1 << bit {
-                0 => px.push(LED_OFF),
+                0 => px.push(PixelColor::BLACK),
                 _ => px.push(color),
             }
         }
@@ -225,16 +288,16 @@ mod tests {
     // single u16.
     #[test]
     fn color_pixel_converts_rgb_into_2_bytes_rgb565() {
-        let white_pixel = PixelColor::new(0xFF, 0xFF, 0xFF);
+        let white_pixel = PixelColor::WHITE;
         assert_eq!(white_pixel.rgb565(), [0xFF, 0xFF]);
 
-        let red_pixel = PixelColor::new(0xFF, 0x00, 0x00);
+        let red_pixel = PixelColor::RED;
         assert_eq!(red_pixel.rgb565(), [0x00, 0xF8]);
 
-        let green_pixel = PixelColor::new(0x00, 0xFF, 0x00);
+        let green_pixel = PixelColor::GREEN;
         assert_eq!(green_pixel.rgb565(), [0xE0, 0x07]);
 
-        let blue_pixel = PixelColor::new(0x00, 0x00, 0xFF);
+        let blue_pixel = PixelColor::BLUE;
         assert_eq!(blue_pixel.rgb565(), [0x1F, 0x00]);
     }
 
@@ -246,7 +309,7 @@ mod tests {
     }
 
     #[test]
-    fn frame_line_is_created_from_slice_of_pixel_color_reference() {
+    fn frame_line_is_created_from_slice_of_pixel_color() {
         let blue = PixelColor::from_rgb565([0x1F, 0x00]);
         let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
