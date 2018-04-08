@@ -1,3 +1,24 @@
+## [0.1.4] 2018-04-08
+### Added
+- Implement `Copy` trait for `PixelColor`.
+- `PixelColor::dim` method to dim the color by a factor between 0 and 1.
+- Color constants:
+
+    * `RED`
+    * `BLUE`
+    * `MAGENTA`
+    * `BLACK`
+    * `RED`
+    * `BLUE`
+    * `GREEN`
+    * `WHITE`
+    * `YELLOW`
+    * `CYAN`
+    * `MAGENTA`
+
+- Update pixel color usage on tests, examples, and `README.md`
+- Speed-up printing letter in `examples/letter.rs`, showing one character every 800ms.
+
 ## [0.1.3] - 2018-04-05
 ### Added
 - Doctest with example on `src/lib.rs`.

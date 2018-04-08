@@ -19,6 +19,6 @@ fn main() {
             let frame = font_to_frame(symbol, white_50_pct);
             screen.write_frame(&frame);
         }
-        thread::sleep(Duration::from_millis(1_300));
+        thread::sleep(Duration::from_millis(800));
     }
 }
