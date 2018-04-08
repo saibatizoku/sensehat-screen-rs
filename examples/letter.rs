@@ -8,7 +8,7 @@ fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
 
     let fonts = FontCollection::new();
-    let white_50_pct = PixelColor::new(127, 127, 127);
+    let white_50_pct = PixelColor::WHITE.dim(0.5);
 
     let letter = "Dear Toño, I am well. Thank you. Bye. - ゆにち";
 
