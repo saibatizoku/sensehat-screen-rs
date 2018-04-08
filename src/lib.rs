@@ -96,43 +96,43 @@ impl PixelColor {
     pub const RED: PixelColor = PixelColor {
         red: 0xFF,
         green: 0,
-        blue: 0
+        blue: 0,
     };
 
     pub const BLUE: PixelColor = PixelColor {
         red: 0,
         green: 0,
-        blue: 0xFF
+        blue: 0xFF,
     };
 
     pub const GREEN: PixelColor = PixelColor {
         red: 0,
         green: 0xFF,
-        blue: 0
+        blue: 0,
     };
 
     pub const WHITE: PixelColor = PixelColor {
         red: 0xFF,
         green: 0xFF,
-        blue: 0xFF
+        blue: 0xFF,
     };
 
     pub const YELLOW: PixelColor = PixelColor {
         red: 0xFF,
         green: 0xFF,
-        blue: 0
+        blue: 0,
     };
 
     pub const CYAN: PixelColor = PixelColor {
         red: 0,
         green: 0xFF,
-        blue: 0xFF
+        blue: 0xFF,
     };
 
     pub const MAGENTA: PixelColor = PixelColor {
         red: 0xFF,
         green: 0,
-        blue: 0xFF
+        blue: 0xFF,
     };
 
     /// Create a new LED pixel color.
@@ -176,7 +176,7 @@ impl PixelColor {
         PixelColor {
             red: scale_byte(self.red, scale),
             green: scale_byte(self.green, scale),
-            blue: scale_byte(self.blue, scale)
+            blue: scale_byte(self.blue, scale),
         }
     }
 }
@@ -202,7 +202,7 @@ impl FrameLine {
     pub fn from_pixels(pixels: &[PixelColor]) -> Self {
         pixels
             .iter()
-            .fold(FrameLine::new(), |frame, px| frame.extend(&px))
+            .fold(FrameLine::new(), |frame, px| frame.extend(px))
     }
 
     // Extend the inner vector of bytes by one `PixelColor`. This method
