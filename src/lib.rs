@@ -70,10 +70,12 @@ extern crate serde_derive;
 mod fonts;
 
 #[cfg(feature = "linux-framebuffer")]
-use framebuffer::{Framebuffer, FramebufferError};
+use framebuffer::Framebuffer;
 
 #[cfg(feature = "fonts")]
 pub use self::fonts::*;
+#[cfg(feature = "linux-framebuffer")]
+pub use framebuffer::FramebufferError;
 
 /// A single LED pixel color, with RGB565 rendering.
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
