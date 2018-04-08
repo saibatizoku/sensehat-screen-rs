@@ -42,7 +42,7 @@ The following program shows how to:
 * Turn that vector into a valid screen frame
 * Show the frame on the screen
 
-```
+```rust
 extern crate sensehat_screen;
 
 use sensehat_screen::{FrameLine, PixelColor, Screen};
@@ -53,7 +53,7 @@ fn main() {
 
     let red_pixel = PixelColor::new(255, 0, 0); // The pixel color's RGB components are each in the range of 0 <= c < 256.
 
-    let all_64_pixels = vec![&red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
+    let all_64_pixels = vec![red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
 
     let all_red_screen = FrameLine::from_pixels(&all_64_pixels); // a screen frame
 
