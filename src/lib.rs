@@ -69,7 +69,6 @@ extern crate serde_derive;
 pub mod color;
 // 8x8 fonts
 #[cfg(feature = "fonts")]
-mod fonts;
 pub mod fonts;
 #[cfg(feature = "linux-framebuffer")]
 #[path = "framebuffer.rs"]
@@ -77,7 +76,7 @@ pub mod screen;
 
 pub use self::color::PixelColor;
 #[cfg(feature = "fonts")]
-pub use self::fonts::*;
+pub use self::fonts::{FontCollection, FontString};
 #[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;
 

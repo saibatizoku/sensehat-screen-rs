@@ -1,3 +1,4 @@
+//! 8x8 font collection
 use font8x8::{BASIC_UNICODE, BLOCK_UNICODE, BOX_UNICODE, GREEK_UNICODE, HIRAGANA_UNICODE,
               LATIN_UNICODE};
 use std::collections::HashMap;
