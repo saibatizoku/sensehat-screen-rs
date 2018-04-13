@@ -1,9 +1,18 @@
 extern crate sensehat_screen;
 
+#[cfg(feature = "default")]
 use sensehat_screen::{font_to_frame, FontCollection, PixelColor, Screen};
+#[cfg(feature = "default")]
 use std::thread;
+#[cfg(feature = "default")]
 use std::time::Duration;
 
+#[cfg(not(feature = "default"))]
+fn main() {
+    unimplemented!("This examples needs the 'default' features.");
+}
+
+#[cfg(feature = "default")]
 fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
 
