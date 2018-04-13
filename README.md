@@ -71,29 +71,19 @@ fn main() {
 
 `default`
 ---------
-By default, the `linux-framebuffer`, `rgb565`, `fonts`, `little-endian`, and `serde-support` features are included.
+By default, the `linux-framebuffer`, `fonts`, and `serde-support` features are included.
 
 `linux-framebuffer`
 -------------------
 Use the Linux framebuffer to write to the LED matrix.
 
-`rgb565`
--------
-Enable support for RGB565 color encoding/decoding.
-
 `fonts`
 -------
 A collection of legacy 8x8 fonts, renderable on the LED matrix.
 
-`little-endian`
-===============
-Uses little-endian format, suitable for AMD64/x86-64 processors. This is what the Raspberry Pi uses up til now.
-
-See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
-
 `big-endian`
 ============
-Uses big-endian format, suitable for *some* processors.
+Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
 
 See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
 
@@ -106,8 +96,6 @@ Feature Wish List
 * [X] `linux-framebuffer` - Use the Linux framebuffer to write to the LED matrix.
 * [X] `fonts` - A collection of legacy 8x8 fonts, renderable on the LED matrix.
 * [X] `serde-support` - Enables support for serialization/deserialization with `serde`.
-* [X] `rgb565` - Enable support for RGB565 color encoding/decoding.
-* [X] `little-endian` - Uses little-endian format, suitable for AMD64/x86-64 processors. This is what the Raspberry Pi uses up til now.
-* [X] `big-endian` - Uses big-endian format, suitable for *some* non-AMD64/x86-64 processors.
+* [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
 * [ ] `images` - Load 8x8 images to the LED matrix with `image`.
 * [ ] `cgmath` - Computer-graphics utilities for manipulating the matrix mathematically.

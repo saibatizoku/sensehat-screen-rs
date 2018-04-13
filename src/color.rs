@@ -62,14 +62,13 @@ impl PixelColor {
         Self { red, green, blue }
     }
 
-    #[cfg(any(feature = "little-endian", feature = "big-endian"))]
     /// Create a new LED pixel color from a pair of RGB565-encoded bytes.
     pub fn from_rgb565(color: [u8; 2]) -> Self {
         let rgb565: Rgb565 = color.into();
         rgb565.into()
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     /// Encodes the current LED pixel color into a pair of RGB565-encoded bytes.
     pub fn rgb565(&self) -> [u8; 2] {
         Rgb565::from(self).split_le()
@@ -125,7 +124,7 @@ impl Rgb565 {
         (red, green, blue)
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     fn from_le(bytes: [u8; 2]) -> Self {
         let lo = (bytes[1] as u16) << 8;
         let hi = bytes[0] as u16;
@@ -147,7 +146,7 @@ impl Rgb565 {
         Rgb565(hi | lo)
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     fn split_le(self) -> [u8; 2] {
         let lo = (self.0 & 0x00FF) as u8;
         let hi = (self.0.swap_bytes() & 0x00FF) as u8;
@@ -162,14 +161,14 @@ impl Rgb565 {
     }
 }
 
-#[cfg(feature = "little-endian")]
+#[cfg(not(feature = "big-endian"))]
 impl Into<[u8; 2]> for Rgb565 {
     fn into(self) -> [u8; 2] {
         Rgb565::split_le(self)
     }
 }
 
-#[cfg(feature = "little-endian")]
+#[cfg(not(feature = "big-endian"))]
 impl From<[u8; 2]> for Rgb565 {
     fn from(bytes: [u8; 2]) -> Self {
         Rgb565::from_le(bytes)
@@ -221,12 +220,11 @@ impl<'a> From<&'a PixelColor> for Rgb565 {
     }
 }
 
-#[cfg(any(feature = "little-endian", feature = "big-endian"))]
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     #[test]
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
         // black 5-bit, 6-bit, 5-bit resolution
@@ -266,7 +264,7 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     #[test]
     fn convert_rgb565_to_byte_array() {
         let bytes = [0xFF, 0xFF];
@@ -288,7 +286,7 @@ mod tests {
         assert_eq!(Rgb565::from(bytes), Rgb565(0x001F));
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     #[test]
     fn convert_byte_array_to_rgb565() {
         let rgb: [u8; 2] = Rgb565(0x07E0).into();
@@ -302,7 +300,7 @@ mod tests {
         assert_eq!(rgb, [0x07, 0xE0]);
     }
 
-    #[cfg(feature = "little-endian")]
+    #[cfg(not(feature = "big-endian"))]
     #[test]
     fn color_pixel_converts_rgb_into_2_bytes_rgb565() {
         let white_pixel = PixelColor::WHITE;
