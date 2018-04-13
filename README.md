@@ -1,5 +1,5 @@
-A Rust library for the Raspberry Pi Sense HAT LED Screen
-========================================================
+A library for the Raspberry Pi Sense HAT LED Screen
+====================================================
 
 [![crates.io](https://img.shields.io/crates/v/sensehat-screen.svg)](https://crates.io/crates/sensehat-screen)
 [![docs](https://docs.rs/sensehat-screen/badge.svg)](https://docs.rs/sensehat-screen)
@@ -75,27 +75,27 @@ By default, the `linux-framebuffer`, `fonts`, and `serde-support` features are i
 
 `linux-framebuffer`
 -------------------
-Use the Linux framebuffer to write to the LED matrix.
+In `default`. Use the Linux framebuffer to write to the LED matrix.
 
 `fonts`
 -------
-A collection of legacy 8x8 fonts, renderable on the LED matrix.
-
-`big-endian`
-============
-Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
+In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
 
 See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
 
 `serde-support`
 ---------------
-Enables support for serialization/deserialization with `serde`.
+In `default`. Enables support for serialization/deserialization with `serde`.
+
+`big-endian`
+------------
+Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
 
 Feature Wish List
 =================
-* [X] `linux-framebuffer` - Use the Linux framebuffer to write to the LED matrix.
-* [X] `fonts` - A collection of legacy 8x8 fonts, renderable on the LED matrix.
-* [X] `serde-support` - Enables support for serialization/deserialization with `serde`.
+* [X] `linux-framebuffer` - In `default`. Use the Linux framebuffer to write to the LED matrix.
+* [X] `fonts` - In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
+* [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
 * [ ] `images` - Load 8x8 images to the LED matrix with `image`.
 * [ ] `cgmath` - Computer-graphics utilities for manipulating the matrix mathematically.
