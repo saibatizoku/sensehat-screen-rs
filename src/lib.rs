@@ -17,11 +17,18 @@
 //! * Turn that vector into a valid screen frame
 //! * Show the frame on the screen
 //!
-//! ```rust,norun
+//! ```rust,no_run
 //! extern crate sensehat_screen;
 //!
+//! #[cfg(feature = "default")]
 //! use sensehat_screen::{FrameLine, PixelColor, Screen};
 //!
+//! #[cfg(not(feature = "default"))]
+//! fn main() {
+//!     unimplemented!("This examples needs the 'default' features.");
+//! }
+//!
+//! #[cfg(feature = "default")]
 //! fn main() {
 //!     let mut screen = Screen::open("/dev/fb1").expect("Could not open the framebuffer for the screen");
 //!
