@@ -65,7 +65,6 @@
 extern crate font8x8;
 #[cfg(feature = "linux-framebuffer")]
 extern crate framebuffer;
-extern crate glob;
 #[cfg(feature = "serde-support")]
 extern crate serde;
 #[cfg(feature = "serde-support")]
