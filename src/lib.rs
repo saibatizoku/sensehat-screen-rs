@@ -65,121 +65,21 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 
+// RGB color with RGB565 support
+pub mod color;
 // 8x8 fonts
 #[cfg(feature = "fonts")]
 mod fonts;
-
+pub mod fonts;
 #[cfg(feature = "linux-framebuffer")]
 use framebuffer::Framebuffer;
 
+pub use self::color::PixelColor;
 #[cfg(feature = "fonts")]
 pub use self::fonts::*;
 #[cfg(feature = "linux-framebuffer")]
 pub use framebuffer::FramebufferError;
 
-/// A single LED pixel color, with RGB565 rendering.
-#[derive(Copy, Clone, Debug, Default, PartialEq)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct PixelColor {
-    pub red: u8,
-    pub green: u8,
-    pub blue: u8,
-}
-
-impl PixelColor {
-    pub const BLACK: PixelColor = PixelColor {
-        red: 0,
-        green: 0,
-        blue: 0,
-    };
-
-    pub const RED: PixelColor = PixelColor {
-        red: 0xFF,
-        green: 0,
-        blue: 0,
-    };
-
-    pub const BLUE: PixelColor = PixelColor {
-        red: 0,
-        green: 0,
-        blue: 0xFF,
-    };
-
-    pub const GREEN: PixelColor = PixelColor {
-        red: 0,
-        green: 0xFF,
-        blue: 0,
-    };
-
-    pub const WHITE: PixelColor = PixelColor {
-        red: 0xFF,
-        green: 0xFF,
-        blue: 0xFF,
-    };
-
-    pub const YELLOW: PixelColor = PixelColor {
-        red: 0xFF,
-        green: 0xFF,
-        blue: 0,
-    };
-
-    pub const CYAN: PixelColor = PixelColor {
-        red: 0,
-        green: 0xFF,
-        blue: 0xFF,
-    };
-
-    pub const MAGENTA: PixelColor = PixelColor {
-        red: 0xFF,
-        green: 0,
-        blue: 0xFF,
-    };
-
-    /// Create a new LED pixel color.
-    pub fn new(red: u8, green: u8, blue: u8) -> Self {
-        Self { red, green, blue }
-    }
-
-    /// Create a new LED pixel color from a pair of RGB565-encoded bytes.
-    pub fn from_rgb565(color: [u8; 2]) -> Self {
-        let red = ((color[1] >> 3) & 0x1F) << 3;
-        let green = (color[1] & 0b0000_0111) << 5 | (color[0] & 0b1110_0000) >> 3;
-        let blue = (color[0] & 0b0001_1111) << 3;
-        PixelColor::new(red, green, blue)
-    }
-
-    /// Encodes the current LED pixel color into a pair of RGB565-encoded bytes.
-    pub fn rgb565(&self) -> [u8; 2] {
-        let r = u16::from((self.red >> 3) & 0x1F);
-        let g = u16::from((self.green >> 2) & 0x3F);
-        let b = u16::from((self.blue >> 3) & 0x1F);
-        let rgb = (r << 11) + (g << 5) + b;
-        let lsb = (rgb & 0x00FF) as u8;
-        let msb = (rgb.swap_bytes() & 0x00FF) as u8;
-        [lsb, msb]
-    }
-
-    /// Sets the brightness of this colour.
-    ///
-    /// The `scale` value should be between 0 and 1. Values outside this range
-    /// are clamped.
-    pub fn dim(self, mut scale: f32) -> PixelColor {
-        if scale > 1.0 {
-            scale = 1.0;
-        }
-        if scale < 0.0 {
-            scale = 0.0;
-        }
-        fn scale_byte(b: u8, scale: f32) -> u8 {
-            (f32::from(b) * scale) as u8
-        }
-        PixelColor {
-            red: scale_byte(self.red, scale),
-            green: scale_byte(self.green, scale),
-            blue: scale_byte(self.blue, scale),
-        }
-    }
-}
 
 /// A single frame on the screen.
 /// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
