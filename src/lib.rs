@@ -97,6 +97,7 @@ impl FrameLine {
         FrameLine(bytes.to_vec())
     }
 
+    #[cfg(any(feature = "little-endian", feature = "big-endian"))]
     /// Create a new `FrameLine` instance, given a slice of `PixelColor`.
     pub fn from_pixels(pixels: &[PixelColor]) -> Self {
         pixels
@@ -104,6 +105,7 @@ impl FrameLine {
             .fold(FrameLine::new(), |frame, px| frame.extend(px))
     }
 
+    #[cfg(any(feature = "little-endian", feature = "big-endian"))]
     // Extend the inner vector of bytes by one `PixelColor`. This method
     // consumes the current `FrameLine` instance and returns a new one,
     // useful for using with `Iterator::fold`.
@@ -150,10 +152,19 @@ mod tests {
         assert_eq!(frame_line.as_slice(), &green);
     }
 
+    #[cfg(feature = "little-endian")]
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color() {
         let blue = PixelColor::from_rgb565([0x1F, 0x00]);
         let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
+    }
+
+    #[cfg(feature = "big-endian")]
+    #[test]
+    fn frame_line_is_created_from_slice_of_pixel_color() {
+        let blue = PixelColor::from_rgb565([0x00, 0x1F]);
+        let frame_line = FrameLine::from_pixels(&[blue, blue]);
+        assert_eq!(frame_line.as_slice(), &[0x00, 0x1F, 0x00, 0x1F]);
     }
 }
