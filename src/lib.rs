@@ -17,7 +17,7 @@
 //! * Turn that vector into a valid screen frame
 //! * Show the frame on the screen
 //!
-//! ```norun
+//! ```rust,norun
 //! extern crate sensehat_screen;
 //!
 //! use sensehat_screen::{FrameLine, PixelColor, Screen};
