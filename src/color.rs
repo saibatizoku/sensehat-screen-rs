@@ -1,5 +1,36 @@
 //! RGB color for LED pixels, with RGB565 rendering support.
 /// A single LED pixel color, with RGB565 rendering.
+///
+/// ```
+/// # extern crate sensehat_screen;
+/// # use sensehat_screen::color::{PixelColor, Rgb565};
+/// # fn main() {
+///     // FROM
+///     // convert directly from 3-bytes in a tuple
+///     let red: PixelColor = (0xFF, 0, 0).into();
+///     assert_eq!(red, PixelColor::RED);
+///
+///     let green: PixelColor = (0, 0xFF, 0).into();
+///     assert_eq!(green, PixelColor::GREEN);
+///
+///     // convert directly from Rgb565
+///     let blue_rgb565 = Rgb565::from_rgb(0, 0, 0xFF);
+///     let blue: PixelColor = blue_rgb565.into();
+///     assert_eq!(blue, PixelColor::new(0, 0, 0xF8));
+///
+///     // INTO
+///     // convert directly into a 3-bytes tuple
+///     let red_tuple: (u8, u8, u8) = PixelColor::RED.into();
+///     assert_eq!(red_tuple, (0xFF, 0, 0));
+///
+///     let yellow_tuple: (u8, u8, u8) = PixelColor::YELLOW.into();
+///     assert_eq!(yellow_tuple, (0xFF, 0xFF, 0));
+///
+///     // convert directly into Rgb565
+///     let blue_565: Rgb565 = PixelColor::BLUE.into();
+///     assert_eq!(blue_565, Rgb565::from_rgb(0, 0, 0xF8));
+/// # }
+/// ```
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
@@ -102,6 +133,29 @@ impl PixelColor {
     }
 }
 
+/// RGB color stored as 16-bit digit, using RGB565 encoding/decoding.
+///
+/// ```
+/// # extern crate sensehat_screen;
+/// # use sensehat_screen::color::Rgb565;
+/// # fn main() {
+///     // convert directly from u16
+///     let red: Rgb565 = 0xF800.into();
+///     // convert from a 3-byte tuple
+///     let green: Rgb565 = (0, 0xFF, 0).into();
+///     assert_eq!(green, 0x07E0.into());
+///     // convert from a 2-byte array
+///     if cfg!(not(feature = "big-endian")) {
+///         let blue: Rgb565 = [0x1F, 0x00].into();
+///         assert_eq!(blue, 0x001F.into());
+///     }
+///
+///     if cfg!(feature = "big-endian") {
+///         let blue: Rgb565 = [0x00, 0x1F].into();
+///         assert_eq!(blue, 0x001F.into());
+///     }
+/// # }
+/// ```
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
 struct Rgb565(u16);
 
