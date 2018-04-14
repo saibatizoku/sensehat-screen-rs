@@ -234,6 +234,17 @@ impl Rgb565 {
     }
 }
 
+impl Into<u16> for Rgb565 {
+    fn into(self) -> u16 {
+        self.0
+    }
+}
+
+impl From<u16> for Rgb565 {
+    fn from(bytes: u16) -> Self {
+        Rgb565(bytes)
+    }
+}
 #[cfg(not(feature = "big-endian"))]
 impl Into<[u8; 2]> for Rgb565 {
     fn into(self) -> [u8; 2] {
