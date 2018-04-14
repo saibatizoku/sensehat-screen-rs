@@ -45,6 +45,56 @@ impl Default for FrameLine {
     }
 }
 
+/// A frame of pixels. This is the basic representation for the LED Matrix display.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct PixelFrame(Vec<PixelColor>);
+
+impl PixelFrame {
+    fn rotate_left(self) -> Self {
+        // brute-force
+        let columns = (0..8).into_iter().map(|col_idx| {
+            let col: Vec<PixelColor> = self.0
+                .iter()
+                .enumerate()
+                .filter(|(idx, _)| idx % 8 == col_idx)
+                .map(|(_, color)| *color)
+                .collect();
+            println!("col: {:?}", col.len());
+            col
+        });
+
+        let transpose: Vec<PixelColor> = columns.flat_map(|col| col).collect();
+
+        let flip_rows: Vec<PixelColor> = transpose
+            .chunks(8)
+            .rev()
+            .flat_map(|row| row.to_vec())
+            .collect();
+
+        PixelFrame(flip_rows)
+    }
+    fn rotate_180(self) -> Self {
+        let flip_180: Vec<PixelColor> = self.0.into_iter().rev().collect();
+        PixelFrame(flip_180)
+    }
+    fn rotate_right(self) -> Self {
+        let columns = (0..8).into_iter().map(|col_idx| {
+            let col: Vec<PixelColor> = self.0
+                .iter()
+                .enumerate()
+                .filter(|(idx, _)| idx % 8 == col_idx)
+                .rev()
+                .map(|(_, color)| *color)
+                .collect();
+
+            col
+        });
+
+        let flip_right: Vec<PixelColor> = columns.flat_map(|col| col).collect();
+
+        PixelFrame(flip_right)
+    }
+}
 
 #[cfg(test)]
 mod tests {
