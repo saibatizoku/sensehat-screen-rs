@@ -176,10 +176,11 @@ impl Into<(u8, u8, u8)> for PixelColor {
 /// # }
 /// ```
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
-struct Rgb565(u16);
+pub struct Rgb565(u16);
 
 impl Rgb565 {
-    fn from_rgb(red: u8, green: u8, blue: u8) -> Self {
+    /// Create `Rgb565` instance from red, green, and blue `u8` values.
+    pub fn from_rgb(red: u8, green: u8, blue: u8) -> Self {
         let r = u16::from((red >> 3) & 0x1F);
         let g = u16::from((green >> 2) & 0x3F);
         let b = u16::from((blue >> 3) & 0x1F);
@@ -187,7 +188,8 @@ impl Rgb565 {
         Rgb565(rgb)
     }
 
-    fn to_rgb(self) -> (u8, u8, u8) {
+    /// Create `(u8, u8, u8)` instance from a `Rgb565` instance.
+    pub fn to_rgb(self) -> (u8, u8, u8) {
         let red = (((self.0 & 0b1111_1000_0000_0000) >> 11) << 3) as u8;
         println!("red: {:02X}", red);
         let green = (((self.0 & 0b0000_0111_1110_0000) >> 5) << 2) as u8;
@@ -198,6 +200,7 @@ impl Rgb565 {
     }
 
     #[cfg(not(feature = "big-endian"))]
+    // Create `Rgb565` from a pair of little-endian bytes.
     fn from_le(bytes: [u8; 2]) -> Self {
         let lo = (bytes[1] as u16) << 8;
         let hi = bytes[0] as u16;
@@ -209,6 +212,7 @@ impl Rgb565 {
     }
 
     #[cfg(feature = "big-endian")]
+    // Create `Rgb565` from a pair of big-endian bytes.
     fn from_be(bytes: [u8; 2]) -> Self {
         let lo = (bytes[0] as u16) << 8;
         let hi = bytes[1] as u16;
@@ -220,6 +224,7 @@ impl Rgb565 {
     }
 
     #[cfg(not(feature = "big-endian"))]
+    // Consume the current `Rgb565` and create `[u8; 2]`, with little-endian format.
     fn split_le(self) -> [u8; 2] {
         let lo = (self.0 & 0x00FF) as u8;
         let hi = (self.0.swap_bytes() & 0x00FF) as u8;
@@ -227,6 +232,7 @@ impl Rgb565 {
     }
 
     #[cfg(feature = "big-endian")]
+    // Consume the current `Rgb565` and create `[u8; 2]`, with big-endian format.
     fn split_be(self) -> [u8; 2] {
         let lo = (self.0 & 0x00FF) as u8;
         let hi = (self.0.swap_bytes() & 0x00FF) as u8;
