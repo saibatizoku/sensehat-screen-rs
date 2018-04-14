@@ -133,6 +133,25 @@ impl PixelColor {
     }
 }
 
+impl From<Rgb565> for PixelColor {
+    fn from(color: Rgb565) -> Self {
+        let rgb565 = color.to_rgb();
+        PixelColor::new(rgb565.0, rgb565.1, rgb565.2)
+    }
+}
+
+impl From<(u8, u8, u8)> for PixelColor {
+    fn from(color: (u8, u8, u8)) -> Self {
+        PixelColor::new(color.0, color.1, color.2)
+    }
+}
+
+impl Into<(u8, u8, u8)> for PixelColor {
+    fn into(self) -> (u8, u8, u8) {
+        (self.red, self.green, self.blue)
+    }
+}
+
 /// RGB color stored as 16-bit digit, using RGB565 encoding/decoding.
 ///
 /// ```
@@ -258,13 +277,6 @@ impl Into<(u8, u8, u8)> for Rgb565 {
 impl From<PixelColor> for Rgb565 {
     fn from(color: PixelColor) -> Self {
         Rgb565::from_rgb(color.red, color.green, color.blue)
-    }
-}
-
-impl Into<PixelColor> for Rgb565 {
-    fn into(self) -> PixelColor {
-        let rgb565 = self.to_rgb();
-        PixelColor::new(rgb565.0, rgb565.1, rgb565.2)
     }
 }
 
