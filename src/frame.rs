@@ -50,8 +50,8 @@ impl Default for FrameLine {
 pub struct PixelFrame(Vec<PixelColor>);
 
 impl PixelFrame {
-    fn rotate_left(self) -> Self {
-        // brute-force
+    /// Rotate the display to the left by 90 degrees. Creates a new `PixelFrame`.
+    pub fn rotate_left(&self) -> Self {
         let columns = (0..8).into_iter().map(|col_idx| {
             let col: Vec<PixelColor> = self.0
                 .iter()
@@ -73,11 +73,15 @@ impl PixelFrame {
 
         PixelFrame(flip_rows)
     }
-    fn rotate_180(self) -> Self {
-        let flip_180: Vec<PixelColor> = self.0.into_iter().rev().collect();
+
+    /// Rotate the display by 180 degrees. Creates a new `PixelFrame`.
+    pub fn rotate_180(&self) -> Self {
+        let flip_180: Vec<PixelColor> = self.0.iter().cloned().rev().collect();
         PixelFrame(flip_180)
     }
-    fn rotate_right(self) -> Self {
+
+    /// Rotate the display to the right by 90 degrees. Creates a new `PixelFrame`.
+    pub fn rotate_right(&self) -> Self {
         let columns = (0..8).into_iter().map(|col_idx| {
             let col: Vec<PixelColor> = self.0
                 .iter()
