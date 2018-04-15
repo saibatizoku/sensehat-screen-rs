@@ -97,6 +97,21 @@ pub use self::screen::Screen;
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 #[cfg(feature = "fonts")]
+pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
+    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
+        for bit in 0..8 {
+            match *x & 1 << bit {
+                0 => px.push(PixelColor::BLACK),
+                _ => px.push(color),
+            }
+        }
+        px
+    });
+    PixelFrame::new(&pixels)
+}
+
+/// Render a font symbol with a `PixelColor` into a `FrameLine`.
+#[cfg(feature = "fonts")]
 pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
     let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
         for bit in 0..8 {
