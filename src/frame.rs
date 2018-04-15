@@ -61,6 +61,7 @@ impl PixelFrame {
     }
 }
 
+#[cfg(feature = "rotate")]
 // TODO: Put this under `Rotate` trait & feature
 // brute-force... TODO: optimize to in-place manipulation
 impl PixelFrame {
@@ -119,9 +120,12 @@ impl PixelFrame {
 mod tests {
     use super::*;
 
+    #[cfg(feature = "rotate")]
     const DARK: PixelColor = PixelColor::BLACK;
+    #[cfg(feature = "rotate")]
     const BLUE: PixelColor = PixelColor::BLUE;
 
+    #[cfg(feature = "rotate")]
     const CHECKER_BASE: [PixelColor; 64] = [
         DARK, DARK, DARK, DARK, BLUE, BLUE, BLUE, BLUE, //
         DARK, DARK, DARK, DARK, BLUE, BLUE, BLUE, BLUE, //
@@ -133,6 +137,7 @@ mod tests {
         BLUE, BLUE, BLUE, DARK, DARK, DARK, DARK, DARK, //
     ];
 
+    #[cfg(feature = "rotate")]
     const CHECKER_90_CW: [PixelColor; 64] = [
         BLUE, BLUE, DARK, DARK, DARK, DARK, DARK, DARK, //
         BLUE, DARK, DARK, DARK, DARK, DARK, DARK, DARK, //
@@ -144,6 +149,7 @@ mod tests {
         DARK, DARK, DARK, DARK, DARK, DARK, BLUE, BLUE, //
     ];
 
+    #[cfg(feature = "rotate")]
     const CHECKER_180: [PixelColor; 64] = [
         DARK, DARK, DARK, DARK, DARK, BLUE, BLUE, BLUE, //
         DARK, BLUE, DARK, DARK, DARK, DARK, DARK, BLUE, //
@@ -155,6 +161,7 @@ mod tests {
         BLUE, BLUE, BLUE, BLUE, DARK, DARK, DARK, DARK, //
     ];
 
+    #[cfg(feature = "rotate")]
     const CHECKER_90_CCW: [PixelColor; 64] = [
         BLUE, BLUE, DARK, DARK, DARK, DARK, DARK, DARK, //
         BLUE, BLUE, DARK, DARK, DARK, BLUE, BLUE, DARK, //
@@ -189,6 +196,7 @@ mod tests {
         assert_eq!(frame_line.as_slice(), &[0x00, 0x1F, 0x00, 0x1F]);
     }
 
+    #[cfg(feature = "rotate")]
     #[test]
     fn pixel_frame_is_rotated_90_degrees_left() {
         let checker_base = PixelFrame(CHECKER_BASE.to_vec());
@@ -196,6 +204,7 @@ mod tests {
         assert_eq!(checker_base.rotate_left(), checker_left);
     }
 
+    #[cfg(feature = "rotate")]
     #[test]
     fn pixel_frame_is_rotated_by_180_degrees() {
         let checker_base = PixelFrame(CHECKER_BASE.to_vec());
@@ -203,6 +212,7 @@ mod tests {
         assert_eq!(checker_base.rotate_180(), checker_180);
     }
 
+    #[cfg(feature = "rotate")]
     #[test]
     fn pixel_frame_is_rotated_by_180_degrees_by_two_90_deg_steps() {
         let checker_base = PixelFrame(CHECKER_BASE.to_vec());
@@ -210,6 +220,7 @@ mod tests {
         assert_eq!(checker_base.rotate_left().rotate_left(), checker_180);
     }
 
+    #[cfg(feature = "rotate")]
     #[test]
     fn pixel_frame_is_rotated_90_degrees_right() {
         let checker_base = PixelFrame(CHECKER_BASE.to_vec());

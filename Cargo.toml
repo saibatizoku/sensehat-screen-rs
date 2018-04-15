@@ -17,8 +17,9 @@ serde = { version = "1.0", optional = true }
 serde_derive = { version = "1.0", optional = true }
 
 [features]
-default = ["linux-framebuffer", "fonts", "serde-support"]
+default = ["linux-framebuffer", "fonts", "rotate", "serde-support"]
 big-endian = []
+rotate = []
 linux-framebuffer = ["framebuffer"]
 fonts = ["font8x8"]
 serde-support = ["serde", "serde_derive"]
