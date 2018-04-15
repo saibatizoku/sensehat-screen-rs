@@ -47,6 +47,7 @@ impl Default for FrameLine {
 
 /// A frame of pixels. This is the basic representation for the LED Matrix display.
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelFrame(Vec<PixelColor>);
 
 // TODO: Put this under `Rotate` trait & feature
