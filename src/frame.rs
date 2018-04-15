@@ -50,6 +50,17 @@ impl Default for FrameLine {
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelFrame(Vec<PixelColor>);
 
+impl PixelFrame {
+    /// Create a `FrameLine` representing the current `PixelFrame`.
+    pub fn new(pixels: &[PixelColor]) -> Self {
+        PixelFrame(pixels.to_vec())
+    }
+    /// Create a `FrameLine` representing the current `PixelFrame`.
+    pub fn frame_line(&self) -> FrameLine {
+        FrameLine::from_pixels(self.0.as_slice())
+    }
+}
+
 // TODO: Put this under `Rotate` trait & feature
 // brute-force... TODO: optimize to in-place manipulation
 impl PixelFrame {
