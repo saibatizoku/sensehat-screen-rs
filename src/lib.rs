@@ -57,9 +57,17 @@
 //! -------
 //! A collection of legacy 8x8 fonts, renderable on the LED matrix.
 //!
+//! `rotate`
+//! --------
+//! In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
+//!
 //! `serde-support`
 //! ---------------
 //! Enables support for serialization/deserialization with `serde`.
+//!
+//! `big-endian`
+//! ------------
+//! Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
 //!
 #[cfg(feature = "fonts")]
 extern crate font8x8;

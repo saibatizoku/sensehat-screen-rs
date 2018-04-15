@@ -83,6 +83,10 @@ In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
 
 See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
 
+`rotate`
+--------
+In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
+
 `serde-support`
 ---------------
 In `default`. Enables support for serialization/deserialization with `serde`.
@@ -95,6 +99,7 @@ Feature Wish List
 =================
 * [X] `linux-framebuffer` - In `default`. Use the Linux framebuffer to write to the LED matrix.
 * [X] `fonts` - In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
+* [X] `rotate` - In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
 * [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
 * [ ] `images` - Load 8x8 images to the LED matrix with `image`.
