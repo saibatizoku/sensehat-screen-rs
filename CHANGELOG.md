@@ -1,3 +1,19 @@
+## [0.1.5] 2018-04-15
+### Changed
+- Framebuffer-related code refactored into `sensehat_screen::screen` module.
+- `FrameLine`-related code refactored into `sensehat_screen::frame` module.
+- Make crate modules public.
+- `FrameLine` defaults to little-endian format.
+- Update `README.md` and `src/lib.rs` documentation.
+
+### Added
+- `Rgb565` type to separate concerns from `PixelColor`, and properly encode/decode RGB565 colors.
+- `big-endian` feature to encode Rgb565 colors in big-endian format.
+- `Rgb565` implements From<_> and Into<_> for `PixelColor`, `&'a PixelColor`, `(u8, u8, u8)`, and [u8; 2]`.
+- `PixelFrame` type to represent a single LED matrix screen frame.
+- `rotate` feature to rotate a `PixelFrame` by steps of 90-degrees.
+- `examples/rotating-symbol.rs` to demo rotating font symbols with color.
+
 ## [0.1.4] 2018-04-08
 ### Added
 - Implement `Copy` trait for `PixelColor`.
