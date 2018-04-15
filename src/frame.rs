@@ -72,7 +72,7 @@ impl PixelFrame {
                 let column: Vec<PixelColor> = self.0
                     .iter()
                     .enumerate()
-                    .filter(|(idx, _)| idx % 8 == col_idx)
+                    .filter(|&(idx, _)| idx % 8 == col_idx)
                     .map(|(_, color)| *color)
                     .collect();
                 column
@@ -101,7 +101,7 @@ impl PixelFrame {
             let column: Vec<PixelColor> = self.0
                 .iter()
                 .enumerate()
-                .filter(|(idx, _)| idx % 8 == col_idx)
+                .filter(|&(idx, _)| idx % 8 == col_idx)
                 .rev()
                 .map(|(_, color)| *color)
                 .collect();
