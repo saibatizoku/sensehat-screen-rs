@@ -202,8 +202,8 @@ impl Rgb565 {
     #[cfg(not(feature = "big-endian"))]
     // Create `Rgb565` from a pair of little-endian bytes.
     fn from_le(bytes: [u8; 2]) -> Self {
-        let lo = (bytes[1] as u16) << 8;
-        let hi = bytes[0] as u16;
+        let lo = u16::from(bytes[1]) << 8;
+        let hi = u16::from(bytes[0]);
         println!("le bytes: {:02X} {:02X}", bytes[0], bytes[1]);
         println!("lo: {:04X}", lo);
         println!("hi: {:04X}", hi);
@@ -214,8 +214,8 @@ impl Rgb565 {
     #[cfg(feature = "big-endian")]
     // Create `Rgb565` from a pair of big-endian bytes.
     fn from_be(bytes: [u8; 2]) -> Self {
-        let lo = (bytes[0] as u16) << 8;
-        let hi = bytes[1] as u16;
+        let lo = u16::from(bytes[0]) << 8;
+        let hi = u16::from(bytes[1]);
         println!("be bytes: {:02X} {:02X}", bytes[0], bytes[1]);
         println!("lo: {:04X}", lo);
         println!("hi: {:04X}", hi);
