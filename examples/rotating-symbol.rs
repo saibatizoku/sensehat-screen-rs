@@ -16,9 +16,9 @@ fn main() {
     for &(sym, color) in &[('Ñ', PixelColor::YELLOW), ('ó', PixelColor::MAGENTA)] {
         let font = fonts.get(sym as u16).unwrap();
         let symbol = font_to_pixel_frame(font, color);
-        let symbol_90 = symbol.clone().rotate_left();
-        let symbol_180 = symbol_90.clone().rotate_left();
-        let symbol_270 = symbol_180.clone().rotate_left();
+        let symbol_90 = symbol.rotate_left();
+        let symbol_180 = symbol.rotate_180();
+        let symbol_270 = symbol.rotate_right();
         for _ in 0..5 {
             screen.write_frame(&symbol.frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
