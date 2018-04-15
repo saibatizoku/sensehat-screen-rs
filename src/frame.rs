@@ -49,21 +49,24 @@ impl Default for FrameLine {
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PixelFrame(Vec<PixelColor>);
 
+// TODO: Put this under `Rotate` trait & feature
+// brute-force... TODO: optimize to in-place manipulation
 impl PixelFrame {
     /// Rotate the display to the left by 90 degrees. Creates a new `PixelFrame`.
     pub fn rotate_left(&self) -> Self {
-        let columns = (0..8).into_iter().map(|col_idx| {
-            let col: Vec<PixelColor> = self.0
-                .iter()
-                .enumerate()
-                .filter(|(idx, _)| idx % 8 == col_idx)
-                .map(|(_, color)| *color)
-                .collect();
-            println!("col: {:?}", col.len());
-            col
-        });
-
-        let transpose: Vec<PixelColor> = columns.flat_map(|col| col).collect();
+        let transpose: Vec<PixelColor> = (0..8)
+            .into_iter()
+            .map(|col_idx| {
+                let column: Vec<PixelColor> = self.0
+                    .iter()
+                    .enumerate()
+                    .filter(|(idx, _)| idx % 8 == col_idx)
+                    .map(|(_, color)| *color)
+                    .collect();
+                column
+            })
+            .flat_map(|col| col)
+            .collect();
 
         let flip_rows: Vec<PixelColor> = transpose
             .chunks(8)
@@ -82,8 +85,8 @@ impl PixelFrame {
 
     /// Rotate the display to the right by 90 degrees. Creates a new `PixelFrame`.
     pub fn rotate_right(&self) -> Self {
-        let columns = (0..8).into_iter().map(|col_idx| {
-            let col: Vec<PixelColor> = self.0
+        let rotated_tranpose = (0..8).into_iter().map(|col_idx| {
+            let column: Vec<PixelColor> = self.0
                 .iter()
                 .enumerate()
                 .filter(|(idx, _)| idx % 8 == col_idx)
@@ -91,10 +94,10 @@ impl PixelFrame {
                 .map(|(_, color)| *color)
                 .collect();
 
-            col
+            column
         });
 
-        let flip_right: Vec<PixelColor> = columns.flat_map(|col| col).collect();
+        let flip_right: Vec<PixelColor> = rotated_tranpose.flat_map(|col| col).collect();
 
         PixelFrame(flip_right)
     }
