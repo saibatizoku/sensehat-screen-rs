@@ -91,6 +91,8 @@ pub use self::fonts::{FontCollection, FontString};
 pub use self::frame::FrameLine;
 
 #[cfg(feature = "linux-framebuffer")]
+pub use framebuffer::FramebufferError;
+#[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
