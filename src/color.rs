@@ -176,6 +176,7 @@ impl Into<(u8, u8, u8)> for PixelColor {
 /// # }
 /// ```
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct Rgb565(u16);
 
 impl Rgb565 {
