@@ -2,6 +2,9 @@
 #[cfg(feature = "rotate")]
 #[path = "frame_rotate.rs"]
 pub mod rotate;
+#[cfg(feature = "translate")]
+#[path = "frame_translate.rs"]
+pub mod translate;
 
 use super::color::PixelColor;
 
