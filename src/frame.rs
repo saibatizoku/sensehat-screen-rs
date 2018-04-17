@@ -66,6 +66,21 @@ impl PixelFrame {
     pub fn frame_line(&self) -> FrameLine {
         FrameLine::from_pixels(self.0.as_slice())
     }
+
+    /// Returns a `Vec<Vec<PixelColor>>`, organized by rows, from top to bottom.
+    pub fn as_rows(&self) -> Vec<Vec<PixelColor>> {
+        self.0.chunks(8).map(|row| row.to_vec()).collect()
+    }
+
+    /// Returns a `Vec<Vec<PixelColor>>`, organized by columns, from left to right.
+    pub fn as_columns(&self) -> Vec<Vec<PixelColor>> {
+        let mut columns: Vec<Vec<PixelColor>> = vec![Vec::with_capacity(8); 8];
+        for (idx, px) in self.0.iter().cloned().enumerate() {
+            let col_idx = idx % 8;
+            columns[col_idx].push(px);
+        }
+        columns
+    }
 }
 
 #[cfg(test)]
