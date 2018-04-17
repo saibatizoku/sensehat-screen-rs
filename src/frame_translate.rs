@@ -1,4 +1,80 @@
 //! Frame scrolling for the LED Matrix screen
+use super::PixelFrame;
+use super::PixelColor;
+
+impl PixelFrame {
+    pub fn offset(&self, offset: Offset) -> Self {
+        match offset {
+            Offset::Left(offset) => self.offset_left(offset),
+            Offset::Right(offset) => self.offset_right(offset),
+            Offset::Bottom(offset) => self.offset_bottom(offset),
+            Offset::Top(offset) => self.offset_top(offset),
+        }
+    }
+
+    fn offset_left(&self, offset: u8) -> Self {
+        unimplemented!();
+    }
+
+    fn offset_right(&self, offset: u8) -> Self {
+        unimplemented!();
+    }
+
+    fn offset_bottom(&self, offset: u8) -> Self {
+        unimplemented!();
+    }
+
+    fn offset_top(&self, offset: u8) -> Self {
+        unimplemented!();
+    }
+}
+
+/// Offset for `PixelFrame` displacement in a given direction
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Offset {
+    Left(u8),
+    Right(u8),
+    Bottom(u8),
+    Top(u8),
+}
+
+impl Offset {
+    /// Offset by `offset` pixels to the left of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn left(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Left(offset)
+    }
+
+    /// Offset by `offset` pixels to the right of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn right(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Right(offset)
+    }
+
+    /// Offset by `offset` pixels to the bottom of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn bottom(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Bottom(offset)
+    }
+
+    /// Offset by `offset` pixels to the top of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn top(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Top(offset)
+    }
+}
 
 #[cfg(test)]
 mod tests {
