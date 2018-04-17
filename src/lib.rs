@@ -57,6 +57,10 @@
 //! -------
 //! A collection of legacy 8x8 fonts, renderable on the LED matrix.
 //!
+//! `offset`
+//! --------
+//! In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
+//!
 //! `rotate`
 //! --------
 //! In `default`. Support for rotating `PixelFrame`s by 90-degree steps.

@@ -3,7 +3,7 @@
 #[path = "frame_rotate.rs"]
 pub mod rotate;
 #[cfg(feature = "offset")]
-#[path = "frame_translate.rs"]
+#[path = "frame_offset.rs"]
 pub mod offset;
 
 use super::color::PixelColor;

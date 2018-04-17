@@ -1,4 +1,4 @@
-//! Frame scrolling for the LED Matrix screen
+//! `PixelFrame` offset in left/right/top/bottom directions.
 use super::PixelFrame;
 use super::PixelColor;
 
