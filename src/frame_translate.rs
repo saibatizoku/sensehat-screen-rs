@@ -2,6 +2,7 @@
 use super::PixelFrame;
 use super::PixelColor;
 
+/// Methods enabled by the `offset` feature.
 impl PixelFrame {
     pub fn offset(&self, offset: Offset) -> Self {
         match offset {
