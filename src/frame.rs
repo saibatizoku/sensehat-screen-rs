@@ -72,6 +72,35 @@ impl PixelFrame {
 mod tests {
     use super::*;
 
+    const RED: PixelColor = PixelColor::RED;
+    const ONE: PixelColor = PixelColor::WHITE;
+    const TWO: PixelColor = PixelColor::BLUE;
+    const PIXEL_FRAME: &[PixelColor; 64] = &[
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+        RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
+    ];
+    fn test_rows() -> Vec<Vec<PixelColor>> {
+        vec![vec![RED, ONE, RED, TWO, RED, ONE, RED, TWO]; 8]
+    }
+    fn test_columns() -> Vec<Vec<PixelColor>> {
+        vec![
+            vec![RED; 8],
+            vec![ONE; 8],
+            vec![RED; 8],
+            vec![TWO; 8],
+            vec![RED; 8],
+            vec![ONE; 8],
+            vec![RED; 8],
+            vec![TWO; 8],
+        ]
+    }
+
     #[test]
     fn frame_line_is_created_from_slice_of_bytes() {
         let green: [u8; 8] = [0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07];
@@ -110,5 +139,17 @@ mod tests {
             pixel_frame.frame_line(),
             FrameLine::from_pixels(&color_frame)
         );
+    }
+
+    #[test]
+    fn pixel_frame_is_represented_as_rows_of_pixel_color() {
+        let pixel_frame = PixelFrame::new(PIXEL_FRAME);
+        assert_eq!(pixel_frame.as_rows(), test_rows());
+    }
+
+    #[test]
+    fn pixel_frame_is_represented_as_columns_of_pixel_color() {
+        let pixel_frame = PixelFrame::new(PIXEL_FRAME);
+        assert_eq!(pixel_frame.as_columns(), test_columns());
     }
 }
