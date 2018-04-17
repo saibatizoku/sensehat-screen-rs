@@ -94,4 +94,21 @@ mod tests {
         let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x00, 0x1F, 0x00, 0x1F]);
     }
+
+    #[test]
+    fn pixel_frame_is_created_from_a_slice_of_pixel_color() {
+        let color_frame = vec![PixelColor::YELLOW; 64];
+        let pixel_frame = PixelFrame::new(&color_frame);
+        assert_eq!(pixel_frame.0, color_frame);
+    }
+
+    #[test]
+    fn pixel_frame_creates_a_frame_line_of_the_current_state() {
+        let color_frame = vec![PixelColor::GREEN; 64];
+        let pixel_frame = PixelFrame::new(&color_frame);
+        assert_eq!(
+            pixel_frame.frame_line(),
+            FrameLine::from_pixels(&color_frame)
+        );
+    }
 }
