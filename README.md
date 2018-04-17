@@ -71,7 +71,7 @@ fn main() {
 
 `default`
 ---------
-By default, the `linux-framebuffer`, `fonts`, and `serde-support` features are included.
+By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, and `serde-support` features are included.
 
 `linux-framebuffer`
 -------------------
