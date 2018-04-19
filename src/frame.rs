@@ -7,6 +7,7 @@ pub mod rotate;
 pub mod offset;
 
 use super::color::PixelColor;
+use std::fmt;
 
 /// A single frame on the screen.
 /// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
@@ -53,9 +54,18 @@ impl Default for FrameLine {
 }
 
 /// A frame of pixels. This is the basic representation for the LED Matrix display.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Clone, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelFrame(Vec<PixelColor>);
+
+impl fmt::Debug for PixelFrame {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let rows = self.0.chunks(8).fold(String::new(), |s, row| {
+            s + &format!("{:?}\n", row)
+        });
+        write!(f, "PixelFrame:\n{}", rows)
+    }
+}
 
 impl PixelFrame {
     /// Create a `FrameLine` representing the current `PixelFrame`.
