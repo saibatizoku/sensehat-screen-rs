@@ -4,6 +4,17 @@ use super::PixelColor;
 
 /// Methods enabled by the `offset` feature.
 impl PixelFrame {
+    /// Offset the PixelFrame by a number of pixels in any of the possible directions:
+    ///
+    /// # Example
+    /// ```
+    /// # extern crate sensehat_screen;
+    /// # use sensehat_screen::PixelFrame;
+    /// # use sensehat_screen::frame::offset::Offset;
+    /// # fn main() {
+    ///     let frame: PixelFrame = Default::default();
+    ///     let moved_1px_to_the_left = frame.offset(Offset::left(1));
+    /// # }
     pub fn offset(&self, offset: Offset) -> Self {
         match offset {
             Offset::Left(offset) => self.offset_left(offset),
