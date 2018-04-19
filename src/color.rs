@@ -31,12 +31,20 @@
 ///     assert_eq!(blue_565, Rgb565::from_rgb(0, 0, 0xF8));
 /// # }
 /// ```
-#[derive(Copy, Clone, Debug, Default, PartialEq)]
+use std::fmt;
+
+#[derive(Copy, Clone, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
     pub red: u8,
     pub green: u8,
     pub blue: u8,
+}
+
+impl fmt::Debug for PixelColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "#{:02X}{:02X}{:02X}", self.red, self.green, self.blue)
+    }
 }
 
 impl PixelColor {
