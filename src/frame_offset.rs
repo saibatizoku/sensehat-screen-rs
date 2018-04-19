@@ -30,11 +30,12 @@ impl PixelFrame {
         assert!(offset < 9);
         match offset {
             0 => self.clone(),
+            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
             n => {
                 let mut cols = Vec::with_capacity(8);
                 cols.extend_from_slice(&self.as_columns()[n as usize..]);
-                for c in (8-n)..8 {
-                    cols.insert(c as usize, vec![PixelColor::BLACK; 8]);
+                for _ in (8-n)..8 {
+                    cols.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 PixelFrame::from_columns(cols)
             }
@@ -45,10 +46,11 @@ impl PixelFrame {
         assert!(offset < 9);
         match offset {
             0 => self.clone(),
+            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
             n => {
                 let mut cols = Vec::with_capacity(8);
-                for c in 0..n as usize {
-                    cols.insert(c as usize, vec![PixelColor::BLACK; 8]);
+                for _ in 0..n as usize {
+                    cols.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 cols.extend_from_slice(&self.as_columns()[..(8 - n as usize)]);
                 PixelFrame::from_columns(cols)
@@ -60,10 +62,11 @@ impl PixelFrame {
         assert!(offset < 9);
         match offset {
             0 => self.clone(),
+            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
             n => {
                 let mut rows = Vec::with_capacity(8);
-                for c in 0..n as usize {
-                    rows.insert(c as usize, vec![PixelColor::BLACK; 8]);
+                for _ in 0..n as usize {
+                    rows.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 rows.extend_from_slice(&self.as_rows()[..(8 - n as usize)]);
                 PixelFrame::from_rows(rows)
@@ -75,11 +78,12 @@ impl PixelFrame {
         assert!(offset < 9);
         match offset {
             0 => self.clone(),
+            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
             n => {
                 let mut rows = Vec::with_capacity(8);
                 rows.extend_from_slice(&self.as_rows()[n as usize..]);
-                for c in (8-n)..8 {
-                    rows.insert(c as usize, vec![PixelColor::BLACK; 8]);
+                for _ in (8-n)..8 {
+                    rows.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 PixelFrame::from_rows(rows)
             }
