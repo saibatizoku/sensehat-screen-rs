@@ -203,7 +203,7 @@ mod tests {
        DARK, DARK, DARK, BLUE, BLUE, BLUE, BLUE, DARK,  //
        DARK, DARK, BLUE, BLUE, BLUE, BLUE, BLUE, DARK,  //
        DARK, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, DARK,  //
-       BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, DARK,  //
+       BLUE, BLUE, BLUE, BLUE, BLUE, DARK, BLUE, DARK,  //
        BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, DARK,  //
     ];
 
