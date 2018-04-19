@@ -15,6 +15,11 @@ impl PixelFrame {
     ///     let frame: PixelFrame = Default::default();
     ///     let moved_1px_to_the_left = frame.offset(Offset::left(1));
     /// # }
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// If `offset` is out of bounds (> 8).
     pub fn offset(&self, offset: Offset) -> Self {
         match offset {
             Offset::Left(offset) => self.offset_left(offset),
