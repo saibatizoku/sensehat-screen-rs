@@ -91,6 +91,23 @@ impl PixelFrame {
         }
         columns
     }
+
+    /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 rows with 8 `PixelColor`s.
+    pub fn from_rows(rows: Vec<Vec<PixelColor>>) -> Self {
+        let pixels = rows.into_iter().flat_map(|row| row.into_iter()).collect::<Vec<PixelColor>>();
+        PixelFrame(pixels)
+    }
+
+    /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 columns with 8 `PixelColor`s.
+    pub fn from_columns(columns: Vec<Vec<PixelColor>>) -> Self {
+        let mut pixels: Vec<PixelColor> = vec![PixelColor::BLACK; 64];
+        for (col_idx, col) in columns.into_iter().enumerate() {
+            for (row_idx, px) in col.into_iter().enumerate() {
+                pixels[row_idx * 8 + col_idx] = px;
+            }
+        }
+        PixelFrame(pixels)
+    }
 }
 
 #[cfg(test)]
