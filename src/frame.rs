@@ -177,4 +177,16 @@ mod tests {
         let pixel_frame = PixelFrame::new(PIXEL_FRAME);
         assert_eq!(pixel_frame.as_columns(), test_columns());
     }
+
+    #[test]
+    fn pixel_frame_is_created_from_rows_of_pixel_color() {
+        let pixel_frame = PixelFrame::new(PIXEL_FRAME);
+        assert_eq!(PixelFrame::from_rows(test_rows()), pixel_frame);
+    }
+
+    #[test]
+    fn pixel_frame_is_created_from_columns_of_pixel_color() {
+        let pixel_frame = PixelFrame::new(PIXEL_FRAME);
+        assert_eq!(PixelFrame::from_columns(test_columns()), pixel_frame);
+    }
 }
