@@ -1,7 +1,7 @@
 //! Frames for the LED Matrix screen
 #[cfg(feature = "rotate")]
 #[path = "frame_rotate.rs"]
-pub mod rotate;
+mod rotate;
 #[cfg(feature = "offset")]
 #[path = "frame_offset.rs"]
 pub mod offset;
