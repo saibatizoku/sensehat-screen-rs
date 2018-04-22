@@ -14,7 +14,7 @@ fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
     let fonts = FontCollection::new();
 
-    for &(sym, color) in &[('Ñ', PixelColor::YELLOW), ('ó', PixelColor::MAGENTA)] {
+    for &(sym, color) in &[('þ', PixelColor::CYAN), ('ß', PixelColor::WHITE.dim(0.5))] {
         let font = fonts.get(sym as u16).unwrap();
         let symbol = font_to_pixel_frame(font, color);
 
@@ -22,7 +22,7 @@ fn main() {
         // reaching the offset = 0 position, which renders the entire symbol on
         // the screen.
         for i in 0..=8 {
-            screen.write_frame(&symbol.offset(Offset::left(8-i)).frame_line());
+            screen.write_frame(&symbol.offset(Offset::left(8 - i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }
         // Slides the displayed symbol to the right until it disappears.
@@ -35,7 +35,7 @@ fn main() {
         // reaching the offset = 0 position, which renders the entire symbol on
         // the screen.
         for i in 0..=8 {
-            screen.write_frame(&symbol.offset(Offset::top(8-i)).frame_line());
+            screen.write_frame(&symbol.offset(Offset::top(8 - i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }
         // Slides the displayed symbol to the bottom until it disappears.

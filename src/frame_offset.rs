@@ -39,7 +39,7 @@ impl PixelFrame {
             n => {
                 let mut cols = Vec::with_capacity(8);
                 cols.extend_from_slice(&self.as_columns()[n as usize..]);
-                for _ in (8-n)..8 {
+                for _ in (8 - n)..8 {
                     cols.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 PixelFrame::from_columns(cols)
@@ -87,7 +87,7 @@ impl PixelFrame {
             n => {
                 let mut rows = Vec::with_capacity(8);
                 rows.extend_from_slice(&self.as_rows()[n as usize..]);
-                for _ in (8-n)..8 {
+                for _ in (8 - n)..8 {
                     rows.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
                 }
                 PixelFrame::from_rows(rows)

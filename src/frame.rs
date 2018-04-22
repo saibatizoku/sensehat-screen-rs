@@ -60,9 +60,9 @@ pub struct PixelFrame(Vec<PixelColor>);
 
 impl fmt::Debug for PixelFrame {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let rows = self.0.chunks(8).fold(String::new(), |s, row| {
-            s + &format!("{:?}\n", row)
-        });
+        let rows = self.0
+            .chunks(8)
+            .fold(String::new(), |s, row| s + &format!("{:?}\n", row));
         write!(f, "PixelFrame:\n{}", rows)
     }
 }
@@ -94,7 +94,9 @@ impl PixelFrame {
 
     /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 rows with 8 `PixelColor`s.
     pub fn from_rows(rows: Vec<Vec<PixelColor>>) -> Self {
-        let pixels = rows.into_iter().flat_map(|row| row.into_iter()).collect::<Vec<PixelColor>>();
+        let pixels = rows.into_iter()
+            .flat_map(|row| row.into_iter())
+            .collect::<Vec<PixelColor>>();
         PixelFrame(pixels)
     }
 
