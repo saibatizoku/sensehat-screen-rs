@@ -1,3 +1,93 @@
+//! Support for making clips out of two `PixelFrame`s.
+use super::PixelFrame;
+use super::offset::Offset;
+
+impl PixelFrame {
+    /// Create a `FrameClip` with this and another `PixelFrame`.
+    pub fn clip(&self, other: &PixelFrame) -> FrameClip {
+        FrameClip::new(self.clone(), other.clone())
+    }
+}
+
+/// A clip made of two `PixelFrame`s.
+#[derive(Clone, Debug, Default)]
+pub struct FrameClip(PixelFrame, PixelFrame);
+
+impl FrameClip {
+    /// Create a new `FrameClip` from two `PixelFrame`s.
+    pub fn new(first: PixelFrame, second: PixelFrame) -> Self {
+        FrameClip(first, second)
+    }
+
+    /// Offset position for which to create the clipped `PixelFrame`.
+    pub fn offset(&self, offset: Offset) -> PixelFrame {
+        match offset {
+            Offset::Left(offset) => self.offset_left(offset),
+            Offset::Right(offset) => self.offset_right(offset),
+            Offset::Bottom(offset) => self.offset_bottom(offset),
+            Offset::Top(offset) => self.offset_top(offset),
+        }
+    }
+
+    // # Panics
+    // If `offset` is out of bounds (> 8).
+    fn offset_left(&self, offset: u8) -> PixelFrame {
+        assert!(offset < 9);
+        match offset {
+            0 => self.0.clone(),
+            8 => self.1.clone(),
+            n => {
+                let mut cols = Vec::with_capacity(8);
+                cols.extend_from_slice(&self.0.as_columns()[n as usize..]);
+                cols.extend_from_slice(&self.1.as_columns()[..n as usize]);
+                PixelFrame::from_columns(cols)
+            }
+        }
+    }
+
+    fn offset_right(&self, offset: u8) -> PixelFrame {
+        assert!(offset < 9);
+        match offset {
+            0 => self.0.clone(),
+            8 => self.1.clone(),
+            n => {
+                let mut cols = Vec::with_capacity(8);
+                cols.extend_from_slice(&self.1.as_columns()[(8 - n as usize)..]);
+                cols.extend_from_slice(&self.0.as_columns()[..(8 - n as usize)]);
+                PixelFrame::from_columns(cols)
+            }
+        }
+    }
+
+    fn offset_bottom(&self, offset: u8) -> PixelFrame {
+        assert!(offset < 9);
+        match offset {
+            0 => self.0.clone(),
+            8 => self.1.clone(),
+            n => {
+                let mut rows = Vec::with_capacity(8);
+                rows.extend_from_slice(&self.1.as_rows()[(8 - n as usize)..]);
+                rows.extend_from_slice(&self.0.as_rows()[..(8 - n as usize)]);
+                PixelFrame::from_rows(rows)
+            }
+        }
+    }
+
+    fn offset_top(&self, offset: u8) -> PixelFrame {
+        assert!(offset < 9);
+        match offset {
+            0 => self.0.clone(),
+            8 => self.1.clone(),
+            n => {
+                let mut rows = Vec::with_capacity(8);
+                rows.extend_from_slice(&self.0.as_rows()[n as usize..]);
+                rows.extend_from_slice(&self.1.as_rows()[..n as usize]);
+                PixelFrame::from_rows(rows)
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

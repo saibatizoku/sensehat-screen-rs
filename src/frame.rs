@@ -5,6 +5,8 @@ mod rotate;
 #[cfg(feature = "offset")]
 #[path = "frame_offset.rs"]
 pub mod offset;
+#[path = "frame_clip.rs"]
+pub mod clip;
 
 use super::color::PixelColor;
 use std::fmt;
