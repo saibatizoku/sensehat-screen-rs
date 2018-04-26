@@ -3,6 +3,7 @@ extern crate sensehat_screen;
 
 #[cfg(feature = "default")]
 use sensehat_screen::{font_to_pixel_frame, FontCollection, PixelColor, PixelFrame, Screen};
+use sensehat_screen::frame::rotate::Rotate;
 
 #[cfg(not(feature = "default"))]
 fn main() {
@@ -16,9 +17,9 @@ fn main() {
     for &(sym, color) in &[('Ñ', PixelColor::YELLOW), ('ó', PixelColor::MAGENTA)] {
         let font = fonts.get(sym as u16).unwrap();
         let symbol = font_to_pixel_frame(font, color);
-        let symbol_90 = symbol.rotate_left();
-        let symbol_180 = symbol.rotate_180();
-        let symbol_270 = symbol.rotate_right();
+        let symbol_90 = symbol.rotate(Rotate::Ccw90);
+        let symbol_180 = symbol.rotate(Rotate::Ccw180);
+        let symbol_270 = symbol.rotate(Rotate::Ccw270);
         for _ in 0..5 {
             screen.write_frame(&symbol.frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));

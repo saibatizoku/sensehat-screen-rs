@@ -2,11 +2,30 @@
 use super::PixelFrame;
 use super::PixelColor;
 
+/// A counter-clockwise angle, multiple of `90°`, used to create rotated `PixelFrame`s.
+pub enum Rotate {
+    None,
+    Ccw90,
+    Ccw180,
+    Ccw270,
+}
+
+/// Methods enabled by the `rotate` feature.
 // TODO: Put this under `Rotate` trait & feature
 // brute-force... TODO: optimize to in-place manipulation
 impl PixelFrame {
-    /// Rotate the display to the left by 90 degrees. Creates a new `PixelFrame`.
-    pub fn rotate_left(&self) -> Self {
+    /// Create a new `PixelFrame` that is rotated by a multiple of `90°`, counter-clockwise.
+    pub fn rotate(&self, rotate: Rotate) -> Self {
+        match rotate {
+            Rotate::None => self.clone(),
+            Rotate::Ccw90 => self.rotate_left(),
+            Rotate::Ccw180 => self.rotate_180(),
+            Rotate::Ccw270 => self.rotate_right(),
+        }
+    }
+
+    // Rotate the display to the left by 90 degrees. Creates a new `PixelFrame`.
+    fn rotate_left(&self) -> Self {
         let transpose: Vec<PixelColor> = (0..8)
             .into_iter()
             .map(|col_idx| {
@@ -30,14 +49,14 @@ impl PixelFrame {
         PixelFrame(flip_rows)
     }
 
-    /// Rotate the display by 180 degrees. Creates a new `PixelFrame`.
-    pub fn rotate_180(&self) -> Self {
+    // Rotate the display by 180 degrees. Creates a new `PixelFrame`.
+    fn rotate_180(&self) -> Self {
         let flip_180: Vec<PixelColor> = self.0.iter().cloned().rev().collect();
         PixelFrame(flip_180)
     }
 
-    /// Rotate the display to the right by 90 degrees. Creates a new `PixelFrame`.
-    pub fn rotate_right(&self) -> Self {
+    // Rotate the display to the right by 90 degrees. Creates a new `PixelFrame`.
+    fn rotate_right(&self) -> Self {
         let rotated_tranpose = (0..8).into_iter().map(|col_idx| {
             let column: Vec<PixelColor> = self.0
                 .iter()
