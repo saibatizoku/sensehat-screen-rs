@@ -5,6 +5,7 @@ mod rotate;
 #[cfg(feature = "offset")]
 #[path = "frame_offset.rs"]
 pub mod offset;
+#[cfg(feature = "clip")]
 #[path = "frame_clip.rs"]
 pub mod clip;
 
