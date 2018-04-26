@@ -277,12 +277,15 @@ impl PixelFrame {
 /// }
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct FrameClip(PixelFrame, PixelFrame);
+pub struct FrameClip {
+    first: PixelFrame,
+    second: PixelFrame,
+}
 
 impl FrameClip {
     /// Create a new `FrameClip` from two `PixelFrame`s.
     pub fn new(first: PixelFrame, second: PixelFrame) -> Self {
-        FrameClip(first, second)
+        FrameClip { first, second }
     }
 
     /// Offset position for which to create the clipped `PixelFrame`.
@@ -295,17 +298,22 @@ impl FrameClip {
         }
     }
 
+    /// Reverse the order of the inner `PixelFrame`s.
+    pub fn reverse(self) -> Self {
+        FrameClip::new(self.second, self.first)
+    }
+
     // # Panics
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
         match offset {
-            0 => self.0.clone(),
-            8 => self.1.clone(),
+            0 => self.first.clone(),
+            8 => self.second.clone(),
             n => {
                 let mut cols = Vec::with_capacity(8);
-                cols.extend_from_slice(&self.0.as_columns()[n as usize..]);
-                cols.extend_from_slice(&self.1.as_columns()[..n as usize]);
+                cols.extend_from_slice(&self.first.as_columns()[n as usize..]);
+                cols.extend_from_slice(&self.second.as_columns()[..n as usize]);
                 PixelFrame::from_columns(cols)
             }
         }
@@ -314,12 +322,12 @@ impl FrameClip {
     fn offset_right(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
         match offset {
-            0 => self.0.clone(),
-            8 => self.1.clone(),
+            0 => self.first.clone(),
+            8 => self.second.clone(),
             n => {
                 let mut cols = Vec::with_capacity(8);
-                cols.extend_from_slice(&self.1.as_columns()[(8 - n as usize)..]);
-                cols.extend_from_slice(&self.0.as_columns()[..(8 - n as usize)]);
+                cols.extend_from_slice(&self.second.as_columns()[(8 - n as usize)..]);
+                cols.extend_from_slice(&self.first.as_columns()[..(8 - n as usize)]);
                 PixelFrame::from_columns(cols)
             }
         }
@@ -328,12 +336,12 @@ impl FrameClip {
     fn offset_bottom(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
         match offset {
-            0 => self.0.clone(),
-            8 => self.1.clone(),
+            0 => self.first.clone(),
+            8 => self.second.clone(),
             n => {
                 let mut rows = Vec::with_capacity(8);
-                rows.extend_from_slice(&self.1.as_rows()[(8 - n as usize)..]);
-                rows.extend_from_slice(&self.0.as_rows()[..(8 - n as usize)]);
+                rows.extend_from_slice(&self.second.as_rows()[(8 - n as usize)..]);
+                rows.extend_from_slice(&self.first.as_rows()[..(8 - n as usize)]);
                 PixelFrame::from_rows(rows)
             }
         }
@@ -342,12 +350,12 @@ impl FrameClip {
     fn offset_top(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
         match offset {
-            0 => self.0.clone(),
-            8 => self.1.clone(),
+            0 => self.first.clone(),
+            8 => self.second.clone(),
             n => {
                 let mut rows = Vec::with_capacity(8);
-                rows.extend_from_slice(&self.0.as_rows()[n as usize..]);
-                rows.extend_from_slice(&self.1.as_rows()[..n as usize]);
+                rows.extend_from_slice(&self.first.as_rows()[n as usize..]);
+                rows.extend_from_slice(&self.second.as_rows()[..n as usize]);
                 PixelFrame::from_rows(rows)
             }
         }
