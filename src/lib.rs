@@ -100,7 +100,7 @@ pub use self::color::PixelColor;
 #[cfg(feature = "fonts")]
 pub use self::fonts::{FontCollection, FontString};
 
-pub use self::frame::{FrameLine, PixelFrame};
+pub use self::frame::{FrameLine, PixelFrame, clip::FrameClip};
 
 #[cfg(feature = "linux-framebuffer")]
 pub use framebuffer::FramebufferError;
