@@ -8,8 +8,14 @@ use super::offset::Offset;
 
 /// Methods enabled by the `clip` feature.
 impl PixelFrame {
+    /// Shortcut to get a `PixelFrame` from a temporary `FrameClip`, at a given `Offset`.
+    /// For memory reallocation, such as when rendering a clip at multiple offsets,
+    /// it is better to use `PixelFrame::build_clip`.
+    pub fn clip(&self, other: &PixelFrame, clip_at: Offset) -> Self {
+        self.build_clip(other, clip_at).offset(clip_at)
+    }
     /// Create a `FrameClip` with this and another `PixelFrame`.
-    pub fn clip(&self, other: &PixelFrame) -> FrameClip {
+    pub fn build_clip(&self, other: &PixelFrame) -> FrameClip {
         FrameClip::new(self.clone(), other.clone())
     }
 }
