@@ -40,18 +40,28 @@ impl PixelFrame {
             .flat_map(|col| col)
             .collect();
 
-        let flip_rows: Vec<PixelColor> = transpose
+        let flip_rows = transpose
             .chunks(8)
             .rev()
-            .flat_map(|row| row.to_vec())
-            .collect();
+            .flat_map(|row| row.into_iter())
+            .enumerate()
+            .fold([PixelColor::default(); 64], |mut pxs, (idx, &px)| {
+                pxs[idx] = px;
+                pxs
+            });
 
         PixelFrame(flip_rows)
     }
 
     // Rotate the display by 180 degrees. Creates a new `PixelFrame`.
     fn rotate_180(&self) -> Self {
-        let flip_180: Vec<PixelColor> = self.0.iter().cloned().rev().collect();
+        let flip_180 = self.0.iter().rev().enumerate().fold(
+            [PixelColor::default(); 64],
+            |mut pxs, (idx, &px)| {
+                pxs[idx] = px;
+                pxs
+            },
+        );
         PixelFrame(flip_180)
     }
 
@@ -69,7 +79,12 @@ impl PixelFrame {
             column
         });
 
-        let flip_right: Vec<PixelColor> = rotated_tranpose.flat_map(|col| col).collect();
+        let flip_right = rotated_tranpose.flat_map(|col| col.into_iter())
+            .enumerate()
+            .fold([PixelColor::default(); 64], |mut pxs, (idx, px)| {
+                pxs[idx] = px;
+                pxs
+            });
 
         PixelFrame(flip_right)
     }
