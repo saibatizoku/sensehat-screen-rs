@@ -65,13 +65,15 @@ fn main() {
 
 * [Blinking RGB shapes](./examples/blink.rs)
 * [A letter from ゆにち (Yunichi) to Toño](./examples/letter.rs)
+* [Rotating symbol](./examples/rotating-symbol.rs)
+* [Offset demo](./examples/offset.rs)
 
 
 # Features
 
 `default`
 ---------
-By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, and `serde-support` features are included.
+By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, `clip`, and `serde-support` features are included.
 
 `linux-framebuffer`
 -------------------
@@ -91,6 +93,10 @@ In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
 --------
 In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
 
+`clip`
+------
+In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
+
 `serde-support`
 ---------------
 In `default`. Enables support for serialization/deserialization with `serde`.
@@ -105,6 +111,7 @@ Feature Wish List
 * [X] `fonts` - In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
 * [X] `offset` - In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
 * [X] `rotate` - In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
+* [X] `clip` - In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
 * [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
 * [ ] `images` - Load 8x8 images to the LED matrix with `image`.
