@@ -95,7 +95,7 @@ impl PartialEq for FrameLine {
         self.0
             .iter()
             .zip(other.0.iter())
-            .fold(true, |eq, (a, b)| eq && a == b )
+            .fold(true, |eq, (a, b)| eq && a == b)
     }
 }
 
@@ -105,12 +105,10 @@ pub struct PixelFrame([PixelColor; 64]);
 
 impl fmt::Debug for PixelFrame {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let rows = self.0
-            .chunks(8)
-            .fold(String::new(), |mut s, row| {
-                write!(&mut s, "{:?}\n", row).unwrap();
-                s
-            });
+        let rows = self.0.chunks(8).fold(String::new(), |mut s, row| {
+            write!(&mut s, "{:?}\n", row).unwrap();
+            s
+        });
         write!(f, "PixelFrame:\n{}", rows)
     }
 }
@@ -126,7 +124,7 @@ impl PartialEq for PixelFrame {
         self.0
             .iter()
             .zip(other.0.iter())
-            .fold(true, |eq, (a, b)| eq && a == b )
+            .fold(true, |eq, (a, b)| eq && a == b)
     }
 }
 
@@ -223,13 +221,11 @@ mod tests {
     fn frame_line_is_created_from_slice_of_bytes() {
         let color: [u8; 128] = [0xE0; 128];
         let frame_line = FrameLine::from_slice(&color);
-        println!("comparing len: {} {}", color.len(), frame_line.as_bytes().len());
         frame_line
             .as_bytes()
             .into_iter()
             .zip(color.into_iter())
             .for_each(|(a, b)| {
-                println!("comparing: {:?} {:?}", a, b);
                 assert_eq!(a, b);
             });
     }

@@ -205,11 +205,8 @@ impl Rgb565 {
     /// Create `(u8, u8, u8)` instance from a `Rgb565` instance.
     pub fn to_rgb(self) -> (u8, u8, u8) {
         let red = (((self.0 & 0b1111_1000_0000_0000) >> 11) << 3) as u8;
-        println!("red: {:02X}", red);
         let green = (((self.0 & 0b0000_0111_1110_0000) >> 5) << 2) as u8;
-        println!("green: {:02X}", green);
         let blue = ((self.0 & 0b0000_0000_0001_1111) << 3) as u8;
-        println!("blue: {:02X}", blue);
         (red, green, blue)
     }
 
@@ -218,10 +215,6 @@ impl Rgb565 {
     fn from_le(bytes: [u8; 2]) -> Self {
         let lo = u16::from(bytes[1]) << 8;
         let hi = u16::from(bytes[0]);
-        println!("le bytes: {:02X} {:02X}", bytes[0], bytes[1]);
-        println!("lo: {:04X}", lo);
-        println!("hi: {:04X}", hi);
-        println!("mix: {:04X}", hi | lo);
         Rgb565(hi | lo)
     }
 
@@ -230,10 +223,6 @@ impl Rgb565 {
     fn from_be(bytes: [u8; 2]) -> Self {
         let lo = u16::from(bytes[0]) << 8;
         let hi = u16::from(bytes[1]);
-        println!("be bytes: {:02X} {:02X}", bytes[0], bytes[1]);
-        println!("lo: {:04X}", lo);
-        println!("hi: {:04X}", hi);
-        println!("mix: {:04X}", hi | lo);
         Rgb565(hi | lo)
     }
 

@@ -79,7 +79,8 @@ impl PixelFrame {
             column
         });
 
-        let flip_right = rotated_tranpose.flat_map(|col| col.into_iter())
+        let flip_right = rotated_tranpose
+            .flat_map(|col| col.into_iter())
             .enumerate()
             .fold([PixelColor::default(); 64], |mut pxs, (idx, px)| {
                 pxs[idx] = px;
