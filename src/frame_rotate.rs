@@ -128,29 +128,29 @@ mod tests {
 
     #[test]
     fn pixel_frame_is_rotated_90_degrees_left() {
-        let checker_base = PixelFrame(CHECKER_BASE.to_vec());
-        let checker_left = PixelFrame(CHECKER_90_CCW.to_vec());
+        let checker_base = PixelFrame(CHECKER_BASE);
+        let checker_left = PixelFrame(CHECKER_90_CCW);
         assert_eq!(checker_base.rotate_left(), checker_left);
     }
 
     #[test]
     fn pixel_frame_is_rotated_by_180_degrees() {
-        let checker_base = PixelFrame(CHECKER_BASE.to_vec());
-        let checker_180 = PixelFrame(CHECKER_180.to_vec());
+        let checker_base = PixelFrame(CHECKER_BASE);
+        let checker_180 = PixelFrame(CHECKER_180);
         assert_eq!(checker_base.rotate_180(), checker_180);
     }
 
     #[test]
     fn pixel_frame_is_rotated_by_180_degrees_by_two_90_deg_steps() {
-        let checker_base = PixelFrame(CHECKER_BASE.to_vec());
-        let checker_180 = PixelFrame(CHECKER_180.to_vec());
+        let checker_base = PixelFrame(CHECKER_BASE);
+        let checker_180 = PixelFrame(CHECKER_180);
         assert_eq!(checker_base.rotate_left().rotate_left(), checker_180);
     }
 
     #[test]
     fn pixel_frame_is_rotated_90_degrees_right() {
-        let checker_base = PixelFrame(CHECKER_BASE.to_vec());
-        let checker_right = PixelFrame(CHECKER_90_CW.to_vec());
+        let checker_base = PixelFrame(CHECKER_BASE);
+        let checker_right = PixelFrame(CHECKER_90_CW);
         assert_eq!(checker_base.rotate_right(), checker_right);
     }
 }

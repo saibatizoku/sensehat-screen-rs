@@ -150,37 +150,55 @@ mod tests {
 
     #[test]
     fn frame_line_is_created_from_slice_of_bytes() {
-        let green: [u8; 8] = [0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07, 0xE0, 0x07];
-        let frame_line = FrameLine::from_slice(&green);
-        assert_eq!(frame_line.as_slice(), &green);
+        let color: [u8; 128] = [0xE0; 128];
+        let frame_line = FrameLine::from_slice(&color);
+        println!("comparing len: {} {}", color.len(), frame_line.as_bytes().len());
+        frame_line
+            .as_bytes()
+            .into_iter()
+            .zip(color.into_iter())
+            .for_each(|(a, b)| {
+                println!("comparing: {:?} {:?}", a, b);
+                assert_eq!(a, b);
+            });
     }
 
     #[cfg(not(feature = "big-endian"))]
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color() {
         let blue = PixelColor::from_rgb565_bytes([0x1F, 0x00]);
-        let frame_line = FrameLine::from_pixels(&[blue, blue]);
-        assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
+        let frame_line = FrameLine::from_pixels(&[blue; 64]);
+        frame_line.as_bytes().chunks(2).for_each(|chunk| {
+            assert_eq!([chunk[0], chunk[1]], [0x1F, 0x00]);
+        });
     }
 
     #[cfg(feature = "big-endian")]
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color() {
         let blue = PixelColor::from_rgb565_bytes([0x00, 0x1F]);
-        let frame_line = FrameLine::from_pixels(&[blue, blue]);
-        assert_eq!(frame_line.as_slice(), &[0x00, 0x1F, 0x00, 0x1F]);
+        let frame_line = FrameLine::from_pixels(&[blue; 64]);
+        frame_line.as_bytes().chunks(2).for_each(|chunk| {
+            assert_eq!([chunk[0], chunk[1]], [0x00, 0x1F]);
+        });
     }
 
     #[test]
     fn pixel_frame_is_created_from_a_slice_of_pixel_color() {
-        let color_frame = vec![PixelColor::YELLOW; 64];
+        let color_frame = [PixelColor::YELLOW; 64];
         let pixel_frame = PixelFrame::new(&color_frame);
-        assert_eq!(pixel_frame.0, color_frame);
+        pixel_frame
+            .0
+            .into_iter()
+            .zip(color_frame.into_iter())
+            .for_each(|(a, b)| {
+                assert_eq!(a, b);
+            });
     }
 
     #[test]
     fn pixel_frame_creates_a_frame_line_of_the_current_state() {
-        let color_frame = vec![PixelColor::GREEN; 64];
+        let color_frame = [PixelColor::GREEN; 64];
         let pixel_frame = PixelFrame::new(&color_frame);
         assert_eq!(
             pixel_frame.frame_line(),
