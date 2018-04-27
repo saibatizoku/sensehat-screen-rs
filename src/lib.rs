@@ -6,73 +6,52 @@
 //! This library provides a thread-safe, strong-typed, high-level API for the LED matrix, treating
 //! it as you would any other screen on a Linux box.
 //!
+//! For examples, please check the
+//! [examples/](https://github.com/saibatizoku/sensehat-screen-rs/tree/master/examples) folder in the source code.
 //!
-//! # Example
+//! Basics
+//! ------
+//! * [`Screen`](./screen/struct.Screen.html) is the representation of the LED Matrix, it stores a `PixelFrame`.
 //!
-//! The following program shows how to:
+//! * [`PixelFrame`](./frame/struct.PixelFrame.html) is a collection of 64 `PixelColor`, representing the 8-row by 8-column LED
+//! Matrix.
+//! * [`PixelColor`](./color/struct.PixelColor.html) is a 24-bit representation of an RGB color, encoded in three bytes.
 //!
-//! * Open the framebuffer file-descriptor for the LED matrix screen (`screen`)
-//! * Define a pixel color (`red_pixel`)
-//! * Define a vector of each pixel color that makes up the screen (`all_64_pixels`)
-//! * Turn that vector into a valid screen frame
-//! * Show the frame on the screen
+//! Low-level constructs
+//! --------------------
+//! * [`Rgb565`](./color/struct.Rgb565.html) is a 16-bit representation of an RGB color, encoded in two bytes. This is the
+//! format. `Rgb565` converts into/from `PixelColor`.
+//! supported by the LED Matrix's framebuffer device.
+//! * [`FrameLine`](./frame/struct.FrameLine.html) is the raw-byte rendering of the `PixelFrame`,
+//! properly encoded and ready to be written into the framebuffer device.
 //!
-//! ```rust,no_run
-//! extern crate sensehat_screen;
+//! Frame operations
+//! ----------------
+//! * [`Rotate`](./frame/rotate/enum.Rotate.html)
 //!
-//! #[cfg(feature = "default")]
-//! use sensehat_screen::{FrameLine, PixelColor, Screen};
+//!   Requires `feature = "rotate"`, which is enabled by default.
 //!
-//! #[cfg(not(feature = "default"))]
-//! fn main() {
-//!     unimplemented!("This examples needs the 'default' features.");
-//! }
+//!   Rotate the PixelFrame by `Rotate::None`, `Rotate::Ccw90`, `Rotate::Ccw180`, or
+//!   `Rotate::Ccw270`, that correspond to a counter-clockwise angle of `0°`, `90°`, `180°`, and `270°`,
+//!   respectively.
 //!
-//! #[cfg(feature = "default")]
-//! fn main() {
-//!     let mut screen = Screen::open("/dev/fb1").expect("Could not open the framebuffer for the screen");
+//! * [`Offset`](./frame/offset/enum.Offset.html)
 //!
-//!     let red_pixel = PixelColor::new(255, 0, 0); // rgb colors are in the range of 0 <= c < 256.
+//!   Requires `feature = "offset"`, which is enabled by default.
 //!
-//!     let all_64_pixels = vec![red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
+//!   Offset the PixelFrame by `Offset::left(n)`, `Offset::right(n)`,
+//!   `Offset::bottom(n)`, or `Offset::top(n)`, where `n` is an integer between in the `0..=8` range.
 //!
-//!     let all_red_screen = FrameLine::from_pixels(&all_64_pixels); // a screen frame
+//!   `Offset` with a value of `n = 0`, return a clone of the `PixelFrame`.
 //!
-//!     screen.write_frame(&all_red_screen); // show the frame on the LED matrix
-//! }
-//! ```
+//!   `Offset` with a value of `n = 8`, return a `PixelFrame` offset out of view, represented with black pixels (LEDs are off).
 //!
+//! * [`Clip`](./frame/clip/struct.FrameClip.html)
 //!
-//! # Features
+//!   Requires `feature = "clip"`, which is enabled by default.
 //!
-//! `default`
-//! ---------
-//! By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, and `serde-support` features are included.
-//!
-//! `linux-framebuffer`
-//! -------------------
-//! Use the Linux framebuffer to write to the LED matrix.
-//!
-//! `fonts`
-//! -------
-//! A collection of legacy 8x8 fonts, renderable on the LED matrix.
-//!
-//! `offset`
-//! --------
-//! In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
-//!
-//! `rotate`
-//! --------
-//! In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
-//!
-//! `serde-support`
-//! ---------------
-//! Enables support for serialization/deserialization with `serde`.
-//!
-//! `big-endian`
-//! ------------
-//! Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
-//!
+//!   Creates a clip of two `PixelFrame`s, by defining an
+//!   `Offset`. See the [clip documentation](./frame/clip/struct.FrameClip.html) for more details.
 #[cfg(feature = "fonts")]
 extern crate font8x8;
 #[cfg(feature = "linux-framebuffer")]
