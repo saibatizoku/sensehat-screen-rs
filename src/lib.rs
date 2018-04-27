@@ -98,7 +98,7 @@ pub mod screen;
 pub use self::color::PixelColor;
 
 #[cfg(feature = "fonts")]
-pub use self::fonts::{FontCollection, FontString};
+pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontString};
 
 pub use self::frame::{FrameLine, PixelFrame, clip::FrameClip};
 
@@ -106,33 +106,3 @@ pub use self::frame::{FrameLine, PixelFrame, clip::FrameClip};
 pub use framebuffer::FramebufferError;
 #[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;
-
-/// Render a font symbol with a `PixelColor` into a `FrameLine`.
-#[cfg(feature = "fonts")]
-pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
-    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
-        for bit in 0..8 {
-            match *x & 1 << bit {
-                0 => px.push(PixelColor::BLACK),
-                _ => px.push(color),
-            }
-        }
-        px
-    });
-    PixelFrame::new(&pixels)
-}
-
-/// Render a font symbol with a `PixelColor` into a `FrameLine`.
-#[cfg(feature = "fonts")]
-pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
-    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
-        for bit in 0..8 {
-            match *x & 1 << bit {
-                0 => px.push(PixelColor::BLACK),
-                _ => px.push(color),
-            }
-        }
-        px
-    });
-    FrameLine::from_pixels(&pixels)
-}

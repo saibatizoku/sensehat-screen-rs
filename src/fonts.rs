@@ -1,4 +1,6 @@
 //! 8x8 font collection
+use super::{FrameLine, PixelColor, PixelFrame};
+
 use font8x8::{BASIC_UNICODE, BLOCK_UNICODE, BOX_UNICODE, GREEK_UNICODE, HIRAGANA_UNICODE,
               LATIN_UNICODE};
 use std::collections::HashMap;
@@ -84,6 +86,34 @@ pub fn print_collection(collection: &FontCollection) {
             String::from_utf16_lossy(&[*key])
         );
     }
+}
+
+/// Render a font symbol with a `PixelColor` into a `FrameLine`.
+pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
+    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
+        for bit in 0..8 {
+            match *x & 1 << bit {
+                0 => px.push(PixelColor::BLACK),
+                _ => px.push(color),
+            }
+        }
+        px
+    });
+    PixelFrame::new(&pixels)
+}
+
+/// Render a font symbol with a `PixelColor` into a `FrameLine`.
+pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
+    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
+        for bit in 0..8 {
+            match *x & 1 << bit {
+                0 => px.push(PixelColor::BLACK),
+                _ => px.push(color),
+            }
+        }
+        px
+    });
+    FrameLine::from_pixels(&pixels)
 }
 
 #[cfg(test)]
