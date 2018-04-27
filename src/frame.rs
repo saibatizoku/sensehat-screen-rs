@@ -100,23 +100,40 @@ impl PartialEq for FrameLine {
 }
 
 /// A frame of pixels. This is the basic representation for the LED Matrix display.
-#[derive(Clone, Default, PartialEq)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct PixelFrame(Vec<PixelColor>);
+#[derive(Copy, Clone)]
+pub struct PixelFrame([PixelColor; 64]);
 
 impl fmt::Debug for PixelFrame {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let rows = self.0
             .chunks(8)
-            .fold(String::new(), |s, row| s + &format!("{:?}\n", row));
+            .fold(String::new(), |mut s, row| {
+                write!(&mut s, "{:?}\n", row).unwrap();
+                s
+            });
         write!(f, "PixelFrame:\n{}", rows)
+    }
+}
+
+impl Default for PixelFrame {
+    fn default() -> Self {
+        PixelFrame([PixelColor::BLACK; 64])
+    }
+}
+
+impl PartialEq for PixelFrame {
+    fn eq(&self, other: &PixelFrame) -> bool {
+        self.0
+            .iter()
+            .zip(other.0.iter())
+            .fold(true, |eq, (a, b)| eq && a == b )
     }
 }
 
 impl PixelFrame {
     /// Create a `FrameLine` representing the current `PixelFrame`.
-    pub fn new(pixels: &[PixelColor]) -> Self {
-        PixelFrame(pixels.to_vec())
+    pub fn new(pixels: &[PixelColor; 64]) -> Self {
+        PixelFrame(*pixels)
     }
     /// Create a `FrameLine` representing the current `PixelFrame`.
     pub fn frame_line(&self) -> FrameLine {
@@ -149,13 +166,17 @@ impl PixelFrame {
     pub fn from_rows(rows: Vec<Vec<PixelColor>>) -> Self {
         let pixels = rows.into_iter()
             .flat_map(|row| row.into_iter())
-            .collect::<Vec<PixelColor>>();
+            .enumerate()
+            .fold([PixelColor::default(); 64], |mut pxs, (idx, px)| {
+                pxs[idx] = px;
+                pxs
+            });
         PixelFrame(pixels)
     }
 
     /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 columns with 8 `PixelColor`s.
     pub fn from_columns(columns: Vec<Vec<PixelColor>>) -> Self {
-        let mut pixels: Vec<PixelColor> = vec![PixelColor::BLACK; 64];
+        let mut pixels = [PixelColor::BLACK; 64];
         for (col_idx, col) in columns.into_iter().enumerate() {
             for (row_idx, px) in col.into_iter().enumerate() {
                 pixels[row_idx * 8 + col_idx] = px;
