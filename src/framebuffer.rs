@@ -19,6 +19,6 @@ impl Screen {
     /// Write the contents of a `FrameLine` into the framebuffer. This will
     /// render the frameline on the screen.
     pub fn write_frame(&mut self, frame: &FrameLine) {
-        self.framebuffer.write_frame(frame.as_slice());
+        self.framebuffer.write_frame(&frame.as_bytes());
     }
 }
