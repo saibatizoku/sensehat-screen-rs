@@ -10,12 +10,11 @@ pub mod offset;
 pub mod clip;
 
 use super::color::{PixelColor, Rgb565};
-use std::fmt;
+use std::fmt::{self, Write};
 
 /// A single frame on the screen.
 /// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
-#[derive(Clone, Debug, PartialEq)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+#[derive(Copy, Clone)]
 pub struct FrameLine([Rgb565; 64]);
 
 impl FrameLine {
@@ -73,6 +72,30 @@ impl FrameLine {
 impl Default for FrameLine {
     fn default() -> Self {
         FrameLine::new()
+    }
+}
+
+impl fmt::Debug for FrameLine {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let rows = self.0.chunks(8).fold(String::new(), |mut s, row| {
+            write!(&mut s, "{}", "\n[").unwrap();
+            for &px in row {
+                let rgbu16: u16 = px.into();
+                write!(&mut s, " {:04X}", rgbu16).unwrap();
+            }
+            write!(&mut s, "{}", " ]").unwrap();
+            s
+        });
+        write!(f, "FrameLine:\n{}", rows)
+    }
+}
+
+impl PartialEq for FrameLine {
+    fn eq(&self, other: &FrameLine) -> bool {
+        self.0
+            .iter()
+            .zip(other.0.iter())
+            .fold(true, |eq, (a, b)| eq && a == b )
     }
 }
 
