@@ -12,7 +12,7 @@ impl PixelFrame {
     /// For memory reallocation, such as when rendering a clip at multiple offsets,
     /// it is better to use `PixelFrame::build_clip`.
     pub fn clip(&self, other: &PixelFrame, clip_at: Offset) -> Self {
-        self.build_clip(other, clip_at).offset(clip_at)
+        self.build_clip(other).offset(clip_at)
     }
     /// Create a `FrameClip` with this and another `PixelFrame`.
     pub fn build_clip(&self, other: &PixelFrame) -> FrameClip {
@@ -714,7 +714,7 @@ mod tests {
     fn frame_clip_offsets_to_the_left() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         assert_eq!(clip.offset(Offset::left(0)), PixelFrame::new(&FRAME_ONE));
         assert_eq!(
             clip.offset(Offset::left(1)),
@@ -752,7 +752,7 @@ mod tests {
     fn frame_clip_panics_when_offset_to_the_left_is_greater_than_8() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         let _ = clip.offset(Offset::left(9));
     }
 
@@ -760,7 +760,7 @@ mod tests {
     fn frame_clip_offsets_to_the_right() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         assert_eq!(clip.offset(Offset::right(0)), PixelFrame::new(&FRAME_ONE));
         assert_eq!(
             clip.offset(Offset::right(1)),
@@ -798,7 +798,7 @@ mod tests {
     fn frame_clip_panics_when_offset_to_the_right_is_greater_than_8() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         let _ = clip.offset(Offset::right(9));
     }
 
@@ -806,7 +806,7 @@ mod tests {
     fn frame_clip_offsets_to_the_bottom() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         assert_eq!(clip.offset(Offset::bottom(0)), PixelFrame::new(&FRAME_ONE));
         assert_eq!(
             clip.offset(Offset::bottom(1)),
@@ -844,7 +844,7 @@ mod tests {
     fn frame_clip_panics_when_offset_to_the_bottom_is_greater_than_8() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         let _ = clip.offset(Offset::bottom(9));
     }
 
@@ -852,7 +852,7 @@ mod tests {
     fn frame_clip_offsets_to_the_top() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         assert_eq!(clip.offset(Offset::top(0)), PixelFrame::new(&FRAME_ONE));
         assert_eq!(
             clip.offset(Offset::top(1)),
@@ -890,7 +890,7 @@ mod tests {
     fn frame_clip_panics_when_offset_to_the_top_is_greater_than_8() {
         let symbol = PixelFrame::new(&FRAME_ONE);
         let symbol_two = PixelFrame::new(&FRAME_TWO);
-        let clip = symbol.clip(&symbol_two);
+        let clip = symbol.build_clip(&symbol_two);
         let _ = clip.offset(Offset::top(9));
     }
 }
