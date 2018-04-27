@@ -31,8 +31,13 @@
 ///     assert_eq!(blue_565, Rgb565::from_rgb(0, 0, 0xF8));
 /// # }
 /// ```
+///
+///
 use std::fmt;
 
+/// 24-bit RGB color pixel.
+///
+/// This is the fundamental representation for RGB colors.
 #[derive(Copy, Clone, Default, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct PixelColor {
@@ -102,7 +107,7 @@ impl PixelColor {
     }
 
     /// Create a new LED pixel color from a pair of RGB565-encoded bytes.
-    pub fn from_rgb565(color: [u8; 2]) -> Self {
+    pub fn from_rgb565_bytes(color: [u8; 2]) -> Self {
         let rgb565: Rgb565 = color.into();
         rgb565.into()
     }
@@ -321,17 +326,17 @@ mod tests {
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
         // black 5-bit, 6-bit, 5-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0x00, 0x00]),
+            PixelColor::from_rgb565_bytes([0x00, 0x00]),
             PixelColor::new(0x00, 0x00, 0x00)
         );
         // white 5-bit, 6-bit, 5-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0xFF, 0xFF]),
+            PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
             PixelColor::new(0xF8, 0xFC, 0xF8)
         );
         // 100% green - 6-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0xE0, 0x07]),
+            PixelColor::from_rgb565_bytes([0xE0, 0x07]),
             PixelColor::new(0x00, 0xFC, 0x00)
         );
     }
@@ -341,17 +346,17 @@ mod tests {
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
         // black 5-bit, 6-bit, 5-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0x00, 0x00]),
+            PixelColor::from_rgb565_bytes([0x00, 0x00]),
             PixelColor::new(0x00, 0x00, 0x00)
         );
         // white 5-bit, 6-bit, 5-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0xFF, 0xFF]),
+            PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
             PixelColor::new(0xF8, 0xFC, 0xF8)
         );
         // 100% green - 6-bit resolution
         assert_eq!(
-            PixelColor::from_rgb565([0x07, 0xE0]),
+            PixelColor::from_rgb565_bytes([0x07, 0xE0]),
             PixelColor::new(0x00, 0xFC, 0x00)
         );
     }

@@ -158,7 +158,7 @@ mod tests {
     #[cfg(not(feature = "big-endian"))]
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color() {
-        let blue = PixelColor::from_rgb565([0x1F, 0x00]);
+        let blue = PixelColor::from_rgb565_bytes([0x1F, 0x00]);
         let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x1F, 0x00, 0x1F, 0x00]);
     }
@@ -166,7 +166,7 @@ mod tests {
     #[cfg(feature = "big-endian")]
     #[test]
     fn frame_line_is_created_from_slice_of_pixel_color() {
-        let blue = PixelColor::from_rgb565([0x00, 0x1F]);
+        let blue = PixelColor::from_rgb565_bytes([0x00, 0x1F]);
         let frame_line = FrameLine::from_pixels(&[blue, blue]);
         assert_eq!(frame_line.as_slice(), &[0x00, 0x1F, 0x00, 0x1F]);
     }
