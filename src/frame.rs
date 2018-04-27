@@ -120,7 +120,14 @@ impl PixelFrame {
     }
     /// Create a `FrameLine` representing the current `PixelFrame`.
     pub fn frame_line(&self) -> FrameLine {
-        FrameLine::from_pixels(self.0.as_slice())
+        let colors = self.0
+            .iter()
+            .enumerate()
+            .fold([PixelColor::BLACK; 64], |mut c, (idx, px)| {
+                c[idx] = *px;
+                c
+            });
+        FrameLine::from_pixels(&colors)
     }
 
     /// Returns a `Vec<Vec<PixelColor>>`, organized by rows, from top to bottom.
