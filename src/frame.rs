@@ -9,44 +9,64 @@ pub mod offset;
 #[path = "frame_clip.rs"]
 pub mod clip;
 
-use super::color::PixelColor;
+use super::color::{PixelColor, Rgb565};
 use std::fmt;
 
 /// A single frame on the screen.
 /// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
 #[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct FrameLine(Vec<u8>);
+pub struct FrameLine([Rgb565; 64]);
 
 impl FrameLine {
     //  Defaults to an empty vector with capacity for 128 bytes.
     fn new() -> Self {
-        FrameLine(Vec::with_capacity(128))
+        FrameLine([Rgb565::default(); 64])
     }
 
     /// Create a new `FrameLine` instance, given a slice of bytes.
-    pub fn from_slice(bytes: &[u8]) -> Self {
-        FrameLine(bytes.to_vec())
+    pub fn from_slice(bytes: &[u8; 128]) -> Self {
+        let colors = bytes
+            .chunks(2)
+            .map(|chunk| Rgb565::from([chunk[0], chunk[1]]))
+            .enumerate()
+            .fold(
+                [Rgb565::default(); 64],
+                |mut color_array, (index, color)| {
+                    color_array[index] = color;
+                    color_array
+                },
+            );
+        FrameLine(colors)
     }
 
     /// Create a new `FrameLine` instance, given a slice of `PixelColor`.
-    pub fn from_pixels(pixels: &[PixelColor]) -> Self {
-        pixels
-            .iter()
-            .fold(FrameLine::new(), |frame, px| frame.extend(px))
-    }
-
-    // Extend the inner vector of bytes by one `PixelColor`. This method
-    // consumes the current `FrameLine` instance and returns a new one,
-    // useful for using with `Iterator::fold`.
-    fn extend(mut self, pixel: &PixelColor) -> Self {
-        self.0.extend_from_slice(&pixel.rgb565());
-        self
+    pub fn from_pixels(pixels: &[PixelColor; 64]) -> Self {
+        let colors = pixels.iter().map(Rgb565::from).enumerate().fold(
+            [Rgb565::default(); 64],
+            |mut color_array, (index, color)| {
+                color_array[index] = color;
+                color_array
+            },
+        );
+        FrameLine(colors)
     }
 
     /// Returns the `FrameLine` as a slice of bytes.
-    pub fn as_slice(&self) -> &[u8] {
-        self.0.as_slice()
+    pub fn as_bytes(&self) -> [u8; 128] {
+        self.0
+            .iter()
+            .cloned()
+            .map(|color| {
+                let bytes: [u8; 2] = color.into();
+                bytes
+            })
+            .enumerate()
+            .fold([0u8; 128], |mut byte_array, (index, color)| {
+                byte_array[index * 2] = color[0];
+                byte_array[(index * 2) + 1] = color[1];
+                byte_array
+            })
     }
 }
 
