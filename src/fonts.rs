@@ -90,29 +90,35 @@ pub fn print_collection(collection: &FontCollection) {
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
-    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
-        for bit in 0..8 {
-            match *x & 1 << bit {
-                0 => px.push(PixelColor::BLACK),
-                _ => px.push(color),
+    let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
+        [PixelColor::BLACK; 64],
+        |mut px, (idx, x)| {
+            for bit in 0..8 {
+                match *x & 1 << bit {
+                    0 => px[idx] = PixelColor::BLACK,
+                    _ => px[idx] = color,
+                }
             }
-        }
-        px
-    });
+            px
+        },
+    );
     PixelFrame::new(&pixels)
 }
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
-    let pixels: Vec<PixelColor> = symbol.iter().fold(Vec::new(), |mut px, x| {
-        for bit in 0..8 {
-            match *x & 1 << bit {
-                0 => px.push(PixelColor::BLACK),
-                _ => px.push(color),
+    let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
+        [PixelColor::BLACK; 64],
+        |mut px, (idx, x)| {
+            for bit in 0..8 {
+                match *x & 1 << bit {
+                    0 => px[idx] = PixelColor::BLACK,
+                    _ => px[idx] = color,
+                }
             }
-        }
-        px
-    });
+            px
+        },
+    );
     FrameLine::from_pixels(&pixels)
 }
 
