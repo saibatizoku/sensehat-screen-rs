@@ -10,7 +10,7 @@ impl PixelFrame {
     /// ```
     /// # extern crate sensehat_screen;
     /// # use sensehat_screen::PixelFrame;
-    /// # use sensehat_screen::frame::offset::Offset;
+    /// # use sensehat_screen::Offset;
     /// # fn main() {
     ///     let frame: PixelFrame = Default::default();
     ///     let moved_1px_to_the_left = frame.offset(Offset::left(1));

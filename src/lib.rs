@@ -82,6 +82,10 @@ pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontSt
 pub use self::frame::{FrameLine, PixelFrame};
 #[cfg(feature = "clip")]
 pub use self::frame::clip::Clip;
+#[cfg(feature = "offset")]
+pub use self::frame::offset::Offset;
+#[cfg(feature = "rotate")]
+pub use self::frame::rotate::Rotate;
 
 #[cfg(feature = "linux-framebuffer")]
 pub use framebuffer::FramebufferError;
