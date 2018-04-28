@@ -1,6 +1,6 @@
 //! Support for combining `PixelFrame`s.
 //!
-//! The `FrameClip` is the type that merges `PixelFrame` by rows or by columns
+//! The `Clip` is the type that merges `PixelFrame` by rows or by columns
 //!
 //!
 use super::PixelFrame;
@@ -8,23 +8,23 @@ use super::offset::Offset;
 
 /// Methods enabled by the `clip` feature.
 impl PixelFrame {
-    /// Shortcut to get a `PixelFrame` from a temporary `FrameClip`, at a given `Offset`.
+    /// Shortcut to get a `PixelFrame` from a temporary `Clip`, at a given `Offset`.
     /// For memory reallocation, such as when rendering a clip at multiple offsets,
     /// it is better to use `PixelFrame::build_clip`.
     pub fn clip(&self, other: &PixelFrame, clip_at: Offset) -> Self {
         self.build_clip(other).offset(clip_at)
     }
-    /// Create a `FrameClip` with this and another `PixelFrame`.
-    pub fn build_clip(&self, other: &PixelFrame) -> FrameClip {
-        FrameClip::new(self.clone(), other.clone())
+    /// Create a `Clip` with this and another `PixelFrame`.
+    pub fn build_clip(&self, other: &PixelFrame) -> Clip {
+        Clip::new(self.clone(), other.clone())
     }
 }
 
 /// A clip made of two `PixelFrame`s.
-/// # Horizontal `FrameClip`
+/// # Horizontal `Clip`
 ///
-/// In horizontal clips, frames are placed side-by-side, and a `FrameClip` is specified
-/// using either `Offset::Right(_)`, or `Offset::Left(_)` with the `FrameClip::offset` method.
+/// In horizontal clips, frames are placed side-by-side, and a `Clip` is specified
+/// using either `Offset::Right(_)`, or `Offset::Left(_)` with the `Clip::offset` method.
 ///
 ///
 /// `Offset::Right(_)`
@@ -69,13 +69,13 @@ impl PixelFrame {
 ///
 /// ```rust
 /// extern crate sensehat_screen;
-/// use sensehat_screen::{FrameClip, PixelColor, PixelFrame};
-/// use sensehat_screen::frame::offset::Offset;
+/// use sensehat_screen::{Clip, PixelColor, PixelFrame};
+/// use sensehat_screen::Offset;
 ///
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::YELLOW; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLUE; 64]);
-///     let clip = FrameClip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Right(0)), frame_1);
 ///
@@ -131,13 +131,13 @@ impl PixelFrame {
 ///
 /// ```rust
 /// extern crate sensehat_screen;
-/// use sensehat_screen::{FrameClip, PixelColor, PixelFrame};
-/// use sensehat_screen::frame::offset::Offset;
+/// use sensehat_screen::{Clip, PixelColor, PixelFrame};
+/// use sensehat_screen::Offset;
 ///
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::YELLOW; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLUE; 64]);
-///     let clip = FrameClip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Left(0)), frame_1);
 ///
@@ -152,11 +152,11 @@ impl PixelFrame {
 /// }
 /// ```
 ///
-/// Vertical `FrameClip`
+/// Vertical `Clip`
 /// ====================
 ///
-/// In vertical clips, frames are placed above-and-belowe each other, and a `FrameClip` is specified
-/// using either `Offset::Bottom(_)`, or `Offset::Top(_)` with the `FrameClip::offset` method.
+/// In vertical clips, frames are placed above-and-belowe each other, and a `Clip` is specified
+/// using either `Offset::Bottom(_)`, or `Offset::Top(_)` with the `Clip::offset` method.
 ///
 /// `Offset::Bottom(_)`
 /// -------------------
@@ -200,13 +200,13 @@ impl PixelFrame {
 ///
 /// ```rust
 /// extern crate sensehat_screen;
-/// use sensehat_screen::{FrameClip, PixelColor, PixelFrame};
-/// use sensehat_screen::frame::offset::Offset;
+/// use sensehat_screen::{Clip, PixelColor, PixelFrame};
+/// use sensehat_screen::Offset;
 ///
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::MAGENTA; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::WHITE; 64]);
-///     let clip = FrameClip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Bottom(0)), frame_1);
 ///
@@ -262,13 +262,13 @@ impl PixelFrame {
 ///
 /// ```rust
 /// extern crate sensehat_screen;
-/// use sensehat_screen::{FrameClip, PixelColor, PixelFrame};
-/// use sensehat_screen::frame::offset::Offset;
+/// use sensehat_screen::{Clip, PixelColor, PixelFrame};
+/// use sensehat_screen::Offset;
 ///
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::GREEN; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLACK; 64]);
-///     let clip = FrameClip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Top(0)), frame_1);
 ///
@@ -283,15 +283,15 @@ impl PixelFrame {
 /// }
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct FrameClip {
+pub struct Clip {
     first: PixelFrame,
     second: PixelFrame,
 }
 
-impl FrameClip {
-    /// Create a new `FrameClip` from two `PixelFrame`s.
+impl Clip {
+    /// Create a new `Clip` from two `PixelFrame`s.
     pub fn new(first: PixelFrame, second: PixelFrame) -> Self {
-        FrameClip { first, second }
+        Clip { first, second }
     }
 
     /// Offset position for which to create the clipped `PixelFrame`.
@@ -306,7 +306,7 @@ impl FrameClip {
 
     /// Reverse the order of the inner `PixelFrame`s.
     pub fn reverse(self) -> Self {
-        FrameClip::new(self.second, self.first)
+        Clip::new(self.second, self.first)
     }
 
     // # Panics

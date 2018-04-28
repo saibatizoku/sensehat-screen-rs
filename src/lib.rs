@@ -46,12 +46,12 @@
 //!
 //!   `Offset` with a value of `n = 8`, return a `PixelFrame` offset out of view, represented with black pixels (LEDs are off).
 //!
-//! * [`Clip`](./frame/clip/struct.FrameClip.html)
+//! * [`Clip`](./frame/clip/struct.Clip.html)
 //!
 //!   Requires `feature = "clip"`, which is enabled by default.
 //!
 //!   Creates a clip of two `PixelFrame`s, by defining an
-//!   `Offset`. See the [clip documentation](./frame/clip/struct.FrameClip.html) for more details.
+//!   `Offset`. See the [clip documentation](./frame/clip/struct.Clip.html) for more details.
 #[cfg(feature = "fonts")]
 extern crate font8x8;
 #[cfg(feature = "linux-framebuffer")]
@@ -79,7 +79,9 @@ pub use self::color::PixelColor;
 #[cfg(feature = "fonts")]
 pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontString};
 
-pub use self::frame::{FrameLine, PixelFrame, clip::FrameClip};
+pub use self::frame::{FrameLine, PixelFrame};
+#[cfg(feature = "clip")]
+pub use self::frame::clip::Clip;
 
 #[cfg(feature = "linux-framebuffer")]
 pub use framebuffer::FramebufferError;
