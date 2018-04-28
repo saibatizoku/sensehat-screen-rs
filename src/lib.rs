@@ -66,7 +66,7 @@
 #[cfg(feature = "fonts")]
 extern crate font8x8;
 #[cfg(feature = "linux-framebuffer")]
-extern crate framebuffer;
+pub extern crate framebuffer;
 #[cfg(feature = "serde-support")]
 extern crate serde;
 #[cfg(feature = "serde-support")]
@@ -98,7 +98,5 @@ pub use self::frame::offset::Offset;
 #[cfg(feature = "rotate")]
 pub use self::frame::rotate::Rotate;
 
-#[cfg(feature = "linux-framebuffer")]
-pub use framebuffer::FramebufferError;
 #[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;
