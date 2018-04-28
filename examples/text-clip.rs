@@ -26,26 +26,27 @@ fn main() {
         })
         .collect::<Vec<PixelFrame>>();
 
-    let frame_reel: Vec<PixelFrame> = frames.chunks(2).fold(Vec::new(), |mut v, chunk| {
-        match chunk.len() {
-            2 => {
-                let clip = chunk[0].clip(&chunk[1]);
-                for i in 0..=8 {
-                    v.push(&clip.offset(Offset::left(i)));
-                }
+    let frame_reel: Vec<PixelFrame> = frames.chunks(2).fold(Vec::new(), |mut v, chunk| match chunk
+        .len()
+    {
+        2 => {
+            let clip = chunk[0].build_clip(&chunk[1]);
+            for i in 0..=8 {
+                v.push(clip.offset(Offset::left(i)));
             }
-            1 => {
-            }
-            0 => panic!("empty frame reel will display nothing"),
-            _ => unreachable!("something strange is happening"),
-    })
-    if let Some(chunk) = iter.next() {
-        render_chunk(&mut screen, chunk);
-    }
+            v
+        }
+        1 => v,
+        0 => panic!("empty frame reel will display nothing"),
+        _ => unreachable!("something strange is happening"),
+    });
+    // if let Some(chunk) = iter.next() {
+    //     render_chunk(&mut screen, chunk);
+    // }
 }
 
 fn render_chunk(screen: &mut Screen, chunk: &[PixelFrame]) {
-    let clip = chunk[0].clip(&chunk[1]);
+    let clip = chunk[0].build_clip(&chunk[1]);
     for i in 0..=8 {
         screen.write_frame(&clip.offset(Offset::left(i)).frame_line());
         ::std::thread::sleep(::std::time::Duration::from_millis(500));
