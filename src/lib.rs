@@ -11,7 +11,18 @@
 //!
 //! Basics
 //! ------
-//! * [`Screen`](./screen/struct.Screen.html) is the representation of the LED Matrix, it stores a `PixelFrame`.
+//! * [`Screen`](./screen/struct.Screen.html) offers a high-level API for the LED Matrix.
+//!
+//!   Internally, it stores a `PixelFrame` meant to be rendered on the LED Matrix.
+//!
+//!   With the `linux-framebuffer` feature, enabled by default, `Screen` will have two methods:
+//!
+//!     1. `Screen::open` which opens the framebuffer
+//!        file-descriptor given as the only argument.
+//!
+//!     1. `Screen::write_frame` which takes a
+//!        `&FrameLine` and writes the raw bytes onto the framebuffer, effectively displaying the
+//!        `PixelFrame` on the LED Matrix.
 //!
 //! * [`PixelFrame`](./frame/struct.PixelFrame.html) is a collection of 64 `PixelColor`, representing the 8-row by 8-column LED
 //! Matrix.

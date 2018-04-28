@@ -2,7 +2,7 @@
 use super::FrameLine;
 use framebuffer::{Framebuffer, FramebufferError};
 
-/// Framebuffered 8x8 LED screen.
+/// This is the main type for interacting with the LED Matrix Screen.
 #[derive(Debug)]
 pub struct Screen {
     framebuffer: Framebuffer,

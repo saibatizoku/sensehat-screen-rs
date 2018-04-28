@@ -12,8 +12,7 @@ pub mod clip;
 use super::color::{PixelColor, Rgb565};
 use std::fmt::{self, Write};
 
-/// A single frame on the screen.
-/// Defaults to an inner capacity for 128 bytes, suitable for the 8x8 pixel screen.
+/// A single frame on the screen. Contains a private `[Rgb565; 64]`.
 #[derive(Copy, Clone)]
 pub struct FrameLine([Rgb565; 64]);
 
