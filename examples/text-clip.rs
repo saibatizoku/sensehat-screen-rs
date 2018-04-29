@@ -45,6 +45,7 @@ fn main() {
     // }
 }
 
+#[cfg(feature = "default")]
 fn render_chunk(screen: &mut Screen, chunk: &[PixelFrame]) {
     let clip = chunk[0].build_clip(&chunk[1]);
     for i in 0..=8 {
