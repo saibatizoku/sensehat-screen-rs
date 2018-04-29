@@ -77,12 +77,12 @@ impl Default for FrameLine {
 impl fmt::Debug for FrameLine {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let rows = self.0.chunks(8).fold(String::new(), |mut s, row| {
-            write!(&mut s, "{}", "\n[").unwrap();
+            write!(&mut s, "\n[").unwrap();
             for &px in row {
                 let rgbu16: u16 = px.into();
                 write!(&mut s, " {:04X}", rgbu16).unwrap();
             }
-            write!(&mut s, "{}", " ]").unwrap();
+            write!(&mut s, " ]").unwrap();
             s
         });
         write!(f, "FrameLine:\n{}", rows)
@@ -105,7 +105,7 @@ pub struct PixelFrame([PixelColor; 64]);
 impl fmt::Debug for PixelFrame {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let rows = self.0.chunks(8).fold(String::new(), |mut s, row| {
-            write!(&mut s, "{:?}\n", row).unwrap();
+            writeln!(&mut s, "{:?}", row).unwrap();
             s
         });
         write!(f, "PixelFrame:\n{}", rows)
@@ -177,12 +177,9 @@ impl PixelFrame {
     pub fn as_rows(&self) -> [[PixelColor; 8]; 8] {
         let pixels = self.0;
         let mut rows = [[PixelColor::default(); 8]; 8];
-        pixels
-            .chunks(8)
-            .enumerate()
-            .for_each(|(idx, row)| {
-                rows[idx].copy_from_slice(row);
-            });
+        pixels.chunks(8).enumerate().for_each(|(idx, row)| {
+            rows[idx].copy_from_slice(row);
+        });
         rows
     }
 
@@ -191,12 +188,9 @@ impl PixelFrame {
         let mut pixels = *self;
         pixels.transpose();
         let mut columns = [[PixelColor::default(); 8]; 8];
-        pixels.0
-            .chunks(8)
-            .enumerate()
-            .for_each(|(idx, col)| {
-                columns[idx].copy_from_slice(col);
-            });
+        pixels.0.chunks(8).enumerate().for_each(|(idx, col)| {
+            columns[idx].copy_from_slice(col);
+        });
         columns
     }
 

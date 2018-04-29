@@ -2,6 +2,7 @@
 use super::PixelFrame;
 
 /// A counter-clockwise angle, multiple of `90°`, used to create rotated `PixelFrame`s.
+#[derive(Copy, Clone)]
 pub enum Rotate {
     None,
     Ccw90,
@@ -16,7 +17,7 @@ impl PixelFrame {
     /// Create a new `PixelFrame` that is rotated by a multiple of `90°`, counter-clockwise.
     pub fn rotate(&self, rotate: Rotate) -> Self {
         match rotate {
-            Rotate::None => self.clone(),
+            Rotate::None => *self,
             Rotate::Ccw90 => self.rotate_left(),
             Rotate::Ccw180 => self.rotate_180(),
             Rotate::Ccw270 => self.rotate_right(),
