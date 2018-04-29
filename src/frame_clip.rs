@@ -80,10 +80,19 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Right(0)), frame_1);
 ///
 ///     let offset_2_cols = clip.offset(Offset::Right(2)).as_columns();
-///     // expect 2 yellow columns
-///     assert_eq!(&offset_2_cols[..2], &[&[PixelColor::BLUE; 8]; 2]);
-///     // expect 6 blue columns
-///     assert_eq!(&offset_2_cols[2..], &[&[PixelColor::YELLOW; 8]; 6]);
+///
+///
+///     let expected_cols = &[
+///         [PixelColor::BLUE; 8],
+///         [PixelColor::BLUE; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///     ];
+///     assert_eq!(&offset_2_cols, expected_cols);
 ///
 ///     // Offset of `8`, shows the second frame.
 ///     assert_eq!(clip.offset(Offset::Right(8)), frame_2);
@@ -142,10 +151,18 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Left(0)), frame_1);
 ///
 ///     let offset_4_cols = clip.offset(Offset::Left(4)).as_columns();
-///     // expect 4 yellow columns
-///     assert_eq!(&offset_4_cols[..4], &[&[PixelColor::YELLOW; 8]; 4]);
-///     // expect 4 blue columns
-///     assert_eq!(&offset_4_cols[4..], &[&[PixelColor::BLUE; 8]; 4]);
+///
+///     let expected_cols = &[
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::YELLOW; 8],
+///         [PixelColor::BLUE; 8],
+///         [PixelColor::BLUE; 8],
+///         [PixelColor::BLUE; 8],
+///         [PixelColor::BLUE; 8],
+///     ];
+///     assert_eq!(&offset_4_cols, expected_cols);
 ///
 ///     // Offset of `8`, shows the second frame.
 ///     assert_eq!(clip.offset(Offset::Left(8)), frame_2);
@@ -211,10 +228,18 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Bottom(0)), frame_1);
 ///
 ///     let offset_2_rows = clip.offset(Offset::Bottom(2)).as_rows();
-///     // expect 2 yellow rows
-///     assert_eq!(&offset_2_rows[..2], &[&[PixelColor::WHITE; 8]; 2]);
-///     // expect 6 blue rows
-///     assert_eq!(&offset_2_rows[2..], &[&[PixelColor::MAGENTA; 8]; 6]);
+///
+///     let expected_rows = &[
+///         [PixelColor::WHITE; 8],
+///         [PixelColor::WHITE; 8],
+///         [PixelColor::MAGENTA; 8],
+///         [PixelColor::MAGENTA; 8],
+///         [PixelColor::MAGENTA; 8],
+///         [PixelColor::MAGENTA; 8],
+///         [PixelColor::MAGENTA; 8],
+///         [PixelColor::MAGENTA; 8],
+///     ];
+///     assert_eq!(&offset_2_rows, expected_rows);
 ///
 ///     // Offset of `8`, shows the second frame.
 ///     assert_eq!(clip.offset(Offset::Bottom(8)), frame_2);
@@ -273,10 +298,19 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Top(0)), frame_1);
 ///
 ///     let offset_7_rows = clip.offset(Offset::Top(7)).as_rows();
-///     // expect 1 green rows
-///     assert_eq!(&offset_7_rows[..1], &[&[PixelColor::GREEN; 8]; 1]);
-///     // expect 7 blue rows
-///     assert_eq!(&offset_7_rows[1..], &[&[PixelColor::BLACK; 8]; 7]);
+///
+///     let expected_rows = &[
+///         [PixelColor::GREEN; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///         [PixelColor::BLACK; 8],
+///     ];
+///
+///     assert_eq!(&offset_7_rows, expected_rows);
 ///
 ///     // Offset of `8`, shows the second frame.
 ///     assert_eq!(clip.offset(Offset::Left(8)), frame_2);
