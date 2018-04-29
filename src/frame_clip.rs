@@ -16,7 +16,7 @@ impl PixelFrame {
     }
     /// Create a `Clip` with this and another `PixelFrame`.
     pub fn build_clip(&self, other: &PixelFrame) -> Clip {
-        Clip::new(self.clone(), other.clone())
+        Clip::new(*self, *other)
     }
 }
 
@@ -75,7 +75,7 @@ impl PixelFrame {
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::YELLOW; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLUE; 64]);
-///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1, frame_2);
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Right(0)), frame_1);
 ///
@@ -137,7 +137,7 @@ impl PixelFrame {
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::YELLOW; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLUE; 64]);
-///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1, frame_2);
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Left(0)), frame_1);
 ///
@@ -206,7 +206,7 @@ impl PixelFrame {
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::MAGENTA; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::WHITE; 64]);
-///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1, frame_2);
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Bottom(0)), frame_1);
 ///
@@ -268,7 +268,7 @@ impl PixelFrame {
 /// fn main() {
 ///     let frame_1 = PixelFrame::new(&[PixelColor::GREEN; 64]);
 ///     let frame_2 = PixelFrame::new(&[PixelColor::BLACK; 64]);
-///     let clip = Clip::new(frame_1.clone(), frame_2.clone());
+///     let clip = Clip::new(frame_1, frame_2);
 ///     // Offset of `0`, shows the first frame.
 ///     assert_eq!(clip.offset(Offset::Top(0)), frame_1);
 ///
@@ -282,7 +282,7 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Left(8)), frame_2);
 /// }
 /// ```
-#[derive(Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug, Default)]
 pub struct Clip {
     first: PixelFrame,
     second: PixelFrame,
