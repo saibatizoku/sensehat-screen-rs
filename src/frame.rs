@@ -145,26 +145,35 @@ impl PixelFrame {
     }
 
     /// Returns a `Vec<Vec<PixelColor>>`, organized by rows, from top to bottom.
-    pub fn as_rows(&self) -> Vec<Vec<PixelColor>> {
-        self.0.chunks(8).map(|row| row.to_vec()).collect()
+    pub fn as_rows(&self) -> [[PixelColor; 8]; 8] {
+        self.0.chunks(8).map(|row| {
+            row.iter().enumerate().fold([PixelColor::default(); 8], |mut pxrow, (idx, &px)| {
+                pxrow[idx] = px;
+                pxrow
+            })
+        }).enumerate().fold([[PixelColor::default(); 8]; 8], |mut rows, (idx, row)| {
+            rows[idx] = row;
+            rows
+        })
     }
 
     /// Returns a `Vec<Vec<PixelColor>>`, organized by columns, from left to right.
-    pub fn as_columns(&self) -> Vec<Vec<PixelColor>> {
-        let mut columns: Vec<Vec<PixelColor>> = vec![Vec::with_capacity(8); 8];
+    pub fn as_columns(&self) -> [[PixelColor; 8]; 8] {
+        let mut columns: [[PixelColor; 8]; 8] = [[PixelColor::default(); 8]; 8];
         for (idx, px) in self.0.iter().cloned().enumerate() {
             let col_idx = idx % 8;
-            columns[col_idx].push(px);
+            let row_idx = idx / 8;
+            columns[col_idx][row_idx] = px;
         }
         columns
     }
 
     /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 rows with 8 `PixelColor`s.
-    pub fn from_rows(rows: Vec<Vec<PixelColor>>) -> Self {
+    pub fn from_rows(rows: &[[PixelColor; 8]; 8]) -> Self {
         let pixels = rows.into_iter()
             .flat_map(|row| row.into_iter())
             .enumerate()
-            .fold([PixelColor::default(); 64], |mut pxs, (idx, px)| {
+            .fold([PixelColor::default(); 64], |mut pxs, (idx, &px)| {
                 pxs[idx] = px;
                 pxs
             });
@@ -172,10 +181,10 @@ impl PixelFrame {
     }
 
     /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 columns with 8 `PixelColor`s.
-    pub fn from_columns(columns: Vec<Vec<PixelColor>>) -> Self {
+    pub fn from_columns(columns: &[[PixelColor; 8]; 8]) -> Self {
         let mut pixels = [PixelColor::BLACK; 64];
         for (col_idx, col) in columns.into_iter().enumerate() {
-            for (row_idx, px) in col.into_iter().enumerate() {
+            for (row_idx, &px) in col.into_iter().enumerate() {
                 pixels[row_idx * 8 + col_idx] = px;
             }
         }
