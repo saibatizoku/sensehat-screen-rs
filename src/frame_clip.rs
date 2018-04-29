@@ -347,56 +347,72 @@ impl Clip {
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset {
-            0 => self.first.clone(),
-            8 => self.second.clone(),
+        match offset as usize {
+            0 => self.first,
+            8 => self.second,
             n => {
-                let mut cols = Vec::with_capacity(8);
-                cols.extend_from_slice(&self.first.as_columns()[n as usize..]);
-                cols.extend_from_slice(&self.second.as_columns()[..n as usize]);
-                PixelFrame::from_columns(cols)
+                let mut orig = self.first.as_columns();
+                let second = self.second.as_columns();
+                {
+                    orig.rotate_left(n);
+                    let (_, right) = orig.split_at_mut(8 - n);
+                    right.copy_from_slice(&second[..n]);
+                }
+                PixelFrame::from_columns(&orig)
             }
         }
     }
 
     fn offset_right(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset {
-            0 => self.first.clone(),
-            8 => self.second.clone(),
+        match offset as usize {
+            0 => self.first,
+            8 => self.second,
             n => {
-                let mut cols = Vec::with_capacity(8);
-                cols.extend_from_slice(&self.second.as_columns()[(8 - n as usize)..]);
-                cols.extend_from_slice(&self.first.as_columns()[..(8 - n as usize)]);
-                PixelFrame::from_columns(cols)
+                let mut orig = self.first.as_columns();
+                let second = self.second.as_columns();
+                {
+                    orig.rotate_right(n);
+                    let (left, _) = orig.split_at_mut(n);
+                    left.copy_from_slice(&second[8 - n..]);
+                }
+                PixelFrame::from_columns(&orig)
             }
         }
     }
 
     fn offset_bottom(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset {
-            0 => self.first.clone(),
-            8 => self.second.clone(),
+        match offset as usize {
+            0 => self.first,
+            8 => self.second,
             n => {
-                let mut rows = Vec::with_capacity(8);
-                rows.extend_from_slice(&self.second.as_rows()[(8 - n as usize)..]);
-                rows.extend_from_slice(&self.first.as_rows()[..(8 - n as usize)]);
-                PixelFrame::from_rows(rows)
+                let mut orig = self.first.as_rows();
+                let second = self.second.as_rows();
+                {
+                    orig.rotate_right(n);
+                    let (left, _) = orig.split_at_mut(n);
+                    left.copy_from_slice(&second[8 - n..]);
+                }
+                PixelFrame::from_rows(&orig)
             }
         }
     }
 
     fn offset_top(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset {
-            0 => self.first.clone(),
-            8 => self.second.clone(),
+        match offset as usize {
+            0 => self.first,
+            8 => self.second,
             n => {
-                let mut rows = Vec::with_capacity(8);
-                rows.extend_from_slice(&self.first.as_rows()[n as usize..]);
-                rows.extend_from_slice(&self.second.as_rows()[..n as usize]);
-                PixelFrame::from_rows(rows)
+                let mut orig = self.first.as_rows();
+                let second = self.second.as_rows();
+                {
+                    orig.rotate_left(n);
+                    let (_, right) = orig.split_at_mut(8 - n);
+                    right.copy_from_slice(&second[..n]);
+                }
+                PixelFrame::from_rows(&orig)
             }
         }
     }
