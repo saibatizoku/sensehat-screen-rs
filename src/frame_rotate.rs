@@ -25,68 +25,25 @@ impl PixelFrame {
 
     // Rotate the display to the left by 90 degrees. Creates a new `PixelFrame`.
     fn rotate_left(&self) -> Self {
-        let transpose: Vec<PixelColor> = (0..8)
-            .into_iter()
-            .map(|col_idx| {
-                let column: Vec<PixelColor> = self.0
-                    .iter()
-                    .enumerate()
-                    .filter(|&(idx, _)| idx % 8 == col_idx)
-                    .map(|(_, color)| *color)
-                    .collect();
-                column
-            })
-            .flat_map(|col| col)
-            .collect();
-
-        let flip_rows = transpose
-            .chunks(8)
-            .rev()
-            .flat_map(|row| row.into_iter())
-            .enumerate()
-            .fold([PixelColor::default(); 64], |mut pxs, (idx, &px)| {
-                pxs[idx] = px;
-                pxs
-            });
-
-        PixelFrame(flip_rows)
+        let mut flip_left = *self;
+        flip_left.flip_h();
+        flip_left.transpose();
+        flip_left
     }
 
     // Rotate the display by 180 degrees. Creates a new `PixelFrame`.
     fn rotate_180(&self) -> Self {
-        let flip_180 = self.0.iter().rev().enumerate().fold(
-            [PixelColor::default(); 64],
-            |mut pxs, (idx, &px)| {
-                pxs[idx] = px;
-                pxs
-            },
-        );
-        PixelFrame(flip_180)
+        let mut flip_180 = *self;
+        flip_180.reverse();
+        flip_180
     }
 
     // Rotate the display to the right by 90 degrees. Creates a new `PixelFrame`.
     fn rotate_right(&self) -> Self {
-        let rotated_tranpose = (0..8).into_iter().map(|col_idx| {
-            let column: Vec<PixelColor> = self.0
-                .iter()
-                .enumerate()
-                .filter(|&(idx, _)| idx % 8 == col_idx)
-                .rev()
-                .map(|(_, color)| *color)
-                .collect();
-
-            column
-        });
-
-        let flip_right = rotated_tranpose
-            .flat_map(|col| col.into_iter())
-            .enumerate()
-            .fold([PixelColor::default(); 64], |mut pxs, (idx, px)| {
-                pxs[idx] = px;
-                pxs
-            });
-
-        PixelFrame(flip_right)
+        let mut flip_right = *self;
+        flip_right.transpose();
+        flip_right.flip_h();
+        flip_right
     }
 }
 
