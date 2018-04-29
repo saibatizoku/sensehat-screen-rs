@@ -146,25 +146,28 @@ impl PixelFrame {
 
     /// Returns a `Vec<Vec<PixelColor>>`, organized by rows, from top to bottom.
     pub fn as_rows(&self) -> [[PixelColor; 8]; 8] {
-        self.0.chunks(8).map(|row| {
-            row.iter().enumerate().fold([PixelColor::default(); 8], |mut pxrow, (idx, &px)| {
-                pxrow[idx] = px;
-                pxrow
-            })
-        }).enumerate().fold([[PixelColor::default(); 8]; 8], |mut rows, (idx, row)| {
-            rows[idx] = row;
-            rows
-        })
+        let pixels = self.0;
+        let mut rows = [[PixelColor::default(); 8]; 8];
+        pixels
+            .chunks(8)
+            .enumerate()
+            .for_each(|(idx, row)| {
+                rows[idx].copy_from_slice(row);
+            });
+        rows
     }
 
     /// Returns a `Vec<Vec<PixelColor>>`, organized by columns, from left to right.
     pub fn as_columns(&self) -> [[PixelColor; 8]; 8] {
-        let mut columns: [[PixelColor; 8]; 8] = [[PixelColor::default(); 8]; 8];
-        for (idx, px) in self.0.iter().cloned().enumerate() {
-            let col_idx = idx % 8;
-            let row_idx = idx / 8;
-            columns[col_idx][row_idx] = px;
-        }
+        let mut pixels = *self;
+        pixels.transpose();
+        let mut columns = [[PixelColor::default(); 8]; 8];
+        pixels.0
+            .chunks(8)
+            .enumerate()
+            .for_each(|(idx, col)| {
+                columns[idx].copy_from_slice(col);
+            });
         columns
     }
 
