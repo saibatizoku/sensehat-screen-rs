@@ -144,6 +144,35 @@ impl PixelFrame {
         FrameLine::from_pixels(&colors)
     }
 
+    /// Transpose the LED Matrix. Rows become columns.
+    pub fn transpose(&mut self) {
+        for row in 0..8 {
+            for col in row..8 {
+                let idx = row * 8 + col;
+                let idx_transpose = col * 8 + row;
+                self.0.swap(idx, idx_transpose);
+            }
+        }
+    }
+
+    /// Flip the LED Matrix horizontally.
+    pub fn flip_h(&mut self) {
+        for row in self.0.chunks_mut(8) {
+            row.reverse();
+        }
+    }
+
+    /// Flip the LED Matrix vertically.
+    pub fn flip_v(&mut self) {
+        self.reverse();
+        self.flip_h();
+    }
+
+    /// Reverse the LED Matrix.
+    pub fn reverse(&mut self) {
+        self.0.reverse();
+    }
+
     /// Returns a `[[PixelColor; 8]; 8]`, organized by rows, from top to bottom.
     pub fn as_rows(&self) -> [[PixelColor; 8]; 8] {
         let pixels = self.0;
