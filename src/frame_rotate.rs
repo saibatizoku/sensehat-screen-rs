@@ -1,6 +1,5 @@
 //! Frame rotation for the LED Matrix screen
 use super::PixelFrame;
-use super::PixelColor;
 
 /// A counter-clockwise angle, multiple of `90°`, used to create rotated `PixelFrame`s.
 pub enum Rotate {
@@ -94,6 +93,7 @@ impl PixelFrame {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use PixelColor;
 
     const DARK: PixelColor = PixelColor::BLACK;
     const BLUE: PixelColor = PixelColor::BLUE;

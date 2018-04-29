@@ -1,6 +1,5 @@
 //! `PixelFrame` offset in left/right/top/bottom directions.
 use super::PixelFrame;
-use super::PixelColor;
 
 /// Methods enabled by the `offset` feature.
 impl PixelFrame {
@@ -146,6 +145,7 @@ impl Offset {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use PixelColor;
 
     const DARK: PixelColor = PixelColor::BLACK;
     const BLUE: PixelColor = PixelColor::BLUE;
