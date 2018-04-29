@@ -10,10 +10,18 @@
 - `offset` trait to render `PixelFrame` with offset.
 - `PixelFrame::offset` method creates a PixelFrame with the visible parts of the offset original. Features comprehensive testing.
 - `frame::Offset` enum wraps an offset from `0..=8` in four directions:
-    * `Offset::Left(u8)`
-    * `Offset::Right(u8)`
-    * `Offset::Top(u8)`
-    * `Offset::Bottom(u8)`
+    * `Offset::Left(_)`
+    * `Offset::Right(_)`
+    * `Offset::Top(_)`
+    * `Offset::Bottom(_)`
+
+  which may only be created by the associated methods:
+
+    * `Offset::left(offset: u8)`
+    * `Offset::right(offset: u8)`
+    * `Offset::top(offset: u8)`
+    * `Offset::bottom(offset: u8)`
+
 - `PixelFrame::as_rows` method. Features comprehensive testing.
 - `PixelFrame::as_columns` method. Features comprehensive testing.
 - `PixelFrame::from_rows` method. Features comprehensive testing.
