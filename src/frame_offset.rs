@@ -31,67 +31,19 @@ impl PixelFrame {
     // # Panics
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> Self {
-        assert!(offset < 9);
-        match offset {
-            0 => self.clone(),
-            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
-            n => {
-                let mut cols = Vec::with_capacity(8);
-                cols.extend_from_slice(&self.as_columns()[n as usize..]);
-                for _ in (8 - n)..8 {
-                    cols.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
-                }
-                PixelFrame::from_columns(cols)
-            }
-        }
+        self.clip(&PixelFrame::default(), Offset::left(offset))
     }
 
     fn offset_right(&self, offset: u8) -> Self {
-        assert!(offset < 9);
-        match offset {
-            0 => self.clone(),
-            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
-            n => {
-                let mut cols = Vec::with_capacity(8);
-                for _ in 0..n as usize {
-                    cols.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
-                }
-                cols.extend_from_slice(&self.as_columns()[..(8 - n as usize)]);
-                PixelFrame::from_columns(cols)
-            }
-        }
+        self.clip(&PixelFrame::default(), Offset::right(offset))
     }
 
     fn offset_bottom(&self, offset: u8) -> Self {
-        assert!(offset < 9);
-        match offset {
-            0 => self.clone(),
-            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
-            n => {
-                let mut rows = Vec::with_capacity(8);
-                for _ in 0..n as usize {
-                    rows.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
-                }
-                rows.extend_from_slice(&self.as_rows()[..(8 - n as usize)]);
-                PixelFrame::from_rows(rows)
-            }
-        }
+        self.clip(&PixelFrame::default(), Offset::bottom(offset))
     }
 
     fn offset_top(&self, offset: u8) -> Self {
-        assert!(offset < 9);
-        match offset {
-            0 => self.clone(),
-            8 => PixelFrame::new(&[PixelColor::BLACK; 64]),
-            n => {
-                let mut rows = Vec::with_capacity(8);
-                rows.extend_from_slice(&self.as_rows()[n as usize..]);
-                for _ in (8 - n)..8 {
-                    rows.extend_from_slice(&[vec![PixelColor::BLACK; 8]]);
-                }
-                PixelFrame::from_rows(rows)
-            }
-        }
+        self.clip(&PixelFrame::default(), Offset::top(offset))
     }
 }
 
