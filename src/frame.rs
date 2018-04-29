@@ -144,7 +144,7 @@ impl PixelFrame {
         FrameLine::from_pixels(&colors)
     }
 
-    /// Returns a `Vec<Vec<PixelColor>>`, organized by rows, from top to bottom.
+    /// Returns a `[[PixelColor; 8]; 8]`, organized by rows, from top to bottom.
     pub fn as_rows(&self) -> [[PixelColor; 8]; 8] {
         let pixels = self.0;
         let mut rows = [[PixelColor::default(); 8]; 8];
@@ -157,7 +157,7 @@ impl PixelFrame {
         rows
     }
 
-    /// Returns a `Vec<Vec<PixelColor>>`, organized by columns, from left to right.
+    /// Returns a `[[PixelColor; 8]; 8]`, organized by columns, from left to right.
     pub fn as_columns(&self) -> [[PixelColor; 8]; 8] {
         let mut pixels = *self;
         pixels.transpose();
@@ -171,7 +171,7 @@ impl PixelFrame {
         columns
     }
 
-    /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 rows with 8 `PixelColor`s.
+    /// Create a new `PixelFrame` from a `[[PixelColor; 8]; 8]`, of 8 rows with 8 `PixelColor`s.
     pub fn from_rows(rows: &[[PixelColor; 8]; 8]) -> Self {
         let pixels = rows.into_iter()
             .flat_map(|row| row.into_iter())
@@ -183,7 +183,7 @@ impl PixelFrame {
         PixelFrame(pixels)
     }
 
-    /// Create a new `PixelFrame` from a `Vec<Vec<PixelColor>>`, of 8 columns with 8 `PixelColor`s.
+    /// Create a new `PixelFrame` from a `[[PixelColor; 8]; 8]`, of 8 columns with 8 `PixelColor`s.
     pub fn from_columns(columns: &[[PixelColor; 8]; 8]) -> Self {
         let mut pixels = [PixelColor::BLACK; 64];
         for (col_idx, col) in columns.into_iter().enumerate() {
