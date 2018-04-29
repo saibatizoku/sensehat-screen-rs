@@ -1,3 +1,24 @@
+## [Unreleased]
+
+## [0.1.6] 2018-04-22
+### Changed
+- `default` features now also include: `rotate`, and `offset`.
+- Updated features on `README.md`.
+- Lots of module refactoring with no change to API.
+
+### Added
+- `offset` trait to render `PixelFrame` with offset.
+- `PixelFrame::offset` method creates a PixelFrame with the visible parts of the offset original. Features comprehensive testing.
+- `frame::Offset` enum wraps an offset from `0..=8` in four directions:
+    * `Offset::Left(u8)`
+    * `Offset::Right(u8)`
+    * `Offset::Top(u8)`
+    * `Offset::Bottom(u8)`
+- `PixelFrame::as_rows` method. Features comprehensive testing.
+- `PixelFrame::as_columns` method. Features comprehensive testing.
+- `PixelFrame::from_rows` method. Features comprehensive testing.
+- `PixelFrame::from_rows` method. Features comprehensive testing.
+
 ## [0.1.5] 2018-04-15
 ### Changed
 - Framebuffer-related code refactored into `sensehat_screen::screen` module.
@@ -9,7 +30,7 @@
 ### Added
 - `Rgb565` type to separate concerns from `PixelColor`, and properly encode/decode RGB565 colors.
 - `big-endian` feature to encode Rgb565 colors in big-endian format.
-- `Rgb565` implements From<_> and Into<_> for `PixelColor`, `&'a PixelColor`, `(u8, u8, u8)`, and [u8; 2]`.
+- `Rgb565` implements From<_> and Into<_> for `PixelColor`, `&PixelColor`, `(u8, u8, u8)`, and [u8; 2]`.
 - `PixelFrame` type to represent a single LED matrix screen frame.
 - `rotate` feature to rotate a `PixelFrame` by steps of 90-degrees.
 - `examples/rotating-symbol.rs` to demo rotating font symbols with color.
