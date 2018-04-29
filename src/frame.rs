@@ -200,19 +200,12 @@ mod tests {
         RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
         RED, ONE, RED, TWO, RED, ONE, RED, TWO, //
     ];
-    fn test_rows() -> Vec<Vec<PixelColor>> {
-        vec![vec![RED, ONE, RED, TWO, RED, ONE, RED, TWO]; 8]
+    fn test_rows() -> [[PixelColor; 8]; 8] {
+        [[RED, ONE, RED, TWO, RED, ONE, RED, TWO]; 8]
     }
-    fn test_columns() -> Vec<Vec<PixelColor>> {
-        vec![
-            vec![RED; 8],
-            vec![ONE; 8],
-            vec![RED; 8],
-            vec![TWO; 8],
-            vec![RED; 8],
-            vec![ONE; 8],
-            vec![RED; 8],
-            vec![TWO; 8],
+    fn test_columns() -> [[PixelColor; 8]; 8] {
+        [
+            [RED; 8], [ONE; 8], [RED; 8], [TWO; 8], [RED; 8], [ONE; 8], [RED; 8], [TWO; 8]
         ]
     }
 
@@ -287,12 +280,12 @@ mod tests {
     #[test]
     fn pixel_frame_is_created_from_rows_of_pixel_color() {
         let pixel_frame = PixelFrame::new(PIXEL_FRAME);
-        assert_eq!(PixelFrame::from_rows(test_rows()), pixel_frame);
+        assert_eq!(PixelFrame::from_rows(&test_rows()), pixel_frame);
     }
 
     #[test]
     fn pixel_frame_is_created_from_columns_of_pixel_color() {
         let pixel_frame = PixelFrame::new(PIXEL_FRAME);
-        assert_eq!(PixelFrame::from_columns(test_columns()), pixel_frame);
+        assert_eq!(PixelFrame::from_columns(&test_columns()), pixel_frame);
     }
 }
