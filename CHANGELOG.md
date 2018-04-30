@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - "Contribute" section in `CHANGELOG.md` to invite people to contribute to this library.
+- `rustfmt.toml`, sets the expected `indent_style` to be `Visual`
+
+### Changed
+- Ran `cargo fmt` with `index_style` set to `Visual`
 
 ## [0.1.8] - 2018-04-30
 ### Fixed

@@ -2,9 +2,9 @@
 extern crate sensehat_screen;
 
 #[cfg(feature = "default")]
-use sensehat_screen::{font_to_pixel_frame, FontCollection, PixelColor, PixelFrame, Screen};
-#[cfg(feature = "default")]
 use sensehat_screen::Rotate;
+#[cfg(feature = "default")]
+use sensehat_screen::{font_to_pixel_frame, FontCollection, PixelColor, PixelFrame, Screen};
 
 #[cfg(not(feature = "default"))]
 fn main() {

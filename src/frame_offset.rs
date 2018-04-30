@@ -439,38 +439,22 @@ mod tests {
     #[test]
     fn pixel_frame_offsets_to_the_left() {
         let symbol = PixelFrame::new(&SYMBOL_FRAME);
-        assert_eq!(
-            symbol.offset(Offset::left(0)),
-            PixelFrame::new(&SYMBOL_FRAME)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(1)),
-            PixelFrame::new(&OFFSET_LEFT_ONE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(2)),
-            PixelFrame::new(&OFFSET_LEFT_TWO)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(3)),
-            PixelFrame::new(&OFFSET_LEFT_THREE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(4)),
-            PixelFrame::new(&OFFSET_LEFT_FOUR)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(5)),
-            PixelFrame::new(&OFFSET_LEFT_FIVE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(6)),
-            PixelFrame::new(&OFFSET_LEFT_SIX)
-        );
-        assert_eq!(
-            symbol.offset(Offset::left(7)),
-            PixelFrame::new(&OFFSET_LEFT_SEVEN)
-        );
+        assert_eq!(symbol.offset(Offset::left(0)),
+                   PixelFrame::new(&SYMBOL_FRAME));
+        assert_eq!(symbol.offset(Offset::left(1)),
+                   PixelFrame::new(&OFFSET_LEFT_ONE));
+        assert_eq!(symbol.offset(Offset::left(2)),
+                   PixelFrame::new(&OFFSET_LEFT_TWO));
+        assert_eq!(symbol.offset(Offset::left(3)),
+                   PixelFrame::new(&OFFSET_LEFT_THREE));
+        assert_eq!(symbol.offset(Offset::left(4)),
+                   PixelFrame::new(&OFFSET_LEFT_FOUR));
+        assert_eq!(symbol.offset(Offset::left(5)),
+                   PixelFrame::new(&OFFSET_LEFT_FIVE));
+        assert_eq!(symbol.offset(Offset::left(6)),
+                   PixelFrame::new(&OFFSET_LEFT_SIX));
+        assert_eq!(symbol.offset(Offset::left(7)),
+                   PixelFrame::new(&OFFSET_LEFT_SEVEN));
         assert_eq!(symbol.offset(Offset::left(8)), PixelFrame::new(&FRAME_ZERO));
     }
 
@@ -484,42 +468,24 @@ mod tests {
     #[test]
     fn pixel_frame_offsets_to_the_right() {
         let symbol = PixelFrame::new(&SYMBOL_FRAME);
-        assert_eq!(
-            symbol.offset(Offset::right(0)),
-            PixelFrame::new(&SYMBOL_FRAME)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(1)),
-            PixelFrame::new(&OFFSET_RIGHT_ONE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(2)),
-            PixelFrame::new(&OFFSET_RIGHT_TWO)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(3)),
-            PixelFrame::new(&OFFSET_RIGHT_THREE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(4)),
-            PixelFrame::new(&OFFSET_RIGHT_FOUR)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(5)),
-            PixelFrame::new(&OFFSET_RIGHT_FIVE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(6)),
-            PixelFrame::new(&OFFSET_RIGHT_SIX)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(7)),
-            PixelFrame::new(&OFFSET_RIGHT_SEVEN)
-        );
-        assert_eq!(
-            symbol.offset(Offset::right(8)),
-            PixelFrame::new(&FRAME_ZERO)
-        );
+        assert_eq!(symbol.offset(Offset::right(0)),
+                   PixelFrame::new(&SYMBOL_FRAME));
+        assert_eq!(symbol.offset(Offset::right(1)),
+                   PixelFrame::new(&OFFSET_RIGHT_ONE));
+        assert_eq!(symbol.offset(Offset::right(2)),
+                   PixelFrame::new(&OFFSET_RIGHT_TWO));
+        assert_eq!(symbol.offset(Offset::right(3)),
+                   PixelFrame::new(&OFFSET_RIGHT_THREE));
+        assert_eq!(symbol.offset(Offset::right(4)),
+                   PixelFrame::new(&OFFSET_RIGHT_FOUR));
+        assert_eq!(symbol.offset(Offset::right(5)),
+                   PixelFrame::new(&OFFSET_RIGHT_FIVE));
+        assert_eq!(symbol.offset(Offset::right(6)),
+                   PixelFrame::new(&OFFSET_RIGHT_SIX));
+        assert_eq!(symbol.offset(Offset::right(7)),
+                   PixelFrame::new(&OFFSET_RIGHT_SEVEN));
+        assert_eq!(symbol.offset(Offset::right(8)),
+                   PixelFrame::new(&FRAME_ZERO));
     }
 
     #[test]
@@ -532,42 +498,24 @@ mod tests {
     #[test]
     fn pixel_frame_offsets_to_the_bottom() {
         let symbol = PixelFrame::new(&SYMBOL_FRAME);
-        assert_eq!(
-            symbol.offset(Offset::bottom(0)),
-            PixelFrame::new(&SYMBOL_FRAME)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(1)),
-            PixelFrame::new(&OFFSET_BOTTOM_ONE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(2)),
-            PixelFrame::new(&OFFSET_BOTTOM_TWO)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(3)),
-            PixelFrame::new(&OFFSET_BOTTOM_THREE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(4)),
-            PixelFrame::new(&OFFSET_BOTTOM_FOUR)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(5)),
-            PixelFrame::new(&OFFSET_BOTTOM_FIVE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(6)),
-            PixelFrame::new(&OFFSET_BOTTOM_SIX)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(7)),
-            PixelFrame::new(&OFFSET_BOTTOM_SEVEN)
-        );
-        assert_eq!(
-            symbol.offset(Offset::bottom(8)),
-            PixelFrame::new(&FRAME_ZERO)
-        );
+        assert_eq!(symbol.offset(Offset::bottom(0)),
+                   PixelFrame::new(&SYMBOL_FRAME));
+        assert_eq!(symbol.offset(Offset::bottom(1)),
+                   PixelFrame::new(&OFFSET_BOTTOM_ONE));
+        assert_eq!(symbol.offset(Offset::bottom(2)),
+                   PixelFrame::new(&OFFSET_BOTTOM_TWO));
+        assert_eq!(symbol.offset(Offset::bottom(3)),
+                   PixelFrame::new(&OFFSET_BOTTOM_THREE));
+        assert_eq!(symbol.offset(Offset::bottom(4)),
+                   PixelFrame::new(&OFFSET_BOTTOM_FOUR));
+        assert_eq!(symbol.offset(Offset::bottom(5)),
+                   PixelFrame::new(&OFFSET_BOTTOM_FIVE));
+        assert_eq!(symbol.offset(Offset::bottom(6)),
+                   PixelFrame::new(&OFFSET_BOTTOM_SIX));
+        assert_eq!(symbol.offset(Offset::bottom(7)),
+                   PixelFrame::new(&OFFSET_BOTTOM_SEVEN));
+        assert_eq!(symbol.offset(Offset::bottom(8)),
+                   PixelFrame::new(&FRAME_ZERO));
     }
 
     #[test]
@@ -580,38 +528,22 @@ mod tests {
     #[test]
     fn pixel_frame_offsets_to_the_top() {
         let symbol = PixelFrame::new(&SYMBOL_FRAME);
-        assert_eq!(
-            symbol.offset(Offset::top(0)),
-            PixelFrame::new(&SYMBOL_FRAME)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(1)),
-            PixelFrame::new(&OFFSET_TOP_ONE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(2)),
-            PixelFrame::new(&OFFSET_TOP_TWO)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(3)),
-            PixelFrame::new(&OFFSET_TOP_THREE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(4)),
-            PixelFrame::new(&OFFSET_TOP_FOUR)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(5)),
-            PixelFrame::new(&OFFSET_TOP_FIVE)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(6)),
-            PixelFrame::new(&OFFSET_TOP_SIX)
-        );
-        assert_eq!(
-            symbol.offset(Offset::top(7)),
-            PixelFrame::new(&OFFSET_TOP_SEVEN)
-        );
+        assert_eq!(symbol.offset(Offset::top(0)),
+                   PixelFrame::new(&SYMBOL_FRAME));
+        assert_eq!(symbol.offset(Offset::top(1)),
+                   PixelFrame::new(&OFFSET_TOP_ONE));
+        assert_eq!(symbol.offset(Offset::top(2)),
+                   PixelFrame::new(&OFFSET_TOP_TWO));
+        assert_eq!(symbol.offset(Offset::top(3)),
+                   PixelFrame::new(&OFFSET_TOP_THREE));
+        assert_eq!(symbol.offset(Offset::top(4)),
+                   PixelFrame::new(&OFFSET_TOP_FOUR));
+        assert_eq!(symbol.offset(Offset::top(5)),
+                   PixelFrame::new(&OFFSET_TOP_FIVE));
+        assert_eq!(symbol.offset(Offset::top(6)),
+                   PixelFrame::new(&OFFSET_TOP_SIX));
+        assert_eq!(symbol.offset(Offset::top(7)),
+                   PixelFrame::new(&OFFSET_TOP_SEVEN));
         assert_eq!(symbol.offset(Offset::top(8)), PixelFrame::new(&FRAME_ZERO));
     }
 

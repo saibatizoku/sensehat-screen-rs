@@ -7,15 +7,14 @@ use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
 fn default_hashmap() -> HashMap<u16, [u8; 8]> {
-    BASIC_UNICODE
-        .iter()
-        .cloned()
-        .chain(LATIN_UNICODE.iter().cloned())
-        .chain(BLOCK_UNICODE.iter().cloned())
-        .chain(BOX_UNICODE.iter().cloned())
-        .chain(GREEK_UNICODE.iter().cloned())
-        .chain(HIRAGANA_UNICODE.iter().cloned())
-        .collect()
+    BASIC_UNICODE.iter()
+                 .cloned()
+                 .chain(LATIN_UNICODE.iter().cloned())
+                 .chain(BLOCK_UNICODE.iter().cloned())
+                 .chain(BOX_UNICODE.iter().cloned())
+                 .chain(GREEK_UNICODE.iter().cloned())
+                 .chain(HIRAGANA_UNICODE.iter().cloned())
+                 .collect()
 }
 
 /// A set of font symbols that can be printed on a `Screen`.
@@ -48,9 +47,8 @@ impl FontCollection {
 
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
-        let valid = s.encode_utf16()
-            .filter(|c| self.0.contains_key(c))
-            .collect::<Vec<u16>>();
+        let valid = s.encode_utf16().filter(|c| self.0.contains_key(c))
+                     .collect::<Vec<u16>>();
         Ok(FontString(valid))
     }
 }
@@ -80,11 +78,9 @@ impl FontString {
 /// Display the contents of a `FontCollection` on `stdout`.
 pub fn print_collection(collection: &FontCollection) {
     for key in collection.0.keys() {
-        println!(
-            "'\\u{{{:04x}}}' {:?}",
-            key,
-            String::from_utf16_lossy(&[*key])
-        );
+        println!("'\\u{{{:04x}}}' {:?}",
+                 key,
+                 String::from_utf16_lossy(&[*key]));
     }
 }
 

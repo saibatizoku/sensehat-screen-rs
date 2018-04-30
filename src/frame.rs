@@ -24,41 +24,38 @@ impl FrameLine {
 
     /// Create a new `FrameLine` instance, given a slice of bytes.
     pub fn from_slice(bytes: &[u8; 128]) -> Self {
-        let colors = bytes
-            .chunks(2)
-            .map(|chunk| Rgb565::from([chunk[0], chunk[1]]))
-            .enumerate()
-            .fold(
-                [Rgb565::default(); 64],
-                |mut color_array, (index, color)| {
-                    color_array[index] = color;
-                    color_array
-                },
-            );
+        let colors = bytes.chunks(2)
+                          .map(|chunk| Rgb565::from([chunk[0], chunk[1]]))
+                          .enumerate()
+                          .fold([Rgb565::default(); 64],
+                                |mut color_array, (index, color)| {
+                                    color_array[index] = color;
+                                    color_array
+                                });
         FrameLine(colors)
     }
 
     /// Create a new `FrameLine` instance, given a slice of `PixelColor`.
     pub fn from_pixels(pixels: &[PixelColor; 64]) -> Self {
-        let colors = pixels.iter().map(Rgb565::from).enumerate().fold(
-            [Rgb565::default(); 64],
-            |mut color_array, (index, color)| {
-                color_array[index] = color;
-                color_array
-            },
-        );
+        let colors = pixels.iter()
+                           .map(Rgb565::from)
+                           .enumerate()
+                           .fold([Rgb565::default(); 64],
+                                 |mut color_array, (index, color)| {
+                                     color_array[index] = color;
+                                     color_array
+                                 });
         FrameLine(colors)
     }
 
     /// Returns the `FrameLine` as a slice of bytes.
     pub fn as_bytes(&self) -> [u8; 128] {
-        self.0
-            .iter()
+        self.0.iter()
             .cloned()
             .map(|color| {
-                let bytes: [u8; 2] = color.into();
-                bytes
-            })
+                     let bytes: [u8; 2] = color.into();
+                     bytes
+                 })
             .enumerate()
             .fold([0u8; 128], |mut byte_array, (index, color)| {
                 byte_array[index * 2] = color[0];
@@ -91,8 +88,7 @@ impl fmt::Debug for FrameLine {
 
 impl PartialEq for FrameLine {
     fn eq(&self, other: &FrameLine) -> bool {
-        self.0
-            .iter()
+        self.0.iter()
             .zip(other.0.iter())
             .fold(true, |eq, (a, b)| eq && a == b)
     }
@@ -120,8 +116,7 @@ impl Default for PixelFrame {
 
 impl PartialEq for PixelFrame {
     fn eq(&self, other: &PixelFrame) -> bool {
-        self.0
-            .iter()
+        self.0.iter()
             .zip(other.0.iter())
             .fold(true, |eq, (a, b)| eq && a == b)
     }
@@ -134,13 +129,12 @@ impl PixelFrame {
     }
     /// Create a `FrameLine` representing the current `PixelFrame`.
     pub fn frame_line(&self) -> FrameLine {
-        let colors = self.0
-            .iter()
-            .enumerate()
-            .fold([PixelColor::BLACK; 64], |mut c, (idx, px)| {
-                c[idx] = *px;
-                c
-            });
+        let colors = self.0.iter()
+                         .enumerate()
+                         .fold([PixelColor::BLACK; 64], |mut c, (idx, px)| {
+                             c[idx] = *px;
+                             c
+                         });
         FrameLine::from_pixels(&colors)
     }
 
@@ -178,8 +172,8 @@ impl PixelFrame {
         let pixels = self.0;
         let mut rows = [[PixelColor::default(); 8]; 8];
         pixels.chunks(8).enumerate().for_each(|(idx, row)| {
-            rows[idx].copy_from_slice(row);
-        });
+                                                  rows[idx].copy_from_slice(row);
+                                              });
         rows
     }
 
@@ -189,8 +183,8 @@ impl PixelFrame {
         pixels.transpose();
         let mut columns = [[PixelColor::default(); 8]; 8];
         pixels.0.chunks(8).enumerate().for_each(|(idx, col)| {
-            columns[idx].copy_from_slice(col);
-        });
+                                                    columns[idx].copy_from_slice(col);
+                                                });
         columns
     }
 
@@ -238,22 +232,19 @@ mod tests {
         [[RED, ONE, RED, TWO, RED, ONE, RED, TWO]; 8]
     }
     fn test_columns() -> [[PixelColor; 8]; 8] {
-        [
-            [RED; 8], [ONE; 8], [RED; 8], [TWO; 8], [RED; 8], [ONE; 8], [RED; 8], [TWO; 8],
-        ]
+        [[RED; 8], [ONE; 8], [RED; 8], [TWO; 8], [RED; 8], [ONE; 8], [RED; 8], [TWO; 8]]
     }
 
     #[test]
     fn frame_line_is_created_from_slice_of_bytes() {
         let color: [u8; 128] = [0xE0; 128];
         let frame_line = FrameLine::from_slice(&color);
-        frame_line
-            .as_bytes()
-            .into_iter()
-            .zip(color.into_iter())
-            .for_each(|(a, b)| {
-                assert_eq!(a, b);
-            });
+        frame_line.as_bytes()
+                  .into_iter()
+                  .zip(color.into_iter())
+                  .for_each(|(a, b)| {
+                                assert_eq!(a, b);
+                            });
     }
 
     #[cfg(not(feature = "big-endian"))]
@@ -262,8 +253,8 @@ mod tests {
         let blue = PixelColor::from_rgb565_bytes([0x1F, 0x00]);
         let frame_line = FrameLine::from_pixels(&[blue; 64]);
         frame_line.as_bytes().chunks(2).for_each(|chunk| {
-            assert_eq!([chunk[0], chunk[1]], [0x1F, 0x00]);
-        });
+                                                     assert_eq!([chunk[0], chunk[1]], [0x1F, 0x00]);
+                                                 });
     }
 
     #[cfg(feature = "big-endian")]
@@ -272,31 +263,28 @@ mod tests {
         let blue = PixelColor::from_rgb565_bytes([0x00, 0x1F]);
         let frame_line = FrameLine::from_pixels(&[blue; 64]);
         frame_line.as_bytes().chunks(2).for_each(|chunk| {
-            assert_eq!([chunk[0], chunk[1]], [0x00, 0x1F]);
-        });
+                                                     assert_eq!([chunk[0], chunk[1]], [0x00, 0x1F]);
+                                                 });
     }
 
     #[test]
     fn pixel_frame_is_created_from_a_slice_of_pixel_color() {
         let color_frame = [PixelColor::YELLOW; 64];
         let pixel_frame = PixelFrame::new(&color_frame);
-        pixel_frame
-            .0
-            .into_iter()
-            .zip(color_frame.into_iter())
-            .for_each(|(a, b)| {
-                assert_eq!(a, b);
-            });
+        pixel_frame.0
+                   .into_iter()
+                   .zip(color_frame.into_iter())
+                   .for_each(|(a, b)| {
+                                 assert_eq!(a, b);
+                             });
     }
 
     #[test]
     fn pixel_frame_creates_a_frame_line_of_the_current_state() {
         let color_frame = [PixelColor::GREEN; 64];
         let pixel_frame = PixelFrame::new(&color_frame);
-        assert_eq!(
-            pixel_frame.frame_line(),
-            FrameLine::from_pixels(&color_frame)
-        );
+        assert_eq!(pixel_frame.frame_line(),
+                   FrameLine::from_pixels(&color_frame));
     }
 
     #[test]
