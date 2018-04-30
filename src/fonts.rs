@@ -92,11 +92,15 @@ pub fn print_collection(collection: &FontCollection) {
 pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
     let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
         [PixelColor::BLACK; 64],
-        |mut px, (idx, x)| {
-            for bit in 0..8 {
-                match *x & 1 << bit {
-                    0 => px[idx] = PixelColor::BLACK,
-                    _ => px[idx] = color,
+        |mut px, (row_idx, encoded_row)| {
+            for col_idx in 0..8 {
+                match *encoded_row & 1 << col_idx {
+                    0 => {
+                        px[row_idx * 8 + col_idx] = PixelColor::BLACK;
+                    }
+                    _ => {
+                        px[row_idx * 8 + col_idx] = color;
+                    }
                 }
             }
             px
@@ -109,11 +113,15 @@ pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
 pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
     let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
         [PixelColor::BLACK; 64],
-        |mut px, (idx, x)| {
-            for bit in 0..8 {
-                match *x & 1 << bit {
-                    0 => px[idx] = PixelColor::BLACK,
-                    _ => px[idx] = color,
+        |mut px, (row_idx, encoded_row)| {
+            for col_idx in 0..8 {
+                match *encoded_row & 1 << col_idx {
+                    0 => {
+                        px[row_idx * 8 + col_idx] = PixelColor::BLACK;
+                    }
+                    _ => {
+                        px[row_idx * 8 + col_idx] = color;
+                    }
                 }
             }
             px
