@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- "Contribute" section in `CHANGELOG.md` to invite people to contribute to this library.
+
 ## [0.1.8] - 2018-04-30
 ### Fixed
 - `font_to_frame` and `font_to_pixel_frame` methods were using incorrect indexes.

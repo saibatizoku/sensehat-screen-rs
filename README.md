@@ -126,3 +126,9 @@ Feature Wish List
 * [X] `clip` - In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
 * [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
+
+# Contribute
+
+Please do contribute! Issues and pull requests are welcome.
+
+Thank you for your help improving software one changelog at a time!
