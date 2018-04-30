@@ -15,7 +15,7 @@ fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
     let fonts = FontCollection::new();
 
-    let letters = "aeiou";
+    let letters = "a e i o u ";
     let letter_color = PixelColor::YELLOW.dim(0.5);
 
     let frames = letters
@@ -36,21 +36,11 @@ fn main() {
             }
             v
         }
-        1 => v,
-        0 => panic!("empty frame reel will display nothing"),
-        _ => unreachable!("something strange is happening"),
+        _ => panic!("this frame reel will only display &str of even length (divisible by 2)"),
     });
-    // if let Some(chunk) = iter.next() {
-    //     render_chunk(&mut screen, chunk);
-    // }
-}
 
-#[cfg(feature = "default")]
-fn render_chunk(screen: &mut Screen, chunk: &[PixelFrame]) {
-    let clip = chunk[0].build_clip(&chunk[1]);
-    for i in 0..=8 {
-        screen.write_frame(&clip.offset(Offset::left(i)).frame_line());
-        ::std::thread::sleep(::std::time::Duration::from_millis(500));
+    for frame in &frame_reel {
+        screen.write_frame(&frame.frame_line());
+        ::std::thread::sleep(::std::time::Duration::from_millis(750));
     }
-    ::std::thread::sleep(::std::time::Duration::from_millis(500));
 }
