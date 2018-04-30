@@ -338,11 +338,6 @@ impl Clip {
         }
     }
 
-    /// Reverse the order of the inner `PixelFrame`s.
-    pub fn reverse(self) -> Self {
-        Clip::new(self.second, self.first)
-    }
-
     // # Panics
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> PixelFrame {
