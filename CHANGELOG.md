@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Update `README.md` section for examples, making it friendlier to read.
+
+### Fixed
+- `font_to_frame` and `font_to_pixel_frame` methods were using incorrect indexes.
 
 ## [0.1.7] - 2018-04-29
 ### Added
@@ -18,10 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Top-level documentation describes what crate types do in `src/lib.rs`.
 - Top-level re-export of `Rotate`, `Offset`, and `Clip`.
 - Fine-tuning of frame clipping doctests.
-- `PixelFrame::transpose` method to transpose LED Matrix indices.
+- `PixelFrame::transpose` method to transpose LED Matrix indexes.
 - `PixelFrame::flip_h` method to horizontally flip the LED Matrix.
 - `PixelFrame::flip_v` method to vertically flip the LED Matrix.
-- `PixelFrame::reverse` method to reverse the LED Matrix indices.
+- `PixelFrame::reverse` method to reverse the LED Matrix indexes.
 
 ### Changed
 - `default` features now also include: `clip`.

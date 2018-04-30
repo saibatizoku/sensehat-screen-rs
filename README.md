@@ -32,20 +32,32 @@ extern crate sensehat_screen
 use sensehat_screen::{FontCollection, FrameLine, PixelColor, Screen};
 ```
 
-# Example
+# Examples
+
+## Source Code Examples
+
+You can find working examples in the source code.
+
+* [Blinking RGB shapes](./examples/blink.rs)
+* [A letter from ゆにち (Yunichi) to Toño](./examples/letter.rs)
+* [Rotate demo](./examples/rotate.rs)
+* [Offset demo](./examples/offset.rs)
+* [Clip demo](./examples/clip.rs)
+
+## Basic Example
 
 The following program shows how to:
 
 * Open the framebuffer file-descriptor for the LED matrix screen (`screen`)
 * Define a pixel color (`red_pixel`)
-* Define a vector of each pixel color that makes up the screen (`all_64_pixels`)
-* Turn that vector into a valid screen frame
+* Define a slice of pixel colors that represents the screen (`all_64_pixels`)
+* Turn that slice into a valid pixel frame
 * Show the frame on the screen
 
 ```rust
 extern crate sensehat_screen;
 
-use sensehat_screen::{FrameLine, PixelColor, Screen};
+use sensehat_screen::{PixelFrame, PixelColor, Screen};
 
 fn main() {
     let mut screen = Screen::new("/dev/fb1")
@@ -53,21 +65,13 @@ fn main() {
 
     let red_pixel = PixelColor::new(255, 0, 0); // The pixel color's RGB components are each in the range of 0 <= c < 256.
 
-    let all_64_pixels = vec![red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
+    let all_64_pixels = &[red_pixel; 64];   // A single vector of 8 x 8 = 64 pixel colors (rows are grouped by chunks of 8)
 
-    let all_red_screen = FrameLine::from_pixels(&all_64_pixels); // a screen frame
+    let all_red_screen = PixelFrame::from_pixels(&all_64_pixels); // a screen frame
 
-    screen.write_frame(&all_red_screen); // show the frame on the LED matrix
+    screen.write_frame(&all_red_screen.frame_line()); // show the frame on the LED matrix
 }
 ```
-
-# Source Code Examples
-
-* [Blinking RGB shapes](./examples/blink.rs)
-* [A letter from ゆにち (Yunichi) to Toño](./examples/letter.rs)
-* [Rotate demo](./examples/rotate.rs)
-* [Offset demo](./examples/offset.rs)
-* [Clip demo](./examples/clip.rs)
 
 
 # Features
