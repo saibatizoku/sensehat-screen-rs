@@ -88,45 +88,28 @@ pub fn print_collection(collection: &FontCollection) {
     }
 }
 
+// Render a font symbol with a `PixelColor` into a `[PixelColor; 64]`.
+fn font_to_pixel_color_array(symbol: &[u8; 8], color: PixelColor) -> [PixelColor; 64] {
+    let mut pixels = [PixelColor::default(); 64];
+    for (row_idx, encoded_row) in symbol.iter().enumerate() {
+        for col_idx in 0..8 {
+            if (*encoded_row & 1 << col_idx) > 0 {
+                pixels[row_idx * 8 + col_idx] = color;
+            }
+        }
+    }
+    pixels
+}
+
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
-    let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
-        [PixelColor::BLACK; 64],
-        |mut px, (row_idx, encoded_row)| {
-            for col_idx in 0..8 {
-                match *encoded_row & 1 << col_idx {
-                    0 => {
-                        px[row_idx * 8 + col_idx] = PixelColor::BLACK;
-                    }
-                    _ => {
-                        px[row_idx * 8 + col_idx] = color;
-                    }
-                }
-            }
-            px
-        },
-    );
+    let pixels = font_to_pixel_color_array(symbol, color);
     PixelFrame::new(&pixels)
 }
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
 pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
-    let pixels: [PixelColor; 64] = symbol.iter().enumerate().fold(
-        [PixelColor::BLACK; 64],
-        |mut px, (row_idx, encoded_row)| {
-            for col_idx in 0..8 {
-                match *encoded_row & 1 << col_idx {
-                    0 => {
-                        px[row_idx * 8 + col_idx] = PixelColor::BLACK;
-                    }
-                    _ => {
-                        px[row_idx * 8 + col_idx] = color;
-                    }
-                }
-            }
-            px
-        },
-    );
+    let pixels = font_to_pixel_color_array(symbol, color);
     FrameLine::from_pixels(&pixels)
 }
 
