@@ -5,11 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Changed
-- Update `README.md` section for examples, making it friendlier to read.
-
+## [0.1.8] - 2018-04-30
 ### Fixed
 - `font_to_frame` and `font_to_pixel_frame` methods were using incorrect indexes.
+
+### Changed
+- Update `README.md` section for examples, making it friendlier to read.
 
 ## [0.1.7] - 2018-04-29
 ### Added
