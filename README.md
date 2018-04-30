@@ -88,7 +88,7 @@ See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for m
 
 `offset`
 --------
-In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
+In `default`. Support for offsetting the `PixelFrame` left/right/top/bottom. Requires `clip`.
 
 `rotate`
 --------
@@ -115,5 +115,3 @@ Feature Wish List
 * [X] `clip` - In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
 * [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
-* [ ] `images` - Load 8x8 images to the LED matrix with `image`.
-* [ ] `cgmath` - Computer-graphics utilities for manipulating the matrix mathematically.
