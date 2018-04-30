@@ -6,11 +6,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.1.6] 2018-04-22
+## [0.1.7] - 2018-04-29
+### Added
+- `CHANGELOG.md` has a header, and conforms to [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
+- `clip` feature to combine PixelFrames
+- `frame::Clip` struct that combines two PixelFrame and returns a clip of them. Fully documented and tested.
+- `PixelFrame::clip` method to create a clip frame on-the-go.
+- `PixelFrame::build_clip` method to build a clip, suitable for loops, and when multiple clips of the same frames are needed.
+- `examples/text-clip.rs` shows how to scroll two frames, by creating clip and rendering them on the screen.
+- `Rotate` enum provided a strongly-typed rotation angle for frames.
+- Top-level documentation describes what crate types do in `src/lib.rs`.
+- Top-level re-export of `Rotate`, `Offset`, and `Clip`.
+- Fine-tuning of frame clipping doctests.
+- `PixelFrame::transpose` method to transpose LED Matrix indices.
+- `PixelFrame::flip_h` method to horizontally flip the LED Matrix.
+- `PixelFrame::flip_v` method to vertically flip the LED Matrix.
+- `PixelFrame::reverse` method to reverse the LED Matrix indices.
+
 ### Changed
-- `default` features now also include: `rotate`, and `offset`.
-- Updated features on `README.md`.
-- Lots of module refactoring with no change to API.
+- `default` features now also include: `clip`.
+- `offset` feature now depends on `clip`.
+- refactor font-related code into `src/fonts.rs`.
+- rename `PixelColor::from_rgb565` to `PixelColor::from_rgb565_bytes` for clarity.
+- replace inner `Vec<u8>` with `[Rgb565; 64]` in `FrameLine`.
+- replace inner `Vec<PixelColor>` with `[PixelColor; 64]` in `PixelFrame`.
+- rename `FrameLine::as_slice` to `FrameLine::as_bytes`
+- `PixelFrame::as_rows` method now returns `&[[PixelColor; 8]; 8]`.
+- `PixelFrame::as_columns` method now returns `&[[PixelColor; 8]; 8]`.
+- `PixelFrame::from_rows` method now takes `[[PixelColor; 8]; 8]`.
+- `PixelFrame::from_columns` method now takes `[[PixelColor; 8]; 8]`.
+- Optimize `rotate`, `offset`, and `clip`  methods with slice methods and iterators.
 
 ## [0.1.6] - 2018-04-22
 ### Added
@@ -34,7 +59,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `PixelFrame::as_rows` method. Features comprehensive testing.
 - `PixelFrame::as_columns` method. Features comprehensive testing.
 - `PixelFrame::from_rows` method. Features comprehensive testing.
-- `PixelFrame::from_rows` method. Features comprehensive testing.
+- `PixelFrame::from_columns` method. Features comprehensive testing.
 
 ### Changed
 - `default` features now also include: `rotate`, and `offset`.
