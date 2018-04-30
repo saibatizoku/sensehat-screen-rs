@@ -1,3 +1,9 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 
 ## [0.1.6] 2018-04-22
@@ -6,6 +12,7 @@
 - Updated features on `README.md`.
 - Lots of module refactoring with no change to API.
 
+## [0.1.6] - 2018-04-22
 ### Added
 - `offset` trait to render `PixelFrame` with offset.
 - `PixelFrame::offset` method creates a PixelFrame with the visible parts of the offset original. Features comprehensive testing.
@@ -22,19 +29,19 @@
     * `Offset::top(offset: u8)`
     * `Offset::bottom(offset: u8)`
 
+  all with comprehensive testing.
+
 - `PixelFrame::as_rows` method. Features comprehensive testing.
 - `PixelFrame::as_columns` method. Features comprehensive testing.
 - `PixelFrame::from_rows` method. Features comprehensive testing.
 - `PixelFrame::from_rows` method. Features comprehensive testing.
 
-## [0.1.5] 2018-04-15
 ### Changed
-- Framebuffer-related code refactored into `sensehat_screen::screen` module.
-- `FrameLine`-related code refactored into `sensehat_screen::frame` module.
-- Make crate modules public.
-- `FrameLine` defaults to little-endian format.
-- Update `README.md` and `src/lib.rs` documentation.
+- `default` features now also include: `rotate`, and `offset`.
+- Updated features on `README.md`.
+- Lots of module refactoring with no change to API.
 
+## [0.1.5] - 2018-04-15
 ### Added
 - `Rgb565` type to separate concerns from `PixelColor`, and properly encode/decode RGB565 colors.
 - `big-endian` feature to encode Rgb565 colors in big-endian format.
@@ -43,7 +50,14 @@
 - `rotate` feature to rotate a `PixelFrame` by steps of 90-degrees.
 - `examples/rotating-symbol.rs` to demo rotating font symbols with color.
 
-## [0.1.4] 2018-04-08
+### Changed
+- Framebuffer-related code refactored into `sensehat_screen::screen` module.
+- `FrameLine`-related code refactored into `sensehat_screen::frame` module.
+- Make crate modules public.
+- `FrameLine` defaults to little-endian format.
+- Update `README.md` and `src/lib.rs` documentation.
+
+## [0.1.4] - 2018-04-08
 ### Added
 - Implement `Copy` trait for `PixelColor`.
 - `PixelColor::dim` method to dim the color by a factor between 0 and 1.
