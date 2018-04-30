@@ -1,6 +1,6 @@
 //! Framebuffer support for the Sense HAT LED Matrix.
-use FrameLine;
 use framebuffer::{Framebuffer, FramebufferError};
+use FrameLine;
 
 /// This is the main type for interacting with the LED Matrix Screen.
 #[derive(Debug)]

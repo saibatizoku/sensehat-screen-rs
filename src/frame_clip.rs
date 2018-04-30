@@ -3,8 +3,8 @@
 //! The `Clip` is the type that merges `PixelFrame` by rows or by columns
 //!
 //!
-use super::PixelFrame;
 use super::offset::Offset;
+use super::PixelFrame;
 
 /// Methods enabled by the `clip` feature.
 impl PixelFrame {

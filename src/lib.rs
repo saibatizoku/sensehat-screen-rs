@@ -90,13 +90,13 @@ pub use self::color::PixelColor;
 #[cfg(feature = "fonts")]
 pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontString};
 
-pub use self::frame::{FrameLine, PixelFrame};
 #[cfg(feature = "clip")]
 pub use self::frame::clip::Clip;
 #[cfg(feature = "offset")]
 pub use self::frame::offset::Offset;
 #[cfg(feature = "rotate")]
 pub use self::frame::rotate::Rotate;
+pub use self::frame::{FrameLine, PixelFrame};
 
 #[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;

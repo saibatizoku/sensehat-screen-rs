@@ -1,13 +1,13 @@
 //! Frames for the LED Matrix screen
-#[cfg(feature = "rotate")]
-#[path = "frame_rotate.rs"]
-pub mod rotate;
-#[cfg(feature = "offset")]
-#[path = "frame_offset.rs"]
-pub mod offset;
 #[cfg(feature = "clip")]
 #[path = "frame_clip.rs"]
 pub mod clip;
+#[cfg(feature = "offset")]
+#[path = "frame_offset.rs"]
+pub mod offset;
+#[cfg(feature = "rotate")]
+#[path = "frame_rotate.rs"]
+pub mod rotate;
 
 use super::color::{PixelColor, Rgb565};
 use std::fmt::{self, Write};
@@ -239,7 +239,7 @@ mod tests {
     }
     fn test_columns() -> [[PixelColor; 8]; 8] {
         [
-            [RED; 8], [ONE; 8], [RED; 8], [TWO; 8], [RED; 8], [ONE; 8], [RED; 8], [TWO; 8]
+            [RED; 8], [ONE; 8], [RED; 8], [TWO; 8], [RED; 8], [ONE; 8], [RED; 8], [TWO; 8],
         ]
     }
 
