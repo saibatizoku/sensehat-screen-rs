@@ -26,6 +26,8 @@ fn main() {
         })
         .collect::<Vec<PixelFrame>>();
 
+    // create a sequence of clips that will scroll each character-whitespace pair
+    // from appearing to move from right to left.
     let frame_reel: Vec<PixelFrame> = frames.chunks(2).fold(Vec::new(), |mut v, chunk| match chunk
         .len()
     {

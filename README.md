@@ -65,8 +65,9 @@ fn main() {
 
 * [Blinking RGB shapes](./examples/blink.rs)
 * [A letter from ゆにち (Yunichi) to Toño](./examples/letter.rs)
-* [Rotating symbol](./examples/rotating-symbol.rs)
+* [Rotate demo](./examples/rotate.rs)
 * [Offset demo](./examples/offset.rs)
+* [Clip demo](./examples/clip.rs)
 
 
 # Features
