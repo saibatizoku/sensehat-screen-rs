@@ -124,6 +124,17 @@ impl PartialEq for PixelFrame {
 }
 
 impl PixelFrame {
+    pub const BLACK: PixelFrame = PixelFrame([PixelColor::BLACK; 64]);
+    pub const RED: PixelFrame = PixelFrame([PixelColor::RED; 64]);
+    pub const BLUE: PixelFrame = PixelFrame([PixelColor::BLUE; 64]);
+    pub const GREEN: PixelFrame = PixelFrame([PixelColor::GREEN; 64]);
+    pub const WHITE: PixelFrame = PixelFrame([PixelColor::WHITE; 64]);
+    pub const YELLOW: PixelFrame = PixelFrame([PixelColor::YELLOW; 64]);
+    pub const CYAN: PixelFrame = PixelFrame([PixelColor::CYAN; 64]);
+    pub const MAGENTA: PixelFrame = PixelFrame([PixelColor::MAGENTA; 64]);
+}
+
+impl PixelFrame {
     /// Create a `FrameLine` representing the current `PixelFrame`.
     pub fn new(pixels: &[PixelColor; 64]) -> Self {
         PixelFrame(*pixels)
