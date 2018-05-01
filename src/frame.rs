@@ -223,6 +223,18 @@ impl PixelFrame {
     }
 }
 
+impl From<[PixelColor; 64]> for PixelFrame {
+    fn from(array: [PixelColor; 64]) -> Self {
+        PixelFrame(array)
+    }
+}
+
+impl Into<[PixelColor; 64]> for PixelFrame {
+    fn into(self) -> [PixelColor; 64] {
+        self.0
+    }
+}
+
 impl Index<usize> for PixelFrame {
     type Output = PixelColor;
 
