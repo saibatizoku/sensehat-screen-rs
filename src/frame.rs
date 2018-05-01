@@ -11,6 +11,7 @@ pub mod rotate;
 
 use super::color::{PixelColor, Rgb565};
 use std::fmt::{self, Write};
+use std::ops::{Index, IndexMut};
 
 /// A single frame on the screen. Contains a private `[Rgb565; 64]`.
 #[derive(Copy, Clone)]
@@ -208,6 +209,20 @@ impl PixelFrame {
             }
         }
         PixelFrame(pixels)
+    }
+}
+
+impl Index<usize> for PixelFrame {
+    type Output = PixelColor;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.0[index]
+    }
+}
+
+impl IndexMut<usize> for PixelFrame {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.0[index]
     }
 }
 
