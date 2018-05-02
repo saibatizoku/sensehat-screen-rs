@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.1.9] - 2018-05-01
 ### Added
 - "Contribute" section in `CHANGELOG.md` to invite people to contribute to this library.
 - `rustfmt.toml`, sets the expected `indent_style` to be `Visual`
+- `impl<'a> From<&'a [PixelColor; 64]> for PixelFrame`
+- `impl From<[PixelColor; 64]> for PixelFrame`
+- `impl Into<[PixelColor; 64]> for PixelFrame`
+- `impl Index<usize> for PixelFrame`, to get pixel colors using `let color = pixel_frame[idx]`-style syntax.
+- `impl IndexMut<usize> for PixelFrame`, to set pixel colors using `pixel_frame[idx] = color`-style syntax.
 
 ### Changed
 - Ran `cargo fmt` with `index_style` set to `Visual`
