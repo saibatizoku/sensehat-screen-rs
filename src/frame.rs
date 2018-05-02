@@ -223,6 +223,12 @@ impl PixelFrame {
     }
 }
 
+impl<'a> From<&'a [PixelColor; 64]> for PixelFrame {
+    fn from(array: &'a [PixelColor; 64]) -> Self {
+        PixelFrame::new(array)
+    }
+}
+
 impl From<[PixelColor; 64]> for PixelFrame {
     fn from(array: [PixelColor; 64]) -> Self {
         PixelFrame(array)
