@@ -31,7 +31,7 @@ fn main() {
         match chunk.len() {
             2 => {
                 let clip = chunk[0].build_clip(&chunk[1]);
-                for i in 0..=8 {
+                for i in 0..9 {
                     v.push(clip.offset(Offset::left(i)));
                 }
                 v

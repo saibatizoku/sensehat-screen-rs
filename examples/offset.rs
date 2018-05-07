@@ -22,12 +22,12 @@ fn main() {
         // Starts with an empty screen, then the symbol slides from the left,
         // reaching the offset = 0 position, which renders the entire symbol on
         // the screen.
-        for i in 0..=8 {
+        for i in 0..9 {
             screen.write_frame(&symbol.offset(Offset::left(8 - i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }
         // Slides the displayed symbol to the right until it disappears.
-        for i in 0..=8 {
+        for i in 0..9 {
             screen.write_frame(&symbol.offset(Offset::right(i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }
@@ -35,12 +35,12 @@ fn main() {
         // Starts with an empty screen, then the symbol slides from the top,
         // reaching the offset = 0 position, which renders the entire symbol on
         // the screen.
-        for i in 0..=8 {
+        for i in 0..9 {
             screen.write_frame(&symbol.offset(Offset::top(8 - i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }
         // Slides the displayed symbol to the bottom until it disappears.
-        for i in 0..=8 {
+        for i in 0..9 {
             screen.write_frame(&symbol.offset(Offset::bottom(i)).frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
         }

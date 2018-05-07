@@ -63,6 +63,7 @@
 //!
 //!   Creates a clip of two `PixelFrame`s, by defining an
 //!   `Offset`. See the [clip documentation](./frame/clip/struct.Clip.html) for more details.
+#![cfg_attr(feature = "nightly", feature(slice_rotate))]
 #[cfg(feature = "fonts")]
 extern crate font8x8;
 #[cfg(feature = "linux-framebuffer")]

@@ -4,7 +4,7 @@
 //!
 //!
 use super::offset::Offset;
-use super::PixelFrame;
+use {PixelColor, PixelFrame};
 
 /// Methods enabled by the `clip` feature.
 impl PixelFrame {
@@ -349,7 +349,7 @@ impl Clip {
                 let mut orig = self.first.as_columns();
                 let second = self.second.as_columns();
                 {
-                    orig.rotate_left(n);
+                    rotate_bytes_left(&mut orig, n);
                     let (_, right) = orig.split_at_mut(8 - n);
                     right.copy_from_slice(&second[..n]);
                 }
@@ -358,6 +358,8 @@ impl Clip {
         }
     }
 
+    // # Panics
+    // If `offset` is out of bounds (> 8).
     fn offset_right(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
         match offset as usize {
@@ -367,7 +369,7 @@ impl Clip {
                 let mut orig = self.first.as_columns();
                 let second = self.second.as_columns();
                 {
-                    orig.rotate_right(n);
+                    rotate_bytes_right(&mut orig, n);
                     let (left, _) = orig.split_at_mut(n);
                     left.copy_from_slice(&second[8 - n..]);
                 }
@@ -385,7 +387,7 @@ impl Clip {
                 let mut orig = self.first.as_rows();
                 let second = self.second.as_rows();
                 {
-                    orig.rotate_right(n);
+                    rotate_bytes_right(&mut orig, n);
                     let (left, _) = orig.split_at_mut(n);
                     left.copy_from_slice(&second[8 - n..]);
                 }
@@ -403,7 +405,7 @@ impl Clip {
                 let mut orig = self.first.as_rows();
                 let second = self.second.as_rows();
                 {
-                    orig.rotate_left(n);
+                    rotate_bytes_left(&mut orig, n);
                     let (_, right) = orig.split_at_mut(8 - n);
                     right.copy_from_slice(&second[..n]);
                 }
@@ -411,6 +413,42 @@ impl Clip {
             }
         }
     }
+}
+
+#[cfg(not(feature = "nightly"))]
+fn rotate_bytes_left(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
+    let copy = *slice;
+    let rhs = &copy[..offset];
+    let lhs = &copy[offset..];
+    {
+        let (left, right) = slice.split_at_mut(8 - offset);
+        left.copy_from_slice(lhs);
+        right.copy_from_slice(rhs);
+    }
+}
+
+#[cfg(feature = "nightly")]
+fn rotate_bytes_left(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
+    slice.rotate_left(offset);
+}
+
+#[cfg(not(feature = "nightly"))]
+fn rotate_bytes_right(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
+    let copy = *slice;
+    let rhs = &copy[..(8 - offset)];
+    let lhs = &copy[(8 - offset)..];
+    println!("copy {} {}", rhs.len(), lhs.len());
+    {
+        let (left, right) = slice.split_at_mut(offset);
+        println!("split {} {}", left.len(), right.len());
+        left.copy_from_slice(lhs);
+        right.copy_from_slice(rhs);
+    }
+}
+
+#[cfg(feature = "nightly")]
+fn rotate_bytes_right(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
+    slice.rotate_right(offset);
 }
 
 #[cfg(test)]
