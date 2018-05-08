@@ -1,19 +1,20 @@
 //! 8x8 font collection
 use super::{FrameLine, PixelColor, PixelFrame};
 
-use font8x8::{BASIC_UNICODE, BLOCK_UNICODE, BOX_UNICODE, GREEK_UNICODE, HIRAGANA_UNICODE,
-              LATIN_UNICODE};
+use font8x8::utf16::{BASIC_UTF16, BLOCK_UTF16, BOX_UTF16, GREEK_UTF16, HIRAGANA_UTF16,
+              LATIN_UTF16};
 use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
 fn default_hashmap() -> HashMap<u16, [u8; 8]> {
-    BASIC_UNICODE.iter()
+    BASIC_UTF16.iter()
                  .cloned()
-                 .chain(LATIN_UNICODE.iter().cloned())
-                 .chain(BLOCK_UNICODE.iter().cloned())
-                 .chain(BOX_UNICODE.iter().cloned())
-                 .chain(GREEK_UNICODE.iter().cloned())
-                 .chain(HIRAGANA_UNICODE.iter().cloned())
+                 .map(|f| f.into_inner())
+                 .chain(LATIN_UTF16.iter().map(|f| f.into_inner()))
+                 .chain(BLOCK_UTF16.iter().map(|f| f.into_inner()))
+                 .chain(BOX_UTF16.iter().map(|f| f.into_inner()))
+                 .chain(GREEK_UTF16.iter().map(|f| f.into_inner()))
+                 .chain(HIRAGANA_UTF16.iter().map(|f| f.into_inner()))
                  .collect()
 }
 
@@ -25,7 +26,7 @@ pub struct FontCollection(HashMap<u16, [u8; 8]>);
 impl FontCollection {
     /// Create a default `FontCollection`, containing the Unicode constants
     /// from the [font8x8](https://github.com/saibatizoku/font8x8-rs) crate, except for
-    /// `MISC_UNICODE`, and `SGA_UNICODE` (which are non-standard).
+    /// `MISC_UTF16`, and `SGA_UTF16` (which are non-standard).
     pub fn new() -> Self {
         FontCollection(default_hashmap())
     }
