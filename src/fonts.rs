@@ -114,6 +114,38 @@ pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
 mod tests {
     use super::*;
 
+    const BLK: PixelColor = PixelColor::BLACK;
+    const RED: PixelColor = PixelColor::RED;
+    const GRN: PixelColor = PixelColor::GREEN;
+    const BLU: PixelColor = PixelColor::BLUE;
+    const BASIC_FONT: [PixelColor; 64] = [ BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+                                           BLU, BLU, BLU, BLK, BLU, BLU, BLU, BLK, //
+                                           BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
+                                           BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
+                                           BLU, BLU, BLK, BLU, BLK, BLU, BLU, BLK, //
+                                           BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+                                           BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+                                           BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+                                          ];
+    const BOX_FONT: [PixelColor; 64] = [ BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+                                         BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+                                         BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+                                         BLK, BLK, BLK, GRN, GRN, GRN, GRN, GRN, //
+                                         GRN, GRN, GRN, GRN, GRN, GRN, GRN, GRN, //
+                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+                                        ];
+    const HIRAGANA_FONT: [PixelColor; 64] = [ BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
+                                              BLK, RED, RED, RED, RED, RED, RED, BLK, //
+                                              BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
+                                              BLK, BLK, RED, RED, RED, RED, BLK, BLK, //
+                                              BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
+                                              BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
+                                              BLK, BLK, BLK, RED, RED, RED, BLK, BLK, //
+                                              BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+                                           ];
+
     #[test]
     fn font_collection_sanitizes_text_by_filtering_known_unicode_points() {
         let font_set = FontCollection::new();
@@ -144,5 +176,31 @@ mod tests {
         let font_set = FontCollection::new();
         let has_symbol = font_set.contains_key('ñ' as u16);
         assert!(has_symbol);
+    }
+
+    #[test]
+    fn font_to_pixel_color_array_creates_new_array() {
+        let font_set = FontCollection::new();
+        let font = font_set.get('M' as u16).unwrap();
+        let px_array = font_to_pixel_color_array(&font, PixelColor::BLUE);
+        for (idx, px) in px_array.into_iter().enumerate() {
+            assert_eq!(*px, BASIC_FONT[idx]);
+        }
+    }
+
+    #[test]
+    fn font_to_pixel_frame_fn_takes_a_byte_array_and_pixel_color() {
+        let font_set = FontCollection::new();
+        let chi_font = font_set.get('ち' as u16).unwrap();
+        let px_frame = font_to_pixel_frame(&chi_font, PixelColor::RED);
+        assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
+    }
+
+    #[test]
+    fn font_to_frame_fn_takes_a_byte_array_and_pixel_color() {
+        let font_set = FontCollection::new();
+        let box_font = font_set.get('┶' as u16).unwrap();
+        let px_frame_line = font_to_frame(&box_font, PixelColor::GREEN);
+        assert_eq!(px_frame_line, PixelFrame::from(BOX_FONT).frame_line());
     }
 }
