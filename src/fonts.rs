@@ -1,21 +1,20 @@
 //! 8x8 font collection
 use super::{FrameLine, PixelColor, PixelFrame};
 
-use font8x8::utf16::{BASIC_UTF16, BLOCK_UTF16, BOX_UTF16, GREEK_UTF16, HIRAGANA_UTF16,
-              LATIN_UTF16};
+use font8x8::utf16::{BASIC_UTF16, BLOCK_UTF16, BOX_UTF16, GREEK_UTF16, HIRAGANA_UTF16, LATIN_UTF16};
 use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
 fn default_hashmap() -> HashMap<u16, [u8; 8]> {
     BASIC_UTF16.iter()
-                 .cloned()
-                 .map(|f| f.into_inner())
-                 .chain(LATIN_UTF16.iter().map(|f| f.into_inner()))
-                 .chain(BLOCK_UTF16.iter().map(|f| f.into_inner()))
-                 .chain(BOX_UTF16.iter().map(|f| f.into_inner()))
-                 .chain(GREEK_UTF16.iter().map(|f| f.into_inner()))
-                 .chain(HIRAGANA_UTF16.iter().map(|f| f.into_inner()))
-                 .collect()
+               .cloned()
+               .map(|f| f.into_inner())
+               .chain(LATIN_UTF16.iter().map(|f| f.into_inner()))
+               .chain(BLOCK_UTF16.iter().map(|f| f.into_inner()))
+               .chain(BOX_UTF16.iter().map(|f| f.into_inner()))
+               .chain(GREEK_UTF16.iter().map(|f| f.into_inner()))
+               .chain(HIRAGANA_UTF16.iter().map(|f| f.into_inner()))
+               .collect()
 }
 
 /// A set of font symbols that can be printed on a `Screen`.
