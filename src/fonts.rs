@@ -117,6 +117,7 @@ mod tests {
     const RED: PixelColor = PixelColor::RED;
     const GRN: PixelColor = PixelColor::GREEN;
     const BLU: PixelColor = PixelColor::BLUE;
+    const YLW: PixelColor = PixelColor::YELLOW;
     const BASIC_FONT: [PixelColor; 64] = [ BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
                                            BLU, BLU, BLU, BLK, BLU, BLU, BLU, BLK, //
                                            BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
@@ -135,6 +136,15 @@ mod tests {
                                          BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
                                          BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
                                         ];
+    const BOX_FONT_BG: [PixelColor; 64] = [ YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+                                            YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+                                            YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+                                            YLW, YLW, YLW, BLU, BLU, BLU, BLU, BLU, //
+                                            BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLU, //
+                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+                                           ];
     const HIRAGANA_FONT: [PixelColor; 64] = [ BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
                                               BLK, RED, RED, RED, RED, RED, RED, BLK, //
                                               BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
@@ -175,6 +185,16 @@ mod tests {
         let font_set = FontCollection::new();
         let has_symbol = font_set.contains_key('ñ' as u16);
         assert!(has_symbol);
+    }
+
+    #[test]
+    fn font_to_pixel_color_array_with_bg_creates_new_array() {
+        let font_set = FontCollection::new();
+        let font = font_set.get('┶' as u16).unwrap();
+        let px_array = font_to_pixel_color_array_with_bg(&font.byte_array(), PixelColor::BLUE, PixelColor::YELLOW);
+        for (idx, px) in px_array.into_iter().enumerate() {
+            assert_eq!(*px, BOX_FONT_BG[idx]);
+        }
     }
 
     #[test]
