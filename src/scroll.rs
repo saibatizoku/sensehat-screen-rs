@@ -1,4 +1,25 @@
 //! Scrolling for pixel frames on the LED Matrix.
+use super::PixelFrame;
+
+/// A type representing a collection of `PixelFrame`s that may be scrolled.
+#[derive(Debug, PartialEq)]
+pub struct Scroll(Vec<PixelFrame>);
+
+impl Scroll {
+    /// Creates a new scroll from a slice of `PixelFrame`s.
+    pub fn new(frames: &[PixelFrame]) -> Self {
+        Scroll(frames.to_vec())
+    }
+
+    pub fn frames(&self) -> &[PixelFrame] {
+        self.0.as_slice()
+    }
+
+    pub fn reverse(&mut self) {
+        self.0.reverse();
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
