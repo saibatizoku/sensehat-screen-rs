@@ -85,7 +85,7 @@ pub mod fonts;
 pub mod screen;
 
 // Re-exports
-pub use self::color::PixelColor;
+pub use self::color::{BackgroundColor, PixelColor, StrokeColor};
 
 #[cfg(feature = "fonts")]
 pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontString};

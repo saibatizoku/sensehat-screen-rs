@@ -288,6 +288,24 @@ impl<'a> From<&'a PixelColor> for Rgb565 {
     }
 }
 
+/// Common trait for types that can be rendered into a `PixelFrame`, with a
+/// background color.
+pub trait BackgroundColor {
+    /// Sets the background color.
+    fn set_background_color(&mut self, color: PixelColor);
+    /// Gets the background color.
+    fn get_background_color(&self) -> PixelColor;
+}
+
+/// Common trait for types that can be rendered into a `PixelFrame`, with a
+/// stroke color.
+pub trait StrokeColor {
+    /// Sets the stroke color.
+    fn set_stroke_color(&mut self, color: PixelColor);
+    /// Gets the stroke color.
+    fn get_stroke_color(&self) -> PixelColor;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
