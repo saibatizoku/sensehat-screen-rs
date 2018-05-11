@@ -19,8 +19,8 @@ fn default_hashmap() -> HashMap<u16, FontUtf16> {
 
 /// A set of font symbols that can be printed on a `Screen`.
 #[derive(Clone, Debug, PartialEq)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct FontCollection(HashMap<u16, [u8; 8]>);
+//#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+pub struct FontCollection(HashMap<u16, FontUtf16>);
 
 impl FontCollection {
     /// Create a default `FontCollection`, containing the Unicode constants
@@ -31,12 +31,12 @@ impl FontCollection {
     }
 
     /// Create a `FontCollection` with a custom HashMap of font symbols.
-    pub fn from_hashmap(hashmap: HashMap<u16, [u8; 8]>) -> Self {
+    pub fn from_hashmap(hashmap: HashMap<u16, FontUtf16>) -> Self {
         FontCollection(hashmap)
     }
 
     /// Get an `Option` with the symbol's byte rendering.
-    pub fn get(&self, symbol: u16) -> Option<&[u8; 8]> {
+    pub fn get(&self, symbol: u16) -> Option<&FontUtf16> {
         self.0.get(&symbol)
     }
 
