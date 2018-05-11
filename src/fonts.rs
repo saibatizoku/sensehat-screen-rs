@@ -84,9 +84,12 @@ pub fn print_collection(collection: &FontCollection) {
     }
 }
 
-// Render a font symbol with a `PixelColor` into a `[PixelColor; 64]`.
-fn font_to_pixel_color_array(symbol: &[u8; 8], color: PixelColor) -> [PixelColor; 64] {
-    let mut pixels = [PixelColor::default(); 64];
+// Render a font symbol with a stroke color and a background color.
+fn font_to_pixel_color_array_with_bg(symbol: &[u8; 8],
+                                     color: PixelColor,
+                                     background: PixelColor)
+                                     -> [PixelColor; 64] {
+    let mut pixels = [background; 64];
     for (row_idx, encoded_row) in symbol.iter().enumerate() {
         for col_idx in 0..8 {
             if (*encoded_row & 1 << col_idx) > 0 {
@@ -95,6 +98,11 @@ fn font_to_pixel_color_array(symbol: &[u8; 8], color: PixelColor) -> [PixelColor
         }
     }
     pixels
+}
+
+// Render a font symbol with a `PixelColor` into a `[PixelColor; 64]`.
+fn font_to_pixel_color_array(symbol: &[u8; 8], color: PixelColor) -> [PixelColor; 64] {
+    font_to_pixel_color_array_with_bg(symbol, color, Default::default())
 }
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
