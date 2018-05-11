@@ -83,6 +83,9 @@ pub mod fonts;
 #[cfg(feature = "linux-framebuffer")]
 #[path = "framebuffer.rs"]
 pub mod screen;
+// Scrolls for collections of PixelFrames
+#[cfg(feature = "scroll")]
+pub mod scroll;
 
 // Re-exports
 pub use self::color::{BackgroundColor, PixelColor, StrokeColor};

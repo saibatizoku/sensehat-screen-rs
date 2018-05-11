@@ -18,13 +18,15 @@ serde = { version = "1.0", optional = true }
 serde_derive = { version = "1.0", optional = true }
 
 [features]
-default = ["clip", "linux-framebuffer", "fonts", "rotate", "serde-support", "offset"]
+default = ["clip", "linux-framebuffer", "fonts", "offset", "rotate", "scroll", "serde-support"]
+
 big-endian = []
-rotate = []
-offset = ["clip"]
 clip = []
-linux-framebuffer = ["framebuffer"]
 fonts = ["font8x8"]
+linux-framebuffer = ["framebuffer"]
+offset = ["clip"]
+rotate = []
+scroll = ["clip"]
 serde-support = ["serde", "serde_derive"]
 
 [build-dependencies]
