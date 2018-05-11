@@ -85,7 +85,7 @@ fn main() {
 
 `default`
 ---------
-By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, `clip`, and `serde-support` features are included.
+By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, `clip`, `scroll`, and `serde-support` features are included.
 
 `linux-framebuffer`
 -------------------
@@ -108,6 +108,10 @@ In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
 `clip`
 ------
 In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
+
+`scroll`
+------
+In `default`. Support for joining a collection of `PixelFrame`s into a single `Scroll`. Requires `clip`.
 
 `serde-support`
 ---------------
