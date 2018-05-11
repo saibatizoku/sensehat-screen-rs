@@ -188,38 +188,40 @@ mod tests {
     }
 
     #[test]
-    fn font_to_pixel_color_array_with_bg_creates_new_array() {
+    fn fn_font_to_pixel_color_array_with_bg_creates_new_array() {
         let font_set = FontCollection::new();
         let font = font_set.get('┶' as u16).unwrap();
-        let px_array = font_to_pixel_color_array_with_bg(&font.byte_array(), PixelColor::BLUE, PixelColor::YELLOW);
+        let px_array = font_to_pixel_color_array_with_bg(&font.byte_array(),
+                                                         PixelColor::BLUE,
+                                                         PixelColor::YELLOW);
         for (idx, px) in px_array.into_iter().enumerate() {
             assert_eq!(*px, BOX_FONT_BG[idx]);
         }
     }
 
     #[test]
-    fn font_to_pixel_color_array_creates_new_array() {
+    fn fn_font_to_pixel_color_array_creates_new_array() {
         let font_set = FontCollection::new();
         let font = font_set.get('M' as u16).unwrap();
-        let px_array = font_to_pixel_color_array(&font, PixelColor::BLUE);
+        let px_array = font_to_pixel_color_array(&font.byte_array(), PixelColor::BLUE);
         for (idx, px) in px_array.into_iter().enumerate() {
             assert_eq!(*px, BASIC_FONT[idx]);
         }
     }
 
     #[test]
-    fn font_to_pixel_frame_fn_takes_a_byte_array_and_pixel_color() {
+    fn fn_font_to_pixel_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
         let chi_font = font_set.get('ち' as u16).unwrap();
-        let px_frame = font_to_pixel_frame(&chi_font, PixelColor::RED);
+        let px_frame = font_to_pixel_frame(&chi_font.byte_array(), PixelColor::RED);
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
     }
 
     #[test]
-    fn font_to_frame_fn_takes_a_byte_array_and_pixel_color() {
+    fn fn_font_to_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
         let box_font = font_set.get('┶' as u16).unwrap();
-        let px_frame_line = font_to_frame(&box_font, PixelColor::GREEN);
+        let px_frame_line = font_to_frame(&box_font.byte_array(), PixelColor::GREEN);
         assert_eq!(px_frame_line, PixelFrame::from(BOX_FONT).frame_line());
     }
 }

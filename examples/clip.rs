@@ -21,7 +21,7 @@ fn main() {
     let frames = letters.encode_utf16()
                         .map(|sym| {
                                  let font = fonts.get(sym).unwrap();
-                                 font_to_pixel_frame(font, letter_color)
+                                 font_to_pixel_frame(&font.byte_array(), letter_color)
                              })
                         .collect::<Vec<PixelFrame>>();
 
