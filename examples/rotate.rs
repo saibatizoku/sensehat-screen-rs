@@ -21,7 +21,7 @@ fn main() {
         let symbol_90 = symbol.rotate(Rotate::Ccw90);
         let symbol_180 = symbol.rotate(Rotate::Ccw180);
         let symbol_270 = symbol.rotate(Rotate::Ccw270);
-        for _ in 0..5 {
+        for _ in 0..=4 {
             screen.write_frame(&symbol.frame_line());
             ::std::thread::sleep(::std::time::Duration::from_millis(500));
             screen.write_frame(&symbol_90.frame_line());

@@ -69,7 +69,7 @@ fn main() {
     screen.write_frame(&off_frame);
     thread::sleep(Duration::from_millis(100));
 
-    for _ in 0..10 {
+    for _ in 0..=9 {
         screen.write_frame(&red_frame);
         thread::sleep(Duration::from_millis(1_500));
         screen.write_frame(&green_frame);

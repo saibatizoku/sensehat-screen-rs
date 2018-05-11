@@ -415,38 +415,10 @@ impl Clip {
     }
 }
 
-#[cfg(not(feature = "nightly"))]
-fn rotate_bytes_left(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
-    let copy = *slice;
-    let rhs = &copy[..offset];
-    let lhs = &copy[offset..];
-    {
-        let (left, right) = slice.split_at_mut(8 - offset);
-        left.copy_from_slice(lhs);
-        right.copy_from_slice(rhs);
-    }
-}
-
-#[cfg(feature = "nightly")]
 fn rotate_bytes_left(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
     slice.rotate_left(offset);
 }
 
-#[cfg(not(feature = "nightly"))]
-fn rotate_bytes_right(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
-    let copy = *slice;
-    let rhs = &copy[..(8 - offset)];
-    let lhs = &copy[(8 - offset)..];
-    println!("copy {} {}", rhs.len(), lhs.len());
-    {
-        let (left, right) = slice.split_at_mut(offset);
-        println!("split {} {}", left.len(), right.len());
-        left.copy_from_slice(lhs);
-        right.copy_from_slice(rhs);
-    }
-}
-
-#[cfg(feature = "nightly")]
 fn rotate_bytes_right(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
     slice.rotate_right(offset);
 }
