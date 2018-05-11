@@ -280,7 +280,7 @@ mod tests {
        BLUE, DARK, DARK, DARK, DARK, DARK, DARK, DARK,  //
     ];
 
-    // BOTTOM
+    // TOP
     const OFFSET_TOP_ONE: [PixelColor; 64] = [
        DARK, BLUE, DARK, DARK, DARK, DARK, BLUE, BLUE,  //
        DARK, DARK, DARK, DARK, DARK, BLUE, BLUE, BLUE,  //

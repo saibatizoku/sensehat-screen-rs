@@ -128,6 +128,7 @@ Feature Wish List
 * [X] `offset` - In `default`. Support for offsetting the `PixelFrame` left/right/up/down.
 * [X] `rotate` - In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
 * [X] `clip` - In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
+* [X] `scroll` - In `default`. Support for joining a collection of `PixelFrame`s into a single `Scroll`. Requires `clip`.
 * [X] `serde-support` - In `default`. Enables support for serialization/deserialization with `serde`.
 * [X] `big-endian` - Uses big-endian format, suitable for non-AMD64/x86-64 processors.
 
