@@ -48,7 +48,8 @@ impl FontCollection {
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
         let valid = s.encode_utf16().filter(|c| self.0.contains_key(c))
-                     .collect::<Vec<u16>>();
+                     .map(|sym| *self.get(sym).unwrap())
+                     .collect::<Vec<FontUtf16>>();
         Ok(FontString(valid))
     }
 }
@@ -61,17 +62,17 @@ impl Default for FontCollection {
 
 /// A string of font symbols valid for rendering. `FontString` instances can only be created by a `FontCollection` instance.
 #[derive(Clone, Debug, Default, PartialEq)]
-pub struct FontString(Vec<u16>);
+pub struct FontString(Vec<FontUtf16>);
 
 impl FontString {
     /// Render the font string as unicode slice, `&[u16]`.
-    pub fn to_slice(&self) -> &[u16] {
-        &self.0
+    pub fn encode_utf16(&self) -> Vec<u16> {
+        self.0.iter().map(|font| font.utf16()).collect::<Vec<u16>>()
     }
 
     /// Render the font string as a `String`.
     pub fn to_string(&self) -> String {
-        String::from_utf16(&self.0).unwrap()
+        String::from_utf16(&self.encode_utf16()).unwrap()
     }
 }
 
