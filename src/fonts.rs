@@ -60,12 +60,18 @@ impl Default for FontCollection {
     }
 }
 
-/// A string of font symbols valid for rendering. `FontString` instances can only be created by a `FontCollection` instance.
+/// A `FontString` is a collection of `FontUtf16` which can be rendered to frames for the LED
+/// Matrix.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FontString(Vec<FontUtf16>);
 
 impl FontString {
-    /// Render the font string as unicode slice, `&[u16]`.
+    /// Create an empty `FontString`.
+    pub fn new() -> Self {
+        FontString(Default::default())
+    }
+
+    /// Render the font string as a collection of unicode value points, `Vec<u16>`.
     pub fn encode_utf16(&self) -> Vec<u16> {
         self.0.iter().map(|font| font.utf16()).collect::<Vec<u16>>()
     }
@@ -194,6 +200,26 @@ mod tests {
         let font_set = FontCollection::new();
         let has_symbol = font_set.contains_key('ñ' as u16);
         assert!(has_symbol);
+    }
+
+    #[test]
+    fn font_string_new_method_starts_emtpy_instance() {
+        let font_string = FontString::new();
+        assert_eq!(font_string.0, Vec::new());
+    }
+
+    #[test]
+    fn font_string_encode_utf16_method_returns_vec_of_u16() {
+        let font_set = FontCollection::new();
+        let font_string = font_set.sanitize_str("┷│││┯").unwrap();
+        assert_eq!(font_string.encode_utf16(), vec![0x2537, 0x2502, 0x2502, 0x2502, 0x252F]);
+    }
+
+    #[test]
+    fn font_string_to_string_method_returns_string() {
+        let font_set = FontCollection::new();
+        let font_string = font_set.sanitize_str("┷│││┯").unwrap();
+        assert_eq!(font_string.to_string(), "┷│││┯".to_string());
     }
 
     #[test]
