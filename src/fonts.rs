@@ -259,4 +259,30 @@ mod tests {
         let px_frame_line = font_to_frame(&box_font.byte_array(), PixelColor::GREEN);
         assert_eq!(px_frame_line, PixelFrame::from(BOX_FONT).frame_line());
     }
+
+    #[test]
+    fn font_frames_are_created_from_ut16_font_a_stroke_and_a_background_color() {
+        let font_set = FontCollection::new();
+        let letter_a = font_set.get('a' as u16).unwrap();
+        let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
+        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::WHITE, background: PixelColor::BLACK });
+    }
+
+    #[test]
+    fn font_frames_is_represented_as_a_pixel_frame() {
+        let font_set = FontCollection::new();
+        let hiragana_font = font_set.get('ち' as u16).unwrap();
+        let font_frame = FontFrame::new(hiragana_font.clone(), PixelColor::RED, PixelColor::BLACK);
+        let px_frame = font_frame.pixel_frame();
+        assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
+    }
+
+    #[test]
+    fn pixel_frame_implements_from_font_frame_trait() {
+        let font_set = FontCollection::new();
+        let hiragana_font = font_set.get('ち' as u16).unwrap();
+        let font_frame = FontFrame::new(hiragana_font.clone(), PixelColor::RED, PixelColor::BLACK);
+        let px_frame = PixelFrame::from(font_frame);
+        assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
+    }
 }
