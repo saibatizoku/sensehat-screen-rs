@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- `BackgroundColor` trait defines setter/getter of background color.
+- `StrokeColor` trait defines setter/getter of stroke color.
 - Unit tests and documentation for:
   * `FontString::new`
   * `FontString::encode_utf16`
@@ -19,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * `FontFrame::new`
   * `FontFrame::pixel_frame`
 - `PixelFrame` implements `From<FontFrame>`.
+- `FontFrame` implements `BackgroundColor` trait.
+- `FontFrame` implements `StrokeColor` trait.
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.

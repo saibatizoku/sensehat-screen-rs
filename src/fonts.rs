@@ -114,6 +114,24 @@ impl From<FontFrame> for PixelFrame {
     }
 }
 
+impl BackgroundColor for FontFrame {
+    fn set_background_color(&mut self, color: PixelColor) {
+        self.background = color;
+    }
+    fn get_background_color(&self) -> PixelColor {
+        self.background
+    }
+}
+
+impl StrokeColor for FontFrame {
+    fn set_stroke_color(&mut self, color: PixelColor) {
+        self.stroke = color;
+    }
+    fn get_stroke_color(&self) -> PixelColor {
+        self.stroke
+    }
+}
+
 /// Display the contents of a `FontCollection` on `stdout`.
 pub fn print_collection(collection: &FontCollection) {
     for key in collection.0.keys() {
