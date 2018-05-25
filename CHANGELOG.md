@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
+- Updated `examples/letter.rs` to use new `FontString::encode_utf16` method.
 
 ## [v0.1.9] - 2018-05-01
 ### Added
