@@ -141,7 +141,8 @@ impl PixelFrame {
     }
     /// Create a `FrameLine` representing the current `PixelFrame`.
     pub fn frame_line(&self) -> FrameLine {
-        let colors = self.0.iter()
+        let colors = self.0
+                         .iter()
                          .enumerate()
                          .fold([PixelColor::BLACK; 64], |mut c, (idx, px)| {
                              c[idx] = *px;

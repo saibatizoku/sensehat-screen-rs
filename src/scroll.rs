@@ -32,7 +32,6 @@ mod tests {
         assert_eq!(scroll, Scroll(SCROLL_ONE.to_vec()));
     }
 
-
     #[test]
     fn scrolls_frames_method_returns_slice_of_pixel_frames() {
         let scroll = Scroll::new(SCROLL_ONE);

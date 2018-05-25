@@ -1,8 +1,12 @@
 //! 8x8 font collection
-use super::{FrameLine, PixelColor, PixelFrame, color::{BackgroundColor, StrokeColor}};
+use super::{
+    color::{BackgroundColor, StrokeColor}, FrameLine, PixelColor, PixelFrame,
+};
 
-use font8x8::{FontUtf16, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS,
-              HIRAGANA_FONTS, LATIN_FONTS};
+use font8x8::{
+    FontUtf16, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
+    LATIN_FONTS,
+};
 use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
@@ -47,7 +51,8 @@ impl FontCollection {
 
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
-        let valid = s.encode_utf16().filter(|c| self.0.contains_key(c))
+        let valid = s.encode_utf16()
+                     .filter(|c| self.0.contains_key(c))
                      .map(|sym| *self.get(sym).unwrap())
                      .collect::<Vec<FontUtf16>>();
         Ok(FontString(valid))
@@ -96,7 +101,9 @@ pub struct FontFrame {
 impl FontFrame {
     /// Create a new font frame with a `stroke` color, and a `background` color.
     pub fn new(font: FontUtf16, stroke: PixelColor, background: PixelColor) -> Self {
-        FontFrame { font, stroke, background }
+        FontFrame { font,
+                    stroke,
+                    background, }
     }
 
     /// The `PixelFrame` for this font.
@@ -262,7 +269,8 @@ mod tests {
     fn font_string_encode_utf16_method_returns_vec_of_u16() {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("┷│││┯").unwrap();
-        assert_eq!(font_string.encode_utf16(), vec![0x2537, 0x2502, 0x2502, 0x2502, 0x252F]);
+        assert_eq!(font_string.encode_utf16(),
+                   vec![0x2537, 0x2502, 0x2502, 0x2502, 0x252F]);
     }
 
     #[test]
@@ -315,7 +323,10 @@ mod tests {
         let font_set = FontCollection::new();
         let letter_a = font_set.get('a' as u16).unwrap();
         let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
-        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::WHITE, background: PixelColor::BLACK });
+        assert_eq!(font_frame,
+                   FontFrame { font: *letter_a,
+                               stroke: PixelColor::WHITE,
+                               background: PixelColor::BLACK });
     }
 
     #[test]
@@ -342,7 +353,10 @@ mod tests {
         let letter_a = font_set.get('a' as u16).unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_background_color(PixelColor::RED);
-        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::WHITE, background: PixelColor::RED });
+        assert_eq!(font_frame,
+                   FontFrame { font: *letter_a,
+                               stroke: PixelColor::WHITE,
+                               background: PixelColor::RED });
     }
 
     #[test]
@@ -359,7 +373,10 @@ mod tests {
         let letter_a = font_set.get('a' as u16).unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_stroke_color(PixelColor::YELLOW);
-        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::YELLOW, background: PixelColor::BLACK });
+        assert_eq!(font_frame,
+                   FontFrame { font: *letter_a,
+                               stroke: PixelColor::YELLOW,
+                               background: PixelColor::BLACK });
     }
 
     #[test]
