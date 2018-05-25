@@ -85,6 +85,20 @@ impl FontString {
     pub fn to_string(&self) -> String {
         String::from_utf16(&self.encode_utf16()).unwrap()
     }
+
+    /// Returns a `Vec<FontFrame>` for each inner font.
+    pub fn font_frames(&self, stroke: PixelColor, bg: PixelColor) -> Vec<FontFrame> {
+        self.0.iter()
+            .map(|font| FontFrame::new(*font, stroke, bg))
+            .collect::<Vec<FontFrame>>()
+    }
+
+    /// Returns a `Vec<PixelFrame>` for each inner font.
+    pub fn pixel_frames(&self, stroke: PixelColor, bg: PixelColor) -> Vec<PixelFrame> {
+        self.font_frames(stroke, bg).into_iter()
+            .map(|f| f.into())
+            .collect::<Vec<PixelFrame>>()
+    }
 }
 
 /// A font that can be rendered as a `PixelFrame` with a `stroke` color, and a `background` color.
@@ -278,6 +292,35 @@ mod tests {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("┷│││┯").unwrap();
         assert_eq!(font_string.to_string(), "┷│││┯".to_string());
+    }
+
+    #[test]
+    fn font_string_font_frames_returns_a_vec_of_font_frame() {
+        let font_set = FontCollection::new();
+        let font_string = font_set.sanitize_str("Mち┶").unwrap();
+        let bas_font = font_set.get('M' as u16).unwrap();
+        let hir_font = font_set.get('ち' as u16).unwrap();
+        let box_font = font_set.get('┶' as u16).unwrap();
+        let ft_frames = font_string.font_frames(PixelColor::YELLOW, PixelColor::BLACK);
+        assert_eq!(ft_frames,
+                   vec![FontFrame { font: *bas_font,
+                                    stroke: PixelColor::YELLOW,
+                                    background: PixelColor::BLACK, },
+                        FontFrame { font: *hir_font,
+                                    stroke: PixelColor::YELLOW,
+                                    background: PixelColor::BLACK, },
+                        FontFrame { font: *box_font,
+                                    stroke: PixelColor::YELLOW,
+                                    background: PixelColor::BLACK, },]);
+    }
+
+    #[test]
+    fn font_string_font_frames_returns_a_vec_of_pixel_frame() {
+        let font_set = FontCollection::new();
+        let font_string = font_set.sanitize_str("MM").unwrap();
+        let px_frames = font_string.pixel_frames(PixelColor::BLUE, PixelColor::BLACK);
+        assert_eq!(px_frames,
+                   vec![PixelFrame::from(BASIC_FONT), PixelFrame::from(BASIC_FONT),]);
     }
 
     #[test]
