@@ -82,6 +82,38 @@ impl FontString {
     }
 }
 
+/// A font that can be rendered as a `PixelFrame` with a `stroke` color, and a `background` color.
+#[derive(Debug, PartialEq)]
+pub struct FontFrame {
+    /// `UTF16` font
+    font: FontUtf16,
+    /// Color for the font stroke
+    stroke: PixelColor,
+    /// Color for the font background
+    background: PixelColor,
+}
+
+impl FontFrame {
+    /// Create a new font frame with a `stroke` color, and a `background` color.
+    pub fn new(font: FontUtf16, stroke: PixelColor, background: PixelColor) -> Self {
+        FontFrame { font, stroke, background }
+    }
+
+    /// The `PixelFrame` for this font.
+    pub fn pixel_frame(&self) -> PixelFrame {
+        let pixels = font_to_pixel_color_array_with_bg(&self.font.byte_array(),
+                                                       self.stroke,
+                                                       self.background);
+        pixels.into()
+    }
+}
+
+impl From<FontFrame> for PixelFrame {
+    fn from(font: FontFrame) -> Self {
+        font.pixel_frame()
+    }
+}
+
 /// Display the contents of a `FontCollection` on `stdout`.
 pub fn print_collection(collection: &FontCollection) {
     for key in collection.0.keys() {
