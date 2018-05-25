@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * `FontString::encode_utf16`
   * `FontString::to_string`
 - `scroll` trait to join a collection of `PixelFrame`s into a single `Scroll`.
+- `Scroll` type to wrap an inner `Vec<PixelFrame>`.
+  * `Scroll::new(&[PixelFrame])` method initializes a scroll.
+  * `Scroll::frames` method returns a slice of the inner `Vec<PixelFrame>`.
+  * `Scroll::reverse` method reverses the order of the inner `Vec<PixelFrame>`.
 - Tests and implementation for new `FontFrame` type, which is a font with stroke and background colors:
   * `FontFrame::new`
   * `FontFrame::pixel_frame`
