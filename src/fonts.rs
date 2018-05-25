@@ -1,5 +1,5 @@
 //! 8x8 font collection
-use super::{FrameLine, PixelColor, PixelFrame};
+use super::{FrameLine, PixelColor, PixelFrame, color::{BackgroundColor, StrokeColor}};
 
 use font8x8::{FontUtf16, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS,
               HIRAGANA_FONTS, LATIN_FONTS};
@@ -316,5 +316,39 @@ mod tests {
         let font_frame = FontFrame::new(hiragana_font.clone(), PixelColor::RED, PixelColor::BLACK);
         let px_frame = PixelFrame::from(font_frame);
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
+    }
+
+    #[test]
+    fn font_frame_sets_background_color() {
+        let font_set = FontCollection::new();
+        let letter_a = font_set.get('a' as u16).unwrap();
+        let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
+        font_frame.set_background_color(PixelColor::RED);
+        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::WHITE, background: PixelColor::RED });
+    }
+
+    #[test]
+    fn font_frame_gets_background_color() {
+        let font_set = FontCollection::new();
+        let letter_a = font_set.get('a' as u16).unwrap();
+        let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::GREEN);
+        assert_eq!(font_frame.get_background_color(), PixelColor::GREEN);
+    }
+
+    #[test]
+    fn font_frame_sets_stroke_color() {
+        let font_set = FontCollection::new();
+        let letter_a = font_set.get('a' as u16).unwrap();
+        let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
+        font_frame.set_stroke_color(PixelColor::YELLOW);
+        assert_eq!(font_frame, FontFrame { font: *letter_a, stroke: PixelColor::YELLOW, background: PixelColor::BLACK });
+    }
+
+    #[test]
+    fn font_frame_gets_stroke_color() {
+        let font_set = FontCollection::new();
+        let letter_a = font_set.get('a' as u16).unwrap();
+        let font_frame = FontFrame::new(letter_a.clone(), PixelColor::BLUE, PixelColor::WHITE);
+        assert_eq!(font_frame.get_stroke_color(), PixelColor::BLUE);
     }
 }
