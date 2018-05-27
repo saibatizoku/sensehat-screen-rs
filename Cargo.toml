@@ -18,16 +18,21 @@ serde = { version = "1.0", optional = true }
 serde_derive = { version = "1.0", optional = true }
 
 [features]
-default = ["clip", "linux-framebuffer", "fonts", "offset", "rotate", "scroll", "serde-support"]
+default = ["basic", "linux-framebuffer"]
 
-big-endian = []
+# features that don't depend on the hardware
+basic = ["clip", "fonts", "offset", "rotate", "scroll", "serde-support"]
 clip = []
 fonts = ["font8x8"]
-linux-framebuffer = ["framebuffer"]
-offset = ["clip"]
+offset = []
 rotate = []
-scroll = ["clip"]
+scroll = []
 serde-support = ["serde", "serde_derive"]
+
+# feature for using the LED Matrix via the linux framebuffer (/dev/fb*)
+linux-framebuffer = ["framebuffer"]
+# feature for compatibility with big-endian architectures.
+big-endian = []
 
 [build-dependencies]
 rustc_version = "0.2"
