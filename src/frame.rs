@@ -257,22 +257,75 @@ impl IndexMut<usize> for PixelFrame {
 }
 
 fn clip_pixel_frames_offset_left(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
-    unimplemented!();
+    assert!(offset < 9);
+    match offset as usize {
+        0 => first,
+        8 => second,
+        n => {
+            let mut orig = first.as_columns();
+            let second = second.as_columns();
+            {
+                orig.rotate_left(n);
+                let (_, right) = orig.split_at_mut(8 - n);
+                right.copy_from_slice(&second[..n]);
+            }
+            PixelFrame::from_columns(&orig)
+        }
+    }
 }
 
 fn clip_pixel_frames_offset_right(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
-    unimplemented!();
+    match offset as usize {
+        0 => first,
+        8 => second,
+        n => {
+            let mut orig = first.as_columns();
+            let second = second.as_columns();
+            {
+                orig.rotate_right(n);
+                let (left, _) = orig.split_at_mut(n);
+                left.copy_from_slice(&second[8 - n..]);
+            }
+            PixelFrame::from_columns(&orig)
+        }
+    }
 }
 
 fn clip_pixel_frames_offset_top(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
-    unimplemented!();
+    match offset as usize {
+        0 => first,
+        8 => second,
+        n => {
+            let mut orig = first.as_rows();
+            let second = second.as_rows();
+            {
+                orig.rotate_left(n);
+                let (_, right) = orig.split_at_mut(8 - n);
+                right.copy_from_slice(&second[..n]);
+            }
+            PixelFrame::from_rows(&orig)
+        }
+    }
 }
 
 fn clip_pixel_frames_offset_bottom(first: PixelFrame,
                                    second: PixelFrame,
                                    offset: u8)
                                    -> PixelFrame {
-    unimplemented!();
+    match offset as usize {
+        0 => first,
+        8 => second,
+        n => {
+            let mut orig = first.as_rows();
+            let second = second.as_rows();
+            {
+                orig.rotate_right(n);
+                let (left, _) = orig.split_at_mut(n);
+                left.copy_from_slice(&second[8 - n..]);
+            }
+            PixelFrame::from_rows(&orig)
+        }
+    }
 }
 
 #[cfg(test)]

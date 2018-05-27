@@ -3,8 +3,10 @@
 //! The `Clip` is the type that merges `PixelFrame` by rows or by columns
 //!
 //!
-use super::offset::Offset;
-use {PixelColor, PixelFrame};
+use super::{
+    clip_pixel_frames_offset_bottom, clip_pixel_frames_offset_left, clip_pixel_frames_offset_right,
+    clip_pixel_frames_offset_top, offset::Offset, PixelFrame,
+};
 
 /// Methods enabled by the `clip` feature.
 impl PixelFrame {
@@ -342,80 +344,24 @@ impl Clip {
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset as usize {
-            0 => self.first,
-            8 => self.second,
-            n => {
-                let mut orig = self.first.as_columns();
-                let second = self.second.as_columns();
-                {
-                    rotate_bytes_left(&mut orig, n);
-                    orig.rotate_left(n);
-                    let (_, right) = orig.split_at_mut(8 - n);
-                    right.copy_from_slice(&second[..n]);
-                }
-                PixelFrame::from_columns(&orig)
-            }
-        }
+        clip_pixel_frames_offset_left(self.first, self.second, offset)
     }
 
     // # Panics
     // If `offset` is out of bounds (> 8).
     fn offset_right(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset as usize {
-            0 => self.first,
-            8 => self.second,
-            n => {
-                let mut orig = self.first.as_columns();
-                let second = self.second.as_columns();
-                {
-                    rotate_bytes_right(&mut orig, n);
-                    orig.rotate_right(n);
-                    let (left, _) = orig.split_at_mut(n);
-                    left.copy_from_slice(&second[8 - n..]);
-                }
-                PixelFrame::from_columns(&orig)
-            }
-        }
+        clip_pixel_frames_offset_right(self.first, self.second, offset)
     }
 
     fn offset_bottom(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset as usize {
-            0 => self.first,
-            8 => self.second,
-            n => {
-                let mut orig = self.first.as_rows();
-                let second = self.second.as_rows();
-                {
-                    rotate_bytes_right(&mut orig, n);
-                    orig.rotate_right(n);
-                    let (left, _) = orig.split_at_mut(n);
-                    left.copy_from_slice(&second[8 - n..]);
-                }
-                PixelFrame::from_rows(&orig)
-            }
-        }
+        clip_pixel_frames_offset_bottom(self.first, self.second, offset)
     }
 
     fn offset_top(&self, offset: u8) -> PixelFrame {
         assert!(offset < 9);
-        match offset as usize {
-            0 => self.first,
-            8 => self.second,
-            n => {
-                let mut orig = self.first.as_rows();
-                let second = self.second.as_rows();
-                {
-                    rotate_bytes_left(&mut orig, n);
-                    orig.rotate_left(n);
-                    let (_, right) = orig.split_at_mut(8 - n);
-                    right.copy_from_slice(&second[..n]);
-                }
-                PixelFrame::from_rows(&orig)
-            }
-        }
+        clip_pixel_frames_offset_top(self.first, self.second, offset)
     }
 }
 

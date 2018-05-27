@@ -1,5 +1,8 @@
 //! `PixelFrame` offset in left/right/top/bottom directions.
-use super::PixelFrame;
+use super::{
+    clip_pixel_frames_offset_bottom, clip_pixel_frames_offset_left, clip_pixel_frames_offset_right,
+    clip_pixel_frames_offset_top, PixelFrame,
+};
 
 /// Methods enabled by the `offset` feature.
 impl PixelFrame {
@@ -31,19 +34,23 @@ impl PixelFrame {
     // # Panics
     // If `offset` is out of bounds (> 8).
     fn offset_left(&self, offset: u8) -> Self {
-        self.clip(&PixelFrame::default(), Offset::left(offset))
+        assert!(offset < 9);
+        clip_pixel_frames_offset_left(*self, PixelFrame::default(), offset)
     }
 
     fn offset_right(&self, offset: u8) -> Self {
-        self.clip(&PixelFrame::default(), Offset::right(offset))
+        assert!(offset < 9);
+        clip_pixel_frames_offset_right(*self, PixelFrame::default(), offset)
     }
 
     fn offset_bottom(&self, offset: u8) -> Self {
-        self.clip(&PixelFrame::default(), Offset::bottom(offset))
+        assert!(offset < 9);
+        clip_pixel_frames_offset_bottom(*self, PixelFrame::default(), offset)
     }
 
     fn offset_top(&self, offset: u8) -> Self {
-        self.clip(&PixelFrame::default(), Offset::top(offset))
+        assert!(offset < 9);
+        clip_pixel_frames_offset_top(*self, PixelFrame::default(), offset)
     }
 }
 
