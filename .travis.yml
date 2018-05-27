@@ -1,0 +1,22 @@
+language: rust
+rust:
+    - stable
+    - beta
+    - nightly
+matrix:
+    allow_failures:
+        - rust: nightly
+    fast_finish: true
+
+cache: cargo
+
+script:
+    - cargo build --verbose --all
+    - cargo test --verbose --all --no-default-features 
+    - cargo test --verbose --all --no-default-features --features clip
+    - cargo test --verbose --all --no-default-features --features offset
+    - cargo test --verbose --all --no-default-features --features rotate
+    - cargo test --verbose --all --no-default-features --features fonts
+    - cargo test --verbose --all --no-default-features --features linux-framebuffer
+    - cargo test --verbose --all --no-default-features --features serde-support
+    - cargo test --verbose --all --no-default-features --features big-endian
