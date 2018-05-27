@@ -5,7 +5,7 @@
 //!
 use super::{
     clip_pixel_frames_offset_bottom, clip_pixel_frames_offset_left, clip_pixel_frames_offset_right,
-    clip_pixel_frames_offset_top, offset::Offset, PixelFrame,
+    clip_pixel_frames_offset_top, Offset, PixelFrame,
 };
 
 /// Methods enabled by the `clip` feature.

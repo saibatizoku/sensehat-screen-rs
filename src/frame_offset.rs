@@ -1,7 +1,7 @@
 //! `PixelFrame` offset in left/right/top/bottom directions.
 use super::{
     clip_pixel_frames_offset_bottom, clip_pixel_frames_offset_left, clip_pixel_frames_offset_right,
-    clip_pixel_frames_offset_top, PixelFrame,
+    clip_pixel_frames_offset_top, Offset, PixelFrame,
 };
 
 /// Methods enabled by the `offset` feature.
@@ -51,53 +51,6 @@ impl PixelFrame {
     fn offset_top(&self, offset: u8) -> Self {
         assert!(offset < 9);
         clip_pixel_frames_offset_top(*self, PixelFrame::default(), offset)
-    }
-}
-
-/// Offset for `PixelFrame` displacement in a given direction
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub enum Offset {
-    Left(u8),
-    Right(u8),
-    Bottom(u8),
-    Top(u8),
-}
-
-impl Offset {
-    /// Offset by `offset` pixels to the left of the LED Matrix.
-    ///
-    /// # Panics
-    /// If `offset` is greater than 8.
-    pub fn left(offset: u8) -> Self {
-        assert!(offset < 9);
-        Offset::Left(offset)
-    }
-
-    /// Offset by `offset` pixels to the right of the LED Matrix.
-    ///
-    /// # Panics
-    /// If `offset` is greater than 8.
-    pub fn right(offset: u8) -> Self {
-        assert!(offset < 9);
-        Offset::Right(offset)
-    }
-
-    /// Offset by `offset` pixels to the bottom of the LED Matrix.
-    ///
-    /// # Panics
-    /// If `offset` is greater than 8.
-    pub fn bottom(offset: u8) -> Self {
-        assert!(offset < 9);
-        Offset::Bottom(offset)
-    }
-
-    /// Offset by `offset` pixels to the top of the LED Matrix.
-    ///
-    /// # Panics
-    /// If `offset` is greater than 8.
-    pub fn top(offset: u8) -> Self {
-        assert!(offset < 9);
-        Offset::Top(offset)
     }
 }
 

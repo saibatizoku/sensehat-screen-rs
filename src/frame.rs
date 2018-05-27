@@ -256,6 +256,55 @@ impl IndexMut<usize> for PixelFrame {
     }
 }
 
+/// Offset for `PixelFrame` displacement in a given direction
+#[cfg(any(feature = "offset", feature = "clip"))]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Offset {
+    Left(u8),
+    Right(u8),
+    Bottom(u8),
+    Top(u8),
+}
+
+#[cfg(any(feature = "offset", feature = "clip"))]
+impl Offset {
+    /// Offset by `offset` pixels to the left of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn left(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Left(offset)
+    }
+
+    /// Offset by `offset` pixels to the right of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn right(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Right(offset)
+    }
+
+    /// Offset by `offset` pixels to the bottom of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn bottom(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Bottom(offset)
+    }
+
+    /// Offset by `offset` pixels to the top of the LED Matrix.
+    ///
+    /// # Panics
+    /// If `offset` is greater than 8.
+    pub fn top(offset: u8) -> Self {
+        assert!(offset < 9);
+        Offset::Top(offset)
+    }
+}
+
 fn clip_pixel_frames_offset_left(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
     assert!(offset < 9);
     match offset as usize {
