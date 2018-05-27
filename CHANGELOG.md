@@ -23,10 +23,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `PixelFrame` implements `From<FontFrame>`.
 - `FontFrame` implements `BackgroundColor` trait.
 - `FontFrame` implements `StrokeColor` trait.
+- New `basic` features are a subset of the current the `default` feature list.
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
 - Updated `examples/letter.rs` to use new `FontString::encode_utf16` method.
+- Refactored `basic` features in the `default` feature list.
 
 ## [v0.1.9] - 2018-05-01
 ### Added
