@@ -350,6 +350,7 @@ impl Clip {
                 let second = self.second.as_columns();
                 {
                     rotate_bytes_left(&mut orig, n);
+                    orig.rotate_left(n);
                     let (_, right) = orig.split_at_mut(8 - n);
                     right.copy_from_slice(&second[..n]);
                 }
@@ -370,6 +371,7 @@ impl Clip {
                 let second = self.second.as_columns();
                 {
                     rotate_bytes_right(&mut orig, n);
+                    orig.rotate_right(n);
                     let (left, _) = orig.split_at_mut(n);
                     left.copy_from_slice(&second[8 - n..]);
                 }
@@ -388,6 +390,7 @@ impl Clip {
                 let second = self.second.as_rows();
                 {
                     rotate_bytes_right(&mut orig, n);
+                    orig.rotate_right(n);
                     let (left, _) = orig.split_at_mut(n);
                     left.copy_from_slice(&second[8 - n..]);
                 }
@@ -406,6 +409,7 @@ impl Clip {
                 let second = self.second.as_rows();
                 {
                     rotate_bytes_left(&mut orig, n);
+                    orig.rotate_left(n);
                     let (_, right) = orig.split_at_mut(8 - n);
                     right.copy_from_slice(&second[..n]);
                 }
@@ -413,14 +417,6 @@ impl Clip {
             }
         }
     }
-}
-
-fn rotate_bytes_left(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
-    slice.rotate_left(offset);
-}
-
-fn rotate_bytes_right(slice: &mut [[PixelColor; 8]; 8], offset: usize) {
-    slice.rotate_right(offset);
 }
 
 #[cfg(test)]
