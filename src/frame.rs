@@ -305,6 +305,7 @@ impl Offset {
     }
 }
 
+#[cfg(any(feature = "offset", feature = "clip"))]
 fn clip_pixel_frames_offset_left(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
     assert!(offset < 9);
     match offset as usize {
@@ -323,6 +324,7 @@ fn clip_pixel_frames_offset_left(first: PixelFrame, second: PixelFrame, offset: 
     }
 }
 
+#[cfg(any(feature = "offset", feature = "clip"))]
 fn clip_pixel_frames_offset_right(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
     match offset as usize {
         0 => first,
@@ -340,6 +342,7 @@ fn clip_pixel_frames_offset_right(first: PixelFrame, second: PixelFrame, offset:
     }
 }
 
+#[cfg(any(feature = "offset", feature = "clip"))]
 fn clip_pixel_frames_offset_top(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
     match offset as usize {
         0 => first,
@@ -357,6 +360,7 @@ fn clip_pixel_frames_offset_top(first: PixelFrame, second: PixelFrame, offset: u
     }
 }
 
+#[cfg(any(feature = "offset", feature = "clip"))]
 fn clip_pixel_frames_offset_bottom(first: PixelFrame,
                                    second: PixelFrame,
                                    offset: u8)
