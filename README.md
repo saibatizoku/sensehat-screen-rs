@@ -83,42 +83,48 @@ fn main() {
 
 # Features
 
-`default`
----------
-By default, the `linux-framebuffer`, `fonts`, `offset`, `rotate`, `clip`, `scroll`, and `serde-support` features are included.
+## `default` features
 
-`linux-framebuffer`
--------------------
-In `default`. Use the Linux framebuffer to write to the LED matrix.
+By default, the `basic`, and `linux-framebuffer` features are included.
 
-`fonts`
--------
+## `basic` features
+
+A set of features that don't require the hardware. This is mostly code that you will want to use if you are writing a simulator/emulator/etc. It includes, the `fonts`, `offset`, `rotate`, `clip`, `scroll`, and `serde-support` features.
+
+### `fonts`
+
 In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
 
 See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
 
-`offset`
---------
+### `offset`
+
 In `default`. Support for offsetting the `PixelFrame` left/right/top/bottom. Requires `clip`.
 
-`rotate`
---------
+### `rotate`
+
 In `default`. Support for rotating `PixelFrame`s by 90-degree steps.
 
-`clip`
-------
+### `clip`
+
 In `default`. Support for combining, and clipping two `PixelFrame`s onto a single frame.
 
-`scroll`
-------
+### `scroll`
+
 In `default`. Support for joining a collection of `PixelFrame`s into a single `Scroll`. Requires `clip`.
 
-`serde-support`
----------------
+### `serde-support`
+
 In `default`. Enables support for serialization/deserialization with `serde`.
 
-`big-endian`
-------------
+## `linux-framebuffer` feature
+
+In `default`. Use the Linux framebuffer to write to the LED matrix.
+
+# Extra features
+
+## `big-endian`
+
 Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
 
 Feature Wish List
