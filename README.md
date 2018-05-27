@@ -3,6 +3,7 @@ A library for the Raspberry Pi Sense HAT LED Screen
 
 [![crates.io](https://img.shields.io/crates/v/sensehat-screen.svg)](https://crates.io/crates/sensehat-screen)
 [![docs](https://docs.rs/sensehat-screen/badge.svg)](https://docs.rs/sensehat-screen)
+[![Build Status](https://travis-ci.org/saibatizoku/sensehat-screen-rs.svg?branch=master)](https://travis-ci.org/saibatizoku/sensehat-screen-rs)
 
 
 The [Raspberry Pi Sense HAT](https://www.raspberrypi.org/products/sense-hat/) has an 8×8 RGB LED matrix that provides its own driver for the Linux framebuffer.
