@@ -256,6 +256,25 @@ impl IndexMut<usize> for PixelFrame {
     }
 }
 
+fn clip_pixel_frames_offset_left(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
+    unimplemented!();
+}
+
+fn clip_pixel_frames_offset_right(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
+    unimplemented!();
+}
+
+fn clip_pixel_frames_offset_top(first: PixelFrame, second: PixelFrame, offset: u8) -> PixelFrame {
+    unimplemented!();
+}
+
+fn clip_pixel_frames_offset_bottom(first: PixelFrame,
+                                   second: PixelFrame,
+                                   offset: u8)
+                                   -> PixelFrame {
+    unimplemented!();
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
