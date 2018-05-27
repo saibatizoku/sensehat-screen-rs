@@ -95,8 +95,6 @@ pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontSt
 
 #[cfg(feature = "clip")]
 pub use self::frame::clip::Clip;
-#[cfg(feature = "offset")]
-pub use self::frame::offset::Offset;
 #[cfg(any(feature = "offset", feature = "clip"))]
 pub use self::frame::Offset;
 #[cfg(feature = "rotate")]
