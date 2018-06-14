@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `FontFrame` implements `BackgroundColor` trait.
 - `FontFrame` implements `StrokeColor` trait.
 - New `basic` features are a subset of the current the `default` feature list.
+- Add Travis CI integration with `.travis.yml`.
+- Badge for Travis CI in README.md
 - Add "Requirements" section to README.md.
 - Specify Rust stable v1.26 as the minimum version requirement on README.md
 
