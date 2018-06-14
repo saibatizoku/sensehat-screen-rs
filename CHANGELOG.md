@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
 - Updated `examples/letter.rs` to use new `FontString::encode_utf16` method.
 - Refactored `basic` features in the `default` feature list.
+- `sensehat_screen::{Offset, clip_pixel_frames_offset_left, clip_pixel_frames_offset_top}` now have the `#[cfg(any(feature = "offset", feature = "clip"))]` attribute.
 
 ### Removed
 - `rotate_bytes_left` and `rotate_bytes_right` implementation functions in `src/frame_clip.rs` are no longer needed.
