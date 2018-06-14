@@ -14,6 +14,10 @@ This library provides a thread-safe, strong-typed, high-level API for the LED ma
 
 This crate supports Rust stable version v1.26.0 and higher, and is tested on nightly continuously.
 
+# Changelog
+
+For a detailed summary of how changes are incorporated into the code, we keep a [CHANGELOG](./CHANGELOG.md).
+
 # Usage
 
 To use this crate with the default features, add this to your `Cargo.toml`:

@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * `Scroll::left_to_right` for `FrameDirection::LeftToRight`.
   * `Scroll::top_to_bottom` for `FrameDirection::TopToBottom`.
   * `Scroll::bottom_to_top` for `FrameDirection::BottomToTop`.
+- Add "Changelog" section to README.md, linking to this document.
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
