@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated `examples/letter.rs` to use new `FontString::encode_utf16` method.
 - Refactored `basic` features in the `default` feature list.
 
+### Removed
+- Duplicate badge for Cargo Docs from `README.md`.
+
 ## [v0.1.9] - 2018-05-01
 ### Added
 - "Contribute" section in `CHANGELOG.md` to invite people to contribute to this library.

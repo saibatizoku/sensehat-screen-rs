@@ -39,7 +39,7 @@ use sensehat_screen::{FontCollection, FrameLine, PixelColor, Screen};
 
 # Documentation
 
-You can find the documentation for the latest release at: [![docs](https://docs.rs/sensehat-screen/badge.svg)](https://docs.rs/sensehat-screen) [https://docs.rs/sensehat-screen](https://docs.rs/sensehat-screen).
+You can find the documentation for the latest release at: [https://docs.rs/sensehat-screen](https://docs.rs/sensehat-screen).
 
 It contains a general description of the types contained in the library, it is a good to place to get familiar with the methods available.
 
