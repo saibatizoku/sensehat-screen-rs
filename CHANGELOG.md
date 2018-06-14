@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Refactored `basic` features in the `default` feature list.
 
 ### Removed
+- `rotate_bytes_left` and `rotate_bytes_right` implementation functions in `src/frame_clip.rs` are no longer needed.
 - Duplicate badge for Cargo Docs from `README.md`.
 
 ## [v0.1.9] - 2018-05-01
