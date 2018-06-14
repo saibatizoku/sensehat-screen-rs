@@ -44,4 +44,32 @@ mod tests {
         scroll.reverse();
         assert_eq!(scroll.frames(), &[PixelFrame::RED, PixelFrame::BLACK]);
     }
+
+    #[test]
+    fn scrolls_create_right_to_left_frame_sequence() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        let sequence = scroll.right_to_left();
+        assert_eq!(sequence, FrameSequence { scroll: &scroll, direction: FrameDirection::RightToLeft });
+    }
+
+    #[test]
+    fn scrolls_create_left_to_right_frame_sequence() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        let sequence = scroll.left_to_right();
+        assert_eq!(sequence, FrameSequence { scroll: &scroll, direction: FrameDirection::LeftToRight });
+    }
+
+    #[test]
+    fn scrolls_create_top_to_bottom_frame_sequence() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        let sequence = scroll.top_to_bottom();
+        assert_eq!(sequence, FrameSequence { scroll: &scroll, direction: FrameDirection::TopToBottom });
+    }
+
+    #[test]
+    fn scrolls_create_bottom_to_top_frame_sequence() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        let sequence = scroll.bottom_to_top();
+        assert_eq!(sequence, FrameSequence { scroll: &scroll, direction: FrameDirection::BottomToTop });
+    }
 }

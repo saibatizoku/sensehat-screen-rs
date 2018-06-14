@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Badge for Travis CI in README.md
 - Add "Requirements" section to README.md.
 - Specify Rust stable v1.26 as the minimum version requirement on README.md
+- Tests for `Scroll` instances that create `FrameSequence` with a given `FrameDirection`.
+  * `Scroll::right_to_left` for `FrameDirection::RightToLeft`.
+  * `Scroll::left_to_right` for `FrameDirection::LeftToRight`.
+  * `Scroll::top_to_bottom` for `FrameDirection::TopToBottom`.
+  * `Scroll::bottom_to_top` for `FrameDirection::BottomToTop`.
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
