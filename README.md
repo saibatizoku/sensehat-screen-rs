@@ -10,6 +10,10 @@ The [Raspberry Pi Sense HAT](https://www.raspberrypi.org/products/sense-hat/) ha
 
 This library provides a thread-safe, strong-typed, high-level API for the LED matrix, treating it as you would any other screen on a Linux box.
 
+# Requirements
+
+This crate supports Rust stable version v1.26.0 and higher, and is tested on nightly continuously.
+
 # Usage
 
 To use this crate with the default features, add this to your `Cargo.toml`:

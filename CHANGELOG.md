@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `FontFrame` implements `BackgroundColor` trait.
 - `FontFrame` implements `StrokeColor` trait.
 - New `basic` features are a subset of the current the `default` feature list.
+- Add "Requirements" section to README.md.
+- Specify Rust stable v1.26 as the minimum version requirement on README.md
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
