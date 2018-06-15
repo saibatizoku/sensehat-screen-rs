@@ -1,6 +1,29 @@
 //! Scrolling for pixel frames on the LED Matrix.
 use super::PixelFrame;
 
+/// A sequence of frames
+#[derive(Debug, PartialEq)]
+pub enum FrameDirection {
+    RightToLeft,
+    LeftToRight,
+    BottomToTop,
+    TopToBottom,
+}
+
+/// A sequence of frames to be scrolled on the LED Matrix.
+#[derive(Debug, PartialEq)]
+pub struct FrameSequence<'a> {
+    scroll: &'a Scroll,
+    direction: FrameDirection,
+}
+
+impl<'a> FrameSequence<'a> {
+    /// Create a new `FrameSequence` from a reference to a `Scroll` and a `FrameDirection`.
+    fn new(scroll: &'a Scroll, direction: FrameDirection) -> Self {
+        FrameSequence { scroll, direction }
+    }
+}
+
 /// A type representing a collection of `PixelFrame`s that may be scrolled.
 #[derive(Debug, PartialEq)]
 pub struct Scroll(Vec<PixelFrame>);
