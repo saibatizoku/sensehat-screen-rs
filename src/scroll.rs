@@ -18,13 +18,38 @@ impl Scroll {
     pub fn reverse(&mut self) {
         self.0.reverse();
     }
+
+    pub fn right_to_left(&self) -> FrameSequence {
+        FrameSequence::new(self, FrameDirection::RightToLeft)
+    }
+
+    pub fn left_to_right(&self) -> FrameSequence {
+        FrameSequence::new(self, FrameDirection::LeftToRight)
+    }
+
+    pub fn top_to_bottom(&self) -> FrameSequence {
+        FrameSequence::new(self, FrameDirection::TopToBottom)
+    }
+
+    pub fn bottom_to_top(&self) -> FrameSequence {
+        FrameSequence::new(self, FrameDirection::BottomToTop)
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use super::super::{fonts::FontCollection, PixelColor};
 
     const SCROLL_ONE: &[PixelFrame] = &[PixelFrame::BLACK, PixelFrame::RED];
+
+    // Helper function to generate a PixelFrame out of a utf16-encoded symbol,
+    // a stroke color, and a background color.
+    fn font_pixel_frames(s: &str, stroke: PixelColor, background: PixelColor) -> Vec<PixelFrame> {
+        let fonts = FontCollection::new();
+        let fstring = fonts.sanitize_str(s).unwrap();
+        fstring.pixel_frames(stroke, background)
+    }
 
     #[test]
     fn scrolls_are_created_from_slice_of_pixel_frames() {
@@ -79,5 +104,12 @@ mod tests {
         assert_eq!(sequence,
                    FrameSequence { scroll: &scroll,
                                    direction: FrameDirection::BottomToTop });
+    }
+
+    #[test]
+    fn left_to_right_frame_sequence_is_a_collection_of_frame_clips() {
+        let scroll = Scroll::new(&font_pixel_frames("basic latin", PixelColor::YELLOW, PixelColor::BLACK));
+        let sequence = scroll.left_to_right();
+        unimplemented!();
     }
 }
