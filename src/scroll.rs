@@ -112,4 +112,11 @@ mod tests {
         let sequence = scroll.left_to_right();
         unimplemented!();
     }
+
+    #[test]
+    fn right_to_left_frame_sequence_is_a_collection_of_frame_clips() {
+        let scroll = Scroll::new(&font_pixel_frames("¡extended latin!", PixelColor::WHITE, PixelColor::BLUE));
+        let sequence = scroll.right_to_left();
+        unimplemented!();
+    }
 }
