@@ -203,14 +203,14 @@ mod tests {
 
     #[test]
     fn left_to_right_frame_sequence_is_a_collection_of_frame_clips() {
-        let scroll = Scroll::new(&font_pixel_frames("basic latin", PixelColor::YELLOW, PixelColor::BLACK));
+        let scroll = Scroll::new(&font_pixel_frames("bas", PixelColor::YELLOW, PixelColor::BLACK));
         let sequence = scroll.left_to_right();
         unimplemented!();
     }
 
     #[test]
     fn right_to_left_frame_sequence_is_a_collection_of_frame_clips() {
-        let scroll = Scroll::new(&font_pixel_frames("¡extended latin!", PixelColor::WHITE, PixelColor::BLUE));
+        let scroll = Scroll::new(&font_pixel_frames("áàä", PixelColor::WHITE, PixelColor::BLUE));
         let sequence = scroll.right_to_left();
         unimplemented!();
     }
