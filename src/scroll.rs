@@ -123,10 +123,10 @@ mod tests {
     }
 
     #[test]
-    fn scrolls_reverse_method_returns_slice_of_pixel_frames() {
+    fn scroll_has_reverse_method_returns_slice_of_pixel_frames() {
         let mut scroll = Scroll::new(SCROLL_ONE);
         scroll.reverse();
-        assert_eq!(scroll.frames(), &[PixelFrame::RED, PixelFrame::BLACK]);
+        assert_eq!(scroll.frames(), &[RED, BLK]);
     }
 
     #[test]
