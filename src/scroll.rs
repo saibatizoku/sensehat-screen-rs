@@ -59,12 +59,25 @@ impl Scroll {
     }
 }
 
+impl Index<usize> for Scroll {
+    type Output = PixelFrame;
+
+    fn index(&self, index: usize) -> &PixelFrame {
+        &self.0[index]
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*;
     use super::super::{fonts::FontCollection, PixelColor};
+    use super::*;
 
-    const SCROLL_ONE: &[PixelFrame] = &[PixelFrame::BLACK, PixelFrame::RED];
+    const BLK: PixelFrame = PixelFrame::BLACK;
+    const RED: PixelFrame = PixelFrame::RED;
+    const YLW: PixelFrame = PixelFrame::YELLOW;
+
+    const SCROLL_ONE: &[PixelFrame] = &[BLK, RED];
+    const SCROLL_TWO: &[PixelFrame] = &[BLK, RED, YLW];
 
     // Helper function to generate a PixelFrame out of a utf16-encoded symbol,
     // a stroke color, and a background color.
