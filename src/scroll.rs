@@ -106,7 +106,18 @@ mod tests {
     }
 
     #[test]
-    fn scrolls_frames_method_returns_slice_of_pixel_frames() {
+    fn scroll_has_clips_method_returns_slice_of_clips() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        let expected_clips = vec![BLK.build_clip(&RED)];
+        assert_eq!(scroll.clips(), expected_clips);
+
+        let scroll = Scroll::new(SCROLL_TWO);
+        let expected_clips = vec![BLK.build_clip(&RED), RED.build_clip(&YLW)];
+        assert_eq!(scroll.clips(), expected_clips);
+    }
+
+    #[test]
+    fn scroll_has_frames_method_returns_slice_of_pixel_frames() {
         let scroll = Scroll::new(SCROLL_ONE);
         assert_eq!(scroll.frames(), SCROLL_ONE);
     }
