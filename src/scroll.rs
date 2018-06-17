@@ -104,6 +104,7 @@ impl Scroll {
     }
 
     /// Return the number of pixel frames in the scroll.
+    #[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
     pub fn len(&self) -> usize {
         self.0.len()
     }
