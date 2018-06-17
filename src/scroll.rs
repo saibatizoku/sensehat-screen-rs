@@ -130,6 +130,14 @@ mod tests {
     }
 
     #[test]
+    fn scroll_has_len_method_returns_the_number_of_pixel_frames() {
+        let scroll = Scroll::new(&font_pixel_frames("áàäeéìiöòó",
+                                                    PixelColor::WHITE,
+                                                    PixelColor::BLUE));
+        assert_eq!(scroll.len(), 10);
+    }
+
+    #[test]
     fn scrolls_create_right_to_left_frame_sequence() {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.right_to_left();
