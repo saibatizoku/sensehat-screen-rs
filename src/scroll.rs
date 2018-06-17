@@ -30,7 +30,11 @@ pub struct Scroll(Vec<PixelFrame>);
 
 impl Scroll {
     /// Creates a new scroll from a slice of `PixelFrame`s.
+    ///
+    /// # Panics
+    /// The scroll needs at least 2 PixelFrames to be created.
     pub fn new(frames: &[PixelFrame]) -> Self {
+        assert!(frames.len() > 1);
         Scroll(frames.to_vec())
     }
 
@@ -38,8 +42,28 @@ impl Scroll {
         self.0.as_slice()
     }
 
+    pub fn clips(&self) -> Vec<Clip> {
+        let mut iter = self.0.iter().peekable();
+        let mut clips = Vec::new();
+        let mut base_frame = iter.next().unwrap();
+        loop {
+            match iter.next() {
+                Some(next) => {
+                    clips.push(base_frame.build_clip(next));
+                    base_frame = next;
+                }
+                None => break,
+            }
+        }
+        clips
+    }
+
     pub fn reverse(&mut self) {
         self.0.reverse();
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
     }
 
     pub fn right_to_left(&self) -> FrameSequence {
