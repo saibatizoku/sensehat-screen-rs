@@ -1,5 +1,6 @@
 //! Scrolling for pixel frames on the LED Matrix.
-use super::PixelFrame;
+use super::{Clip, PixelFrame};
+use std::ops::Index;
 
 /// A sequence of frames
 #[derive(Debug, PartialEq)]
