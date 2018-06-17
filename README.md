@@ -87,7 +87,7 @@ You can find working examples in the source code.
 
   A `Clip` is a `PixelFrame` that is the result of merging two `PixelFrame`. They are useful for manually constructing sequences of frames. Generally, you will prefer to work with `Scroll`, and `FrameSequence` iterators.
 
-## Basic Example
+## A Simple, Low-Level Example
 
 The following program shows how to:
 
@@ -153,7 +153,7 @@ In `default`. Support for joining a collection of `PixelFrame`s into a single `S
 
 In `default`. Enables support for serialization/deserialization with `serde`.
 
-## `linux-framebuffer` feature
+## `linux-framebuffer`
 
 In `default`. Use the Linux framebuffer to write to the LED matrix.
 
