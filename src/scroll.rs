@@ -202,6 +202,14 @@ mod tests {
     }
 
     #[test]
+    fn frame_sequence_positions_method_returns_calculated_positions_if_scroll_has_many_items() {
+        let scroll =
+            Scroll::new(&font_pixel_frames("bas  bas  ", PixelColor::YELLOW, PixelColor::BLACK));
+        let sequence = scroll.left_to_right();
+        assert_eq!(sequence.positions(), 72);
+    }
+
+    #[test]
     fn left_to_right_frame_sequence_is_a_collection_of_frame_clips() {
         let scroll = Scroll::new(&font_pixel_frames("bas", PixelColor::YELLOW, PixelColor::BLACK));
         let sequence = scroll.left_to_right();
