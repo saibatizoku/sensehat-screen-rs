@@ -32,6 +32,37 @@ impl FrameSequence {
     pub fn positions(&self) -> usize {
         self.clips.len() * 8
     }
+
+    fn offset(&self, off: u8) -> Offset {
+        match self.direction {
+            FrameDirection::RightToLeft => Offset::left(off),
+            FrameDirection::LeftToRight => Offset::right(off),
+            FrameDirection::TopToBottom => Offset::bottom(off),
+            FrameDirection::BottomToTop => Offset::top(off),
+        }
+    }
+}
+
+impl Iterator for FrameSequence {
+    type Item = PixelFrame;
+
+    fn next(&mut self) -> Option<PixelFrame> {
+        let total_pos = self.positions();
+        match self.position {
+            n if n == (total_pos + 1) => None,
+            n if n == total_pos => {
+                self.position += 1;
+                Some(self.clips[self.clips.len() - 1].offset(self.offset(8)))
+            }
+            n => {
+                self.position += 1;
+                let frame = n / 8;
+                let offset = n % 8;
+                let f = self.clips[frame];
+                Some(f.offset(self.offset(offset as u8)))
+            }
+        }
+    }
 }
 
 /// A type representing a collection of `PixelFrame`s that may be scrolled.
