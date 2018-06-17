@@ -87,25 +87,25 @@ You can find working examples in the source code.
 
   A `Clip` is a `PixelFrame` that is the result of merging two `PixelFrame`. They are useful for manually constructing sequences of frames. Generally, you will prefer to work with `Scroll`, and `FrameSequence` iterators.
 
-* [Scroll - Top To Bottom](./examples/scroll-top-bottom-rs)
+* [Scroll - Top To Bottom](./examples/scroll-top-bottom.rs)
 
   The name says it all: it builds a scroll of frames, and displays it from top to bottom, one clipped-frame at a time.
 
   Makes use of `FontString`, `Scroll`, and `FrameSequence` to work.
 
-* [Scroll - Bottom To Top](./examples/scroll-bottom-top-rs)
+* [Scroll - Bottom To Top](./examples/scroll-bottom-top.rs)
 
   The name says it all: it builds a scroll of frames, and displays it from bottom to top, one clipped-frame at a time.
 
   Makes use of `FontString`, `Scroll`, and `FrameSequence` to work.
 
-* [Scroll - Left To Right](./examples/scroll-left-right-rs)
+* [Scroll - Left To Right](./examples/scroll-left-right.rs)
 
   The name says it all: it builds a scroll of frames, and displays it from left to right, one clipped-frame at a time.
 
   Makes use of `FontString`, `Scroll`, and `FrameSequence` to work.
 
-* [Scroll - Right To Left](./examples/scroll-right-left-rs)
+* [Scroll - Right To Left](./examples/scroll-right-left.rs)
 
   The name says it all: it builds a scroll of frames, and displays it from right to left, one clipped-frame at a time.
 
