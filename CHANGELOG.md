@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.1.11] - 2018-06-17
+### Fixed
+- URLs to `examples/scroll-*.rs` on README.
+
 ## [v0.1.10] - 2018-06-17
 ### Added
 - `BackgroundColor` trait defines setter/getter of background color.
