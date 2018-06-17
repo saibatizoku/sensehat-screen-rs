@@ -29,10 +29,12 @@ impl FrameSequence {
                         position, }
     }
 
+    /// Returns the number of positions that the frame sequence can render as pixel frames.
     pub fn positions(&self) -> usize {
         self.clips.len() * 8
     }
 
+    // Returns the offset depending on the internal FrameDirection.
     fn offset(&self, off: u8) -> Offset {
         match self.direction {
             FrameDirection::RightToLeft => Offset::left(off),
@@ -79,10 +81,12 @@ impl Scroll {
         Scroll(frames.to_vec())
     }
 
+    /// Returns `&[PixelFrame]` with the pixel frames that constitute this scroll.
     pub fn frames(&self) -> &[PixelFrame] {
         self.0.as_slice()
     }
 
+    /// Returns `Vec<Clip>` with the pixel frames clips that may be rendered.
     pub fn clips(&self) -> Vec<Clip> {
         let mut iter = self.0.iter().peekable();
         let mut clips = Vec::new();
@@ -99,26 +103,32 @@ impl Scroll {
         clips
     }
 
+    /// Reverse the order of the inner pixel frames.
     pub fn reverse(&mut self) {
         self.0.reverse();
     }
 
+    /// Return the number of pixel frames in the scroll.
     pub fn len(&self) -> usize {
         self.0.len()
     }
 
+    /// Returns a `FrameSequence` iterator that moves the frames from the right to the left.
     pub fn right_to_left(&self) -> FrameSequence {
         FrameSequence::new(self, FrameDirection::RightToLeft)
     }
 
+    /// Returns a `FrameSequence` iterator that moves the frames from the left to the right.
     pub fn left_to_right(&self) -> FrameSequence {
         FrameSequence::new(self, FrameDirection::LeftToRight)
     }
 
+    /// Returns a `FrameSequence` iterator that moves the frames from the top to the bottom.
     pub fn top_to_bottom(&self) -> FrameSequence {
         FrameSequence::new(self, FrameDirection::TopToBottom)
     }
 
+    /// Returns a `FrameSequence` iterator that moves the frames from the bottom to the bottom.
     pub fn bottom_to_top(&self) -> FrameSequence {
         FrameSequence::new(self, FrameDirection::BottomToTop)
     }
