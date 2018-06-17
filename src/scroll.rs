@@ -88,17 +88,12 @@ impl Scroll {
 
     /// Returns `Vec<Clip>` with the pixel frames clips that may be rendered.
     pub fn clips(&self) -> Vec<Clip> {
-        let mut iter = self.0.iter().peekable();
+        let mut iter = self.0.iter();
         let mut clips = Vec::new();
         let mut base_frame = iter.next().unwrap();
-        loop {
-            match iter.next() {
-                Some(next) => {
-                    clips.push(base_frame.build_clip(next));
-                    base_frame = next;
-                }
-                None => break,
-            }
+        for next in iter {
+            clips.push(base_frame.build_clip(next));
+            base_frame = next;
         }
         clips
     }
