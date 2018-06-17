@@ -12,15 +12,24 @@ pub enum FrameDirection {
 
 /// A sequence of frames to be scrolled on the LED Matrix.
 #[derive(Debug, PartialEq)]
-pub struct FrameSequence<'a> {
-    scroll: &'a Scroll,
+pub struct FrameSequence {
+    clips: Vec<Clip>,
     direction: FrameDirection,
+    position: usize,
 }
 
-impl<'a> FrameSequence<'a> {
+impl FrameSequence {
     /// Create a new `FrameSequence` from a reference to a `Scroll` and a `FrameDirection`.
-    fn new(scroll: &'a Scroll, direction: FrameDirection) -> Self {
-        FrameSequence { scroll, direction }
+    fn new(scroll: &Scroll, direction: FrameDirection) -> Self {
+        let position = 0usize;
+        let clips = scroll.clips();
+        FrameSequence { clips,
+                        direction,
+                        position, }
+    }
+
+    pub fn positions(&self) -> usize {
+        self.clips.len() * 8
     }
 }
 
