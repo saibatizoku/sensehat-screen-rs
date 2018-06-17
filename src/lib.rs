@@ -106,3 +106,6 @@ pub use self::frame::{FrameLine, PixelFrame};
 
 #[cfg(feature = "linux-framebuffer")]
 pub use self::screen::Screen;
+
+#[cfg(feature = "scroll")]
+pub use self::scroll::Scroll;
