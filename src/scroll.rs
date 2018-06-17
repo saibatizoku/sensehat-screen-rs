@@ -166,8 +166,9 @@ mod tests {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.right_to_left();
         assert_eq!(sequence,
-                   FrameSequence { scroll: &scroll,
-                                   direction: FrameDirection::RightToLeft });
+                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
+                                   direction: FrameDirection::RightToLeft,
+                                   position: 0, });
     }
 
     #[test]
@@ -175,8 +176,9 @@ mod tests {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.left_to_right();
         assert_eq!(sequence,
-                   FrameSequence { scroll: &scroll,
-                                   direction: FrameDirection::LeftToRight });
+                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
+                                   direction: FrameDirection::LeftToRight,
+                                   position: 0, });
     }
 
     #[test]
@@ -184,8 +186,9 @@ mod tests {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.top_to_bottom();
         assert_eq!(sequence,
-                   FrameSequence { scroll: &scroll,
-                                   direction: FrameDirection::TopToBottom });
+                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
+                                   direction: FrameDirection::TopToBottom,
+                                   position: 0, });
     }
 
     #[test]
@@ -193,8 +196,9 @@ mod tests {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.bottom_to_top();
         assert_eq!(sequence,
-                   FrameSequence { scroll: &scroll,
-                                   direction: FrameDirection::BottomToTop });
+                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
+                                   direction: FrameDirection::BottomToTop,
+                                   position: 0, });
     }
 
     #[test]
