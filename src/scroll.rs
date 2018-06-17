@@ -211,6 +211,20 @@ mod tests {
     }
 
     #[test]
+    fn scroll_implements_index_trait_with_pixel_frame_output() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        assert_eq!(scroll[0], BLK);
+        assert_eq!(scroll[1], RED);
+    }
+
+    #[test]
+    #[should_panic]
+    fn scroll_implements_index_trait_with_pixel_frame_output_panics_when_out_of_bounds() {
+        let scroll = Scroll::new(SCROLL_ONE);
+        assert_eq!(scroll[4], BLK);
+    }
+
+    #[test]
     fn frame_sequence_positions_method_returns_calculated_positions_if_scroll_has_many_items() {
         let scroll =
             Scroll::new(&font_pixel_frames("bas  bas  ", PixelColor::YELLOW, PixelColor::BLACK));
