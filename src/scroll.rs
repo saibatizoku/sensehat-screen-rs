@@ -88,7 +88,19 @@ mod tests {
     }
 
     #[test]
-    fn scrolls_are_created_from_slice_of_pixel_frames() {
+    #[should_panic]
+    fn scroll_is_created_from_empty_slice_of_pixel_frames_will_panic() {
+        let _ = Scroll::new(&[]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn scroll_is_created_from_slice_of_1_pixel_frame_will_panic() {
+        let _ = Scroll::new(&[PixelFrame::BLUE]);
+    }
+
+    #[test]
+    fn scroll_is_created_from_slice_of_at_least_2_pixel_frames() {
         let scroll = Scroll::new(SCROLL_ONE);
         assert_eq!(scroll, Scroll(SCROLL_ONE.to_vec()));
     }
