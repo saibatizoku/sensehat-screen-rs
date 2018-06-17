@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.1.10] - 2018-06-17
 ### Added
 - `BackgroundColor` trait defines setter/getter of background color.
 - `StrokeColor` trait defines setter/getter of stroke color.
@@ -15,8 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `scroll` trait to join a collection of `PixelFrame`s into a single `Scroll`.
 - `Scroll` type to wrap an inner `Vec<PixelFrame>`.
   * `Scroll::new(&[PixelFrame])` method initializes a scroll.
+  * `Scroll::clips` method returns a `Vec<Clip>` made from the inner `Vec<PixelFrame>`.
   * `Scroll::frames` method returns a slice of the inner `Vec<PixelFrame>`.
   * `Scroll::reverse` method reverses the order of the inner `Vec<PixelFrame>`.
+  * `Scroll::len` method the length of the inner `Vec<PixelFrame>`.
 - Tests and implementation for new `FontFrame` type, which is a font with stroke and background colors:
   * `FontFrame::new`
   * `FontFrame::pixel_frame`
@@ -34,6 +38,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * `Scroll::top_to_bottom` for `FrameDirection::TopToBottom`.
   * `Scroll::bottom_to_top` for `FrameDirection::BottomToTop`.
 - Add "Changelog" section to README.md, linking to this document.
+- Add `FrameSequence` type.
+- Add `examples/scroll-top-bottom.rs`.
+- Add `examples/scroll-bottom-top.rs`.
+- Add `examples/scroll-left-right.rs`.
+- Add `examples/scroll-right-left.rs`.
+- Add descriptions to examples on README.md.
+- Add scroll examples to README.md
 
 ### Changed
 - `FontString` wraps `Vec<font8x8::FontUtf16>` instead of `Vec<u16>`.
