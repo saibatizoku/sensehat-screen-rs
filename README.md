@@ -55,10 +55,37 @@ It contains a general description of the types contained in the library, it is a
 You can find working examples in the source code.
 
 * [Blinking RGB shapes](./examples/blink.rs)
+
+  This example builds low-level `FrameLine`s by hand, writes them
+  to the `Screen` at set intervals.
+
 * [A letter from ゆにち (Yunichi) to Toño](./examples/letter.rs)
+
+  This example makes use of the built-in 8x8 `FontCollection`. The collection is used to sanitize a user-provided `&str`, returning a `FontString` that includes only those characters provided by the FontCollection (basically, the full `latin` set, some `greek`, some `hiragana`, and legacy `ascii box` and `ascii block` sets).
+
+  Each font is given stroke color of 50% white, `PixelColor::WHITE.dim(0.5)`, and then it is converted into a `FrameLine`, which is finally written to the `Screen`.
+
+  See the [font8x8](https://github.com/saibatizoku/font8x8-rs) crate for more details.
+
 * [Rotate demo](./examples/rotate.rs)
+
+  This example makes use of `PixelFrame`, an ergonomic wrapper for representing each pixel in the 8x8 LED Matrix: `[PixelColor; 64]`.
+
+  Like the `letter` example, it makes use of the built-in `FontCollection`, to create two hand-made `PixelFrame`s, made from the a yellow-colored `Ñ`, and a magenta-colored `ó`.
+
+  Each frame is then subject to counter-clockwise rotation in steps of 90°.
+
 * [Offset demo](./examples/offset.rs)
+
+  Starts with an empty screen, and two font-symbols. Each symbol is then made to slide-in from the left by setting an `Offset` progressively.
+
+  Once the symbol is fully displayed, it slides-out to the right, again by incrementing the offset, until the symbol disappears.
+
+  The same process is done with the top-bottom offset directions.
+
 * [Clip demo](./examples/clip.rs)
+
+  A `Clip` is a `PixelFrame` that is the result of merging two `PixelFrame`. They are useful for manually constructing sequences of frames. Generally, you will prefer to work with `Scroll`, and `FrameSequence` iterators.
 
 ## Basic Example
 
