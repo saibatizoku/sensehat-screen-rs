@@ -292,31 +292,38 @@ mod tests {
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(1)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(1)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(2)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(2)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(3)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(3)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(4)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(4)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(5)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(5)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(6)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(6)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::right(7)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(7)));
 
         let mut seq = scroll.left_to_right();
         let eighth_frame = seq.nth(8).unwrap();
@@ -324,31 +331,38 @@ mod tests {
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(1)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(1)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(2)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(2)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(3)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(3)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(4)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(4)));
 
         let mut seq = scroll.left_to_right();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(5)));
+        assert_eq!(twelfth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(5)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(6)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(6)));
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::right(7)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(7)));
 
         let mut seq = scroll.left_to_right();
         let last_frame = seq.nth(16).unwrap();
@@ -365,31 +379,38 @@ mod tests {
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(1)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(1)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(2)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(2)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(3)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(3)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(4)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(4)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(5)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(5)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(6)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(6)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::left(7)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(7)));
 
         let mut seq = scroll.right_to_left();
         let eighth_frame = seq.nth(8).unwrap();
@@ -397,31 +418,38 @@ mod tests {
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(1)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(1)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(2)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(2)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(3)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(3)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(4)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(4)));
 
         let mut seq = scroll.right_to_left();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(5)));
+        assert_eq!(twelfth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(5)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(6)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(6)));
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::left(7)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(7)));
 
         let mut seq = scroll.right_to_left();
         let last_frame = seq.nth(16).unwrap();
@@ -438,31 +466,38 @@ mod tests {
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(1)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(1)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(2)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(2)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(3)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(3)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(4)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(4)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(5)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(5)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(6)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(6)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(7)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(7)));
 
         let mut seq = scroll.top_to_bottom();
         let eighth_frame = seq.nth(8).unwrap();
@@ -470,31 +505,38 @@ mod tests {
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(1)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(1)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(2)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(2)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(3)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(3)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(4)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(4)));
 
         let mut seq = scroll.top_to_bottom();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(5)));
+        assert_eq!(twelfth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(5)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(6)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(6)));
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(7)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(7)));
 
         let mut seq = scroll.top_to_bottom();
         let last_frame = seq.nth(16).unwrap();
@@ -511,31 +553,38 @@ mod tests {
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(1)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(1)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(2)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(2)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(3)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(3)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(4)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(4)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(5)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(5)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(6)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(6)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame, scroll[0].build_clip(&scroll[1]).offset(Offset::top(7)));
+        assert_eq!(nth_frame,
+                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(7)));
 
         let mut seq = scroll.bottom_to_top();
         let eighth_frame = seq.nth(8).unwrap();
@@ -543,31 +592,38 @@ mod tests {
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(1)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(1)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(2)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(2)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(3)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(3)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(4)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(4)));
 
         let mut seq = scroll.bottom_to_top();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(5)));
+        assert_eq!(twelfth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(5)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(6)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(6)));
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame, scroll[1].build_clip(&scroll[2]).offset(Offset::top(7)));
+        assert_eq!(nth_frame,
+                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(7)));
 
         let mut seq = scroll.bottom_to_top();
         let last_frame = seq.nth(16).unwrap();

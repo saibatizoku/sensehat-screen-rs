@@ -10,6 +10,7 @@ use sensehat_screen::{font_to_pixel_frame, FontCollection, PixelColor, PixelFram
 fn main() {
     unimplemented!("This examples needs the 'default' features.");
 }
+
 #[cfg(feature = "default")]
 fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
