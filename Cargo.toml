@@ -26,7 +26,7 @@ clip = []
 fonts = ["font8x8"]
 offset = []
 rotate = []
-scroll = []
+scroll = ["clip"]
 serde-support = ["serde", "serde_derive"]
 
 # feature for using the LED Matrix via the linux framebuffer (/dev/fb*)
