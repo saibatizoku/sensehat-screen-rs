@@ -226,7 +226,7 @@ mod tests {
     }
 
     #[test]
-    fn frame_sequence_positions_method_returns_calculated_positions_if_scroll_has_many_items() {
+    fn frame_sequence_positions_method_returns_number_of_pixel_frame_positions() {
         let scroll =
             Scroll::new(&font_pixel_frames("bas  bas  ", PixelColor::YELLOW, PixelColor::BLACK));
         let sequence = scroll.left_to_right();
