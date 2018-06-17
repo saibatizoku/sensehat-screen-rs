@@ -318,7 +318,7 @@ impl PixelFrame {
 ///     assert_eq!(clip.offset(Offset::Left(8)), frame_2);
 /// }
 /// ```
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug, Default, PartialEq)]
 pub struct Clip {
     first: PixelFrame,
     second: PixelFrame,
