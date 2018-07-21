@@ -289,8 +289,7 @@ mod tests {
     fn font_string_chars_method_returns_vec_of_chars() {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("┷│││┯").unwrap();
-        assert_eq!(font_string.chars(),
-                   vec!['┷', '│', '│', '│', '┯']);
+        assert_eq!(font_string.chars(), vec!['┷', '│', '│', '│', '┯']);
     }
 
     #[test]
