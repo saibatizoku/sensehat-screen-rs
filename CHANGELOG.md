@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Replace `Utf16Fonts` with `UnicodeFonts` trait.
 - Replace `u16` with `char`.
 - Replace `FontString::encode_utf16` with `FontString::chars` method (breaking change).
+### Removed
+- `fonts::print_collection` function.
+
 ## [v0.1.11] - 2018-06-17
 ### Fixed
 - URLs to `examples/scroll-*.rs` on README.

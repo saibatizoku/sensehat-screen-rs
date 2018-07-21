@@ -168,15 +168,6 @@ impl StrokeColor for FontFrame {
     }
 }
 
-/// Display the contents of a `FontCollection` on `stdout`.
-pub fn print_collection(collection: &FontCollection) {
-    for key in collection.0.keys() {
-        println!("'\\u{{{:04x}}}' {:?}",
-                 key,
-                 String::from_utf16_lossy(&[*key]));
-    }
-}
-
 // Render a font symbol with a stroke color and a background color.
 fn font_to_pixel_color_array_with_bg(symbol: &[u8; 8],
                                      color: PixelColor,
