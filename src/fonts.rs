@@ -11,21 +11,21 @@ use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
 lazy_static! {
-    /// A `static HashMap<u16, FontUnicode>` that holds the entire set of fonts supported
+    /// A `static HashMap<char, FontUnicode>` that holds the entire set of fonts supported
     /// for the `Screen`.
-    pub static ref FONT_HASHMAP: HashMap<u16, FontUnicode> = default_hashmap();
+    pub static ref FONT_HASHMAP: HashMap<char, FontUnicode> = default_hashmap();
     /// A `static FontCollection` that offers a higher-level API for working with
     /// pixel frames, clips, scrolls, etc.
     ///
     /// `FONT_COLLECTION.sanitize_str(&str)` returns a sanitized `FontString`,
     /// and use that to render pixel frames..
     ///
-    /// `FONT_COLLECTION.get(font: u16)` returns the low-level `FontUnicode` if the font
+    /// `FONT_COLLECTION.get(font: char)` returns the low-level `FontUnicode` if the font
     /// is found in the collection.
     pub static ref FONT_COLLECTION: FontCollection = FontCollection(default_hashmap());
 }
 
-fn default_hashmap() -> HashMap<u16, FontUnicode> {
+fn default_hashmap() -> HashMap<char, FontUnicode> {
     BASIC_FONTS.to_vec()
                .into_iter()
                .chain(LATIN_FONTS.to_vec().into_iter())
@@ -39,7 +39,7 @@ fn default_hashmap() -> HashMap<u16, FontUnicode> {
 /// A set of font symbols that can be printed on a `Screen`.
 #[derive(Clone, Debug, PartialEq)]
 //#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct FontCollection(HashMap<u16, FontUnicode>);
+pub struct FontCollection(HashMap<char, FontUnicode>);
 
 impl FontCollection {
     /// Create a default `FontCollection`, containing the Unicode constants
@@ -50,23 +50,23 @@ impl FontCollection {
     }
 
     /// Create a `FontCollection` with a custom HashMap of font symbols.
-    pub fn from_hashmap(hashmap: HashMap<u16, FontUnicode>) -> Self {
+    pub fn from_hashmap(hashmap: HashMap<char, FontUnicode>) -> Self {
         FontCollection(hashmap)
     }
 
     /// Get an `Option` with the symbol's byte rendering.
-    pub fn get(&self, symbol: u16) -> Option<&FontUnicode> {
+    pub fn get(&self, symbol: char) -> Option<&FontUnicode> {
         self.0.get(&symbol)
     }
 
     /// Search if collection has a symbol by its unicode key.
-    pub fn contains_key(&self, symbol: u16) -> bool {
+    pub fn contains_key(&self, symbol: char) -> bool {
         self.0.contains_key(&symbol)
     }
 
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
-        let valid = s.encode_utf16()
+        let valid = s.chars()
                      .filter(|c| self.0.contains_key(c))
                      .map(|sym| *self.get(sym).unwrap())
                      .collect::<Vec<FontUnicode>>();
@@ -91,14 +91,14 @@ impl FontString {
         FontString(Default::default())
     }
 
-    /// Render the font string as a collection of unicode value points, `Vec<u16>`.
-    pub fn encode_utf16(&self) -> Vec<u16> {
-        self.0.iter().map(|font| font.utf16()).collect::<Vec<u16>>()
+    /// Render the font string as a collection of unicode value points, `Vec<char>`.
+    pub fn chars(&self) -> Vec<char> {
+        self.0.iter().map(|font| font.char()).collect::<Vec<char>>()
     }
 
     /// Render the font string as a `String`.
     pub fn to_string(&self) -> String {
-        String::from_utf16(&self.encode_utf16()).unwrap()
+        self.0.iter().map(|font| font.char()).collect::<String>()
     }
 
     /// Returns a `Vec<FontFrame>` for each inner font.
@@ -277,14 +277,14 @@ mod tests {
     #[test]
     fn font_collection_gets_optional_symbol_by_unicode_key() {
         let font_set = FontCollection::new();
-        let symbol = font_set.get('ñ' as u16);
+        let symbol = font_set.get('ñ');
         assert!(symbol.is_some());
     }
 
     #[test]
     fn font_collection_searches_for_symbols_by_unicode_key() {
         let font_set = FontCollection::new();
-        let has_symbol = font_set.contains_key('ñ' as u16);
+        let has_symbol = font_set.contains_key('ñ');
         assert!(has_symbol);
     }
 
@@ -295,11 +295,11 @@ mod tests {
     }
 
     #[test]
-    fn font_string_encode_utf16_method_returns_vec_of_u16() {
+    fn font_string_chars_method_returns_vec_of_chars() {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("┷│││┯").unwrap();
-        assert_eq!(font_string.encode_utf16(),
-                   vec![0x2537, 0x2502, 0x2502, 0x2502, 0x252F]);
+        assert_eq!(font_string.chars(),
+                   vec!['┷', '│', '│', '│', '┯']);
     }
 
     #[test]
@@ -313,9 +313,9 @@ mod tests {
     fn font_string_font_frames_returns_a_vec_of_font_frame() {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("Mち┶").unwrap();
-        let bas_font = font_set.get('M' as u16).unwrap();
-        let hir_font = font_set.get('ち' as u16).unwrap();
-        let box_font = font_set.get('┶' as u16).unwrap();
+        let bas_font = font_set.get('M').unwrap();
+        let hir_font = font_set.get('ち').unwrap();
+        let box_font = font_set.get('┶').unwrap();
         let ft_frames = font_string.font_frames(PixelColor::YELLOW, PixelColor::BLACK);
         assert_eq!(ft_frames,
                    vec![FontFrame { font: *bas_font,
@@ -341,7 +341,7 @@ mod tests {
     #[test]
     fn fn_font_to_pixel_color_array_with_bg_creates_new_array() {
         let font_set = FontCollection::new();
-        let font = font_set.get('┶' as u16).unwrap();
+        let font = font_set.get('┶').unwrap();
         let px_array = font_to_pixel_color_array_with_bg(&font.byte_array(),
                                                          PixelColor::BLUE,
                                                          PixelColor::YELLOW);
@@ -353,7 +353,7 @@ mod tests {
     #[test]
     fn fn_font_to_pixel_color_array_creates_new_array() {
         let font_set = FontCollection::new();
-        let font = font_set.get('M' as u16).unwrap();
+        let font = font_set.get('M').unwrap();
         let px_array = font_to_pixel_color_array(&font.byte_array(), PixelColor::BLUE);
         for (idx, px) in px_array.into_iter().enumerate() {
             assert_eq!(*px, BASIC_FONT[idx]);
@@ -363,7 +363,7 @@ mod tests {
     #[test]
     fn fn_font_to_pixel_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
-        let chi_font = font_set.get('ち' as u16).unwrap();
+        let chi_font = font_set.get('ち').unwrap();
         let px_frame = font_to_pixel_frame(&chi_font.byte_array(), PixelColor::RED);
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
     }
@@ -371,7 +371,7 @@ mod tests {
     #[test]
     fn fn_font_to_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
-        let box_font = font_set.get('┶' as u16).unwrap();
+        let box_font = font_set.get('┶').unwrap();
         let px_frame_line = font_to_frame(&box_font.byte_array(), PixelColor::GREEN);
         assert_eq!(px_frame_line, PixelFrame::from(BOX_FONT).frame_line());
     }
@@ -379,7 +379,7 @@ mod tests {
     #[test]
     fn font_frames_are_created_from_ut16_font_a_stroke_and_a_background_color() {
         let font_set = FontCollection::new();
-        let letter_a = font_set.get('a' as u16).unwrap();
+        let letter_a = font_set.get('a').unwrap();
         let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         assert_eq!(font_frame,
                    FontFrame { font: *letter_a,
@@ -390,7 +390,7 @@ mod tests {
     #[test]
     fn font_frames_is_represented_as_a_pixel_frame() {
         let font_set = FontCollection::new();
-        let hiragana_font = font_set.get('ち' as u16).unwrap();
+        let hiragana_font = font_set.get('ち').unwrap();
         let font_frame = FontFrame::new(hiragana_font.clone(), PixelColor::RED, PixelColor::BLACK);
         let px_frame = font_frame.pixel_frame();
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
@@ -399,7 +399,7 @@ mod tests {
     #[test]
     fn pixel_frame_implements_from_font_frame_trait() {
         let font_set = FontCollection::new();
-        let hiragana_font = font_set.get('ち' as u16).unwrap();
+        let hiragana_font = font_set.get('ち').unwrap();
         let font_frame = FontFrame::new(hiragana_font.clone(), PixelColor::RED, PixelColor::BLACK);
         let px_frame = PixelFrame::from(font_frame);
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
@@ -408,7 +408,7 @@ mod tests {
     #[test]
     fn font_frame_sets_background_color() {
         let font_set = FontCollection::new();
-        let letter_a = font_set.get('a' as u16).unwrap();
+        let letter_a = font_set.get('a').unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_background_color(PixelColor::RED);
         assert_eq!(font_frame,
@@ -420,7 +420,7 @@ mod tests {
     #[test]
     fn font_frame_gets_background_color() {
         let font_set = FontCollection::new();
-        let letter_a = font_set.get('a' as u16).unwrap();
+        let letter_a = font_set.get('a').unwrap();
         let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::GREEN);
         assert_eq!(font_frame.get_background_color(), PixelColor::GREEN);
     }
@@ -428,7 +428,7 @@ mod tests {
     #[test]
     fn font_frame_sets_stroke_color() {
         let font_set = FontCollection::new();
-        let letter_a = font_set.get('a' as u16).unwrap();
+        let letter_a = font_set.get('a').unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_stroke_color(PixelColor::YELLOW);
         assert_eq!(font_frame,
@@ -440,7 +440,7 @@ mod tests {
     #[test]
     fn font_frame_gets_stroke_color() {
         let font_set = FontCollection::new();
-        let letter_a = font_set.get('a' as u16).unwrap();
+        let letter_a = font_set.get('a').unwrap();
         let font_frame = FontFrame::new(letter_a.clone(), PixelColor::BLUE, PixelColor::WHITE);
         assert_eq!(font_frame.get_stroke_color(), PixelColor::BLUE);
     }
