@@ -16,7 +16,7 @@ fn main() {
     let fonts = FontCollection::new();
 
     for &(sym, color) in &[('þ', PixelColor::CYAN), ('ß', PixelColor::WHITE.dim(0.5))] {
-        let font = fonts.get(sym as u16).unwrap();
+        let font = fonts.get(sym).unwrap();
         let symbol = font_to_pixel_frame(&font.byte_array(), color);
 
         // Starts with an empty screen, then the symbol slides from the left,

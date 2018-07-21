@@ -23,7 +23,7 @@ fn main() {
 
     let screen_text = fonts.sanitize_str(letter).unwrap();
 
-    for unicode in screen_text.encode_utf16() {
+    for unicode in screen_text.chars() {
         if let Some(symbol) = fonts.get(unicode) {
             let frame = font_to_frame(&symbol.byte_array(), white_50_pct);
             screen.write_frame(&frame);

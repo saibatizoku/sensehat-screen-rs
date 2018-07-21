@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Replace `Utf16Fonts` with `UnicodeFonts` trait.
 - Replace `u16` with `char`.
 - Replace `FontString::encode_utf16` with `FontString::chars` method (breaking change).
+- Update examples to use new Fonts API.
 ### Removed
 - `fonts::print_collection` function.
 

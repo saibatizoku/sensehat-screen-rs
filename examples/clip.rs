@@ -19,7 +19,7 @@ fn main() {
     let letters = "a e i o u ";
     let letter_color = PixelColor::YELLOW.dim(0.5);
 
-    let frames = letters.encode_utf16()
+    let frames = letters.chars()
                         .map(|sym| {
                                  let font = fonts.get(sym).unwrap();
                                  font_to_pixel_frame(&font.byte_array(), letter_color)
