@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Update to `font8x8 = 0.2` in Cargo.toml.
+- Replace `FontUtf16` with `FontUnicode` type.
 ## [v0.1.11] - 2018-06-17
 ### Fixed
 - URLs to `examples/scroll-*.rs` on README.

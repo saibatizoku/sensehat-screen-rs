@@ -4,28 +4,28 @@ use super::{
 };
 
 pub use font8x8::{
-    FontUtf16, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
+    FontUnicode, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
     LATIN_FONTS,
 };
 use std::collections::HashMap;
 use std::string::FromUtf16Error;
 
 lazy_static! {
-    /// A `static HashMap<u16, FontUtf16>` that holds the entire set of fonts supported
+    /// A `static HashMap<u16, FontUnicode>` that holds the entire set of fonts supported
     /// for the `Screen`.
-    pub static ref FONT_HASHMAP: HashMap<u16, FontUtf16> = default_hashmap();
+    pub static ref FONT_HASHMAP: HashMap<u16, FontUnicode> = default_hashmap();
     /// A `static FontCollection` that offers a higher-level API for working with
     /// pixel frames, clips, scrolls, etc.
     ///
     /// `FONT_COLLECTION.sanitize_str(&str)` returns a sanitized `FontString`,
     /// and use that to render pixel frames..
     ///
-    /// `FONT_COLLECTION.get(font: u16)` returns the low-level `FontUtf16` if the font
+    /// `FONT_COLLECTION.get(font: u16)` returns the low-level `FontUnicode` if the font
     /// is found in the collection.
     pub static ref FONT_COLLECTION: FontCollection = FontCollection(default_hashmap());
 }
 
-fn default_hashmap() -> HashMap<u16, FontUtf16> {
+fn default_hashmap() -> HashMap<u16, FontUnicode> {
     BASIC_FONTS.to_vec()
                .into_iter()
                .chain(LATIN_FONTS.to_vec().into_iter())
@@ -39,7 +39,7 @@ fn default_hashmap() -> HashMap<u16, FontUtf16> {
 /// A set of font symbols that can be printed on a `Screen`.
 #[derive(Clone, Debug, PartialEq)]
 //#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct FontCollection(HashMap<u16, FontUtf16>);
+pub struct FontCollection(HashMap<u16, FontUnicode>);
 
 impl FontCollection {
     /// Create a default `FontCollection`, containing the Unicode constants
@@ -50,12 +50,12 @@ impl FontCollection {
     }
 
     /// Create a `FontCollection` with a custom HashMap of font symbols.
-    pub fn from_hashmap(hashmap: HashMap<u16, FontUtf16>) -> Self {
+    pub fn from_hashmap(hashmap: HashMap<u16, FontUnicode>) -> Self {
         FontCollection(hashmap)
     }
 
     /// Get an `Option` with the symbol's byte rendering.
-    pub fn get(&self, symbol: u16) -> Option<&FontUtf16> {
+    pub fn get(&self, symbol: u16) -> Option<&FontUnicode> {
         self.0.get(&symbol)
     }
 
@@ -69,7 +69,7 @@ impl FontCollection {
         let valid = s.encode_utf16()
                      .filter(|c| self.0.contains_key(c))
                      .map(|sym| *self.get(sym).unwrap())
-                     .collect::<Vec<FontUtf16>>();
+                     .collect::<Vec<FontUnicode>>();
         Ok(FontString(valid))
     }
 }
@@ -80,10 +80,10 @@ impl Default for FontCollection {
     }
 }
 
-/// A `FontString` is a collection of `FontUtf16` which can be rendered to frames for the LED
+/// A `FontString` is a collection of `FontUnicode` which can be rendered to frames for the LED
 /// Matrix.
 #[derive(Clone, Debug, Default, PartialEq)]
-pub struct FontString(Vec<FontUtf16>);
+pub struct FontString(Vec<FontUnicode>);
 
 impl FontString {
     /// Create an empty `FontString`.
@@ -120,7 +120,7 @@ impl FontString {
 #[derive(Debug, PartialEq)]
 pub struct FontFrame {
     /// `UTF16` font
-    font: FontUtf16,
+    font: FontUnicode,
     /// Color for the font stroke
     stroke: PixelColor,
     /// Color for the font background
@@ -129,7 +129,7 @@ pub struct FontFrame {
 
 impl FontFrame {
     /// Create a new font frame with a `stroke` color, and a `background` color.
-    pub fn new(font: FontUtf16, stroke: PixelColor, background: PixelColor) -> Self {
+    pub fn new(font: FontUnicode, stroke: PixelColor, background: PixelColor) -> Self {
         FontFrame { font,
                     stroke,
                     background, }
