@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.2.0] - 2018-07-20
+### Fixed
+- Correct version in Usage section of README.md
+
+## [v0.2.0] - 2018-07-20
+### Added
+- `lazy_static = "1.0"` to Cargo.toml.
+- Lazily-initiated static `fonts::FONT_HASHMAP` exported in top-level.
+- Lazily-initiated static `fonts::FONT_COLLECTION` exported in top-level.
+
+### Changed
+- Update to `font8x8 = 0.2` in Cargo.toml.
+- Replace `FontUtf16` with `FontUnicode` type.
+- Replace `Utf16Fonts` with `UnicodeFonts` trait.
+- Replace `u16` with `char`.
+- Replace `FontString::encode_utf16` with `FontString::chars` method (breaking change).
+- Update examples to use new Fonts API.
+- `examples/letter.rs` uses `FONT_COLLECTION` instead of manually setting up a `FontCollection`.
+- `examples/clip.rs` uses `FONT_COLLECTION` instead of manually setting up a `FontCollection`.
+
+### Removed
+- `fonts::print_collection` function.
+
 ## [v0.1.11] - 2018-06-17
 ### Fixed
 - URLs to `examples/scroll-*.rs` on README.

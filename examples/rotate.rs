@@ -16,7 +16,7 @@ fn main() {
     let fonts = FontCollection::new();
 
     for &(sym, color) in &[('Ñ', PixelColor::YELLOW), ('ó', PixelColor::MAGENTA)] {
-        let font = fonts.get(sym as u16).unwrap();
+        let font = fonts.get(sym).unwrap();
         let symbol = font_to_pixel_frame(&font.byte_array(), color);
         let symbol_90 = symbol.rotate(Rotate::Ccw90);
         let symbol_180 = symbol.rotate(Rotate::Ccw180);

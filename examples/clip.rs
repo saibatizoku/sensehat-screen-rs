@@ -4,7 +4,7 @@ extern crate sensehat_screen;
 #[cfg(feature = "default")]
 use sensehat_screen::Offset;
 #[cfg(feature = "default")]
-use sensehat_screen::{font_to_pixel_frame, FontCollection, PixelColor, PixelFrame, Screen};
+use sensehat_screen::{font_to_pixel_frame, PixelColor, PixelFrame, Screen, FONT_COLLECTION};
 
 #[cfg(not(feature = "default"))]
 fn main() {
@@ -14,14 +14,13 @@ fn main() {
 #[cfg(feature = "default")]
 fn main() {
     let mut screen = Screen::open("/dev/fb1").unwrap();
-    let fonts = FontCollection::new();
 
     let letters = "a e i o u ";
     let letter_color = PixelColor::YELLOW.dim(0.5);
 
-    let frames = letters.encode_utf16()
+    let frames = letters.chars()
                         .map(|sym| {
-                                 let font = fonts.get(sym).unwrap();
+                                 let font = FONT_COLLECTION.get(sym).unwrap();
                                  font_to_pixel_frame(&font.byte_array(), letter_color)
                              })
                         .collect::<Vec<PixelFrame>>();

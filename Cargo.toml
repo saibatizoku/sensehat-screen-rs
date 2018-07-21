@@ -1,7 +1,7 @@
 [package]
 name = "sensehat-screen"
 description = "A library for using the 8x8-LED matrix, with RGB565 coloring, on the Raspberry Pi Sense HAT device."
-version = "0.1.11"
+version = "0.2.1"
 authors = ["Joaquin Rosales <globojorro@gmail.com>"]
 keywords = ["sensehat", "screen", "8x8", "raspberry-pi", "framebuffer"]
 categories = ["embedded", "rendering", "visualization", "encoding"]
@@ -13,7 +13,8 @@ build = "build.rs"
 
 [dependencies]
 framebuffer = { version = "0.1", optional = true }
-font8x8 = { version = "0.1.5", optional = true }
+font8x8 = { version = "0.2", optional = true }
+lazy_static = "1.0"
 serde = { version = "1.0", optional = true }
 serde_derive = { version = "1.0", optional = true }
 
