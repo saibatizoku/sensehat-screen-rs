@@ -23,14 +23,14 @@ For a detailed summary of how changes are incorporated into the code, we keep a 
 To use this crate with the default features, add this to your `Cargo.toml`:
 ```cargo
 [dependencies]
-sensehat-screen = "0.1"
+sensehat-screen = "0.2"
 ```
 
 or, to manually specify the features::
 
 ```cargo
 [dependencies]
-sensehat-screen = { version = "0.1", default-features = false, features = ["fonts"] }
+sensehat-screen = { version = "0.2", default-features = false, features = ["fonts"] }
 ```
 
 Then you can use it with your crate:
@@ -38,7 +38,7 @@ Then you can use it with your crate:
 ```rust
 extern crate sensehat_screen
 
-use sensehat_screen::{FontCollection, FrameLine, PixelColor, Screen};
+use sensehat_screen::{FrameLine, PixelColor, Screen, FONT_COLLECTION};
 ```
 
 # Documentation
@@ -155,8 +155,6 @@ A set of features that don't require the hardware. This is mostly code that you 
 
 In `default`. A collection of legacy 8x8 fonts, renderable on the LED matrix.
 
-See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
-
 ### `offset`
 
 In `default`. Support for offsetting the `PixelFrame` left/right/top/bottom. Requires `clip`.
@@ -186,6 +184,7 @@ In `default`. Use the Linux framebuffer to write to the LED matrix.
 ## `big-endian`
 
 Uses big-endian format, suitable for non-AMD64/x86-64 processors. This is used when encoding/decoding 16-bit RGB565 to/from 24-bit RGB.
+See [this](https://en.wikipedia.org/wiki/Endianness#Current_architectures) for more information.
 
 Feature Wish List
 =================
