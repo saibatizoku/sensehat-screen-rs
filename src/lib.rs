@@ -109,3 +109,5 @@ pub use self::screen::Screen;
 
 #[cfg(feature = "scroll")]
 pub use self::scroll::Scroll;
+
+pub use framebuffer::FramebufferError;
