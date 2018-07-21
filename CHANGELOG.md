@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `lazy_static = "1.0"` to Cargo.toml.
+- Lazily-initiated static `fonts::FONT_HASHMAP` exported in top-level.
+- Lazily-initiated static `fonts::FONT_COLLECTION` exported in top-level.
 
 ## [v0.1.11] - 2018-06-17
 ### Fixed

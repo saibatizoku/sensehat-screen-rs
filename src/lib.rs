@@ -65,6 +65,8 @@
 //!   `Offset`. See the [clip documentation](./frame/clip/struct.Clip.html) for more details.
 #[cfg(feature = "fonts")]
 extern crate font8x8;
+#[macro_use]
+extern crate lazy_static;
 #[cfg(feature = "linux-framebuffer")]
 pub extern crate framebuffer;
 #[cfg(feature = "serde-support")]
@@ -91,7 +93,9 @@ pub mod scroll;
 pub use self::color::{BackgroundColor, PixelColor, StrokeColor};
 
 #[cfg(feature = "fonts")]
-pub use self::fonts::{font_to_frame, font_to_pixel_frame, FontCollection, FontString};
+pub use self::fonts::{
+    font_to_frame, font_to_pixel_frame, FontCollection, FontString, FONT_COLLECTION, FONT_HASHMAP,
+};
 
 #[cfg(feature = "clip")]
 pub use self::frame::clip::Clip;

@@ -3,12 +3,27 @@ use super::{
     color::{BackgroundColor, StrokeColor}, FrameLine, PixelColor, PixelFrame,
 };
 
-use font8x8::{
+pub use font8x8::{
     FontUtf16, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
     LATIN_FONTS,
 };
 use std::collections::HashMap;
 use std::string::FromUtf16Error;
+
+lazy_static! {
+    /// A `static HashMap<u16, FontUtf16>` that holds the entire set of fonts supported
+    /// for the `Screen`.
+    pub static ref FONT_HASHMAP: HashMap<u16, FontUtf16> = default_hashmap();
+    /// A `static FontCollection` that offers a higher-level API for working with
+    /// pixel frames, clips, scrolls, etc.
+    ///
+    /// `FONT_COLLECTION.sanitize_str(&str)` returns a sanitized `FontString`,
+    /// and use that to render pixel frames..
+    ///
+    /// `FONT_COLLECTION.get(font: u16)` returns the low-level `FontUtf16` if the font
+    /// is found in the collection.
+    pub static ref FONT_COLLECTION: FontCollection = FontCollection(default_hashmap());
+}
 
 fn default_hashmap() -> HashMap<u16, FontUtf16> {
     BASIC_FONTS.to_vec()
