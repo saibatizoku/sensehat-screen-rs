@@ -26,17 +26,17 @@ lazy_static! {
 }
 
 fn default_hashmap() -> HashMap<char, FontUnicode> {
-    BASIC_FONTS.to_vec()
-               .into_iter()
-               .chain(LATIN_FONTS.to_vec().into_iter())
-               .chain(BLOCK_FONTS.to_vec().into_iter())
-               .chain(BOX_FONTS.to_vec().into_iter())
-               .chain(GREEK_FONTS.to_vec().into_iter())
-               .chain(HIRAGANA_FONTS.to_vec().into_iter())
+    BASIC_FONTS.iter()
+               .chain(LATIN_FONTS.iter())
+               .chain(BLOCK_FONTS.iter())
+               .chain(BOX_FONTS.iter())
+               .chain(GREEK_FONTS.iter())
+               .chain(HIRAGANA_FONTS.iter())
+               .map(|x| (x.0, *x))
                .collect()
 }
 
-/// A set of font symbols that can be printed on a `Screen`.
+// A set of font symbols that can be printed on a `Screen`.
 #[derive(Clone, Debug, PartialEq)]
 //#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct FontCollection(HashMap<char, FontUnicode>);
