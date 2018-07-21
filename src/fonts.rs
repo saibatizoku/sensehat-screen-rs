@@ -4,7 +4,7 @@ use super::{
 };
 
 pub use font8x8::{
-    FontUnicode, Utf16Fonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
+    FontUnicode, UnicodeFonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
     LATIN_FONTS,
 };
 use std::collections::HashMap;
