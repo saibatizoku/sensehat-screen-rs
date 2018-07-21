@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Replace `u16` with `char`.
 - Replace `FontString::encode_utf16` with `FontString::chars` method (breaking change).
 - Update examples to use new Fonts API.
+- `examples/letter.rs` uses `FONT_COLLECTION` instead of manually setting up a `FontCollection`.
+- `examples/clip.rs` uses `FONT_COLLECTION` instead of manually setting up a `FontCollection`.
+
 ### Removed
 - `fonts::print_collection` function.
 
