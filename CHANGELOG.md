@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [v0.2.0] - 2018-07-20
+### Changed
+- Use 'font8x8 = 0.2.3' with new `UnicodeFonts::iter` method.
+
+## [v0.2.1] - 2018-07-20
 ### Fixed
 - Correct version in Usage section of README.md
 
