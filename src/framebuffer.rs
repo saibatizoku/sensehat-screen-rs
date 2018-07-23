@@ -1,6 +1,6 @@
 //! Framebuffer support for the Sense HAT LED Matrix.
-use framebuffer::{Framebuffer, FramebufferError};
-use FrameLine;
+use framebuffer::Framebuffer;
+use super::{FrameLine, error::ScreenError};
 
 /// This is the main type for interacting with the LED Matrix Screen.
 #[derive(Debug)]
@@ -11,7 +11,7 @@ pub struct Screen {
 #[cfg(feature = "linux-framebuffer")]
 impl Screen {
     /// Open the framebuffer to the screen at the given file-system path.
-    pub fn open(path: &str) -> Result<Self, FramebufferError> {
+    pub fn open(path: &str) -> Result<Self, ScreenError> {
         let framebuffer = Framebuffer::new(path)?;
         Ok(Screen { framebuffer })
     }

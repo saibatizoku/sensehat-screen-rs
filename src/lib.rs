@@ -79,6 +79,8 @@ extern crate serde_derive;
 pub mod color;
 // Screen frames
 pub mod frame;
+// Screen errors
+pub mod error;
 // 8x8 fonts
 #[cfg(feature = "fonts")]
 pub mod fonts;
@@ -113,5 +115,3 @@ pub use self::screen::Screen;
 
 #[cfg(feature = "scroll")]
 pub use self::scroll::Scroll;
-
-pub use framebuffer::FramebufferError;

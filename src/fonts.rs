@@ -8,7 +8,7 @@ pub use font8x8::{
     LATIN_FONTS,
 };
 use std::collections::HashMap;
-use std::string::FromUtf16Error;
+use super::error::ScreenError;
 
 lazy_static! {
     /// A `static HashMap<char, FontUnicode>` that holds the entire set of fonts supported
@@ -65,7 +65,7 @@ impl FontCollection {
     }
 
     /// Sanitize a `&str` and create a new `FontString`.
-    pub fn sanitize_str(&self, s: &str) -> Result<FontString, FromUtf16Error> {
+    pub fn sanitize_str(&self, s: &str) -> Result<FontString, ScreenError> {
         let valid = s.chars()
                      .filter(|c| self.0.contains_key(c))
                      .map(|sym| *self.get(sym).unwrap())
