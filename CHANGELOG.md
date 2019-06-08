@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [v0.2.3] - 2019-06-07
+### Changed
+- Version for font8x8 to v0.2.5. Addresses https://github.com/rust-lang/rust/issues/61478
+
 ## [v0.2.2] - 2018-07-23
 ### Added
 - New `error::ScreenError` type to handle crate errors.
