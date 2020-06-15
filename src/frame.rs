@@ -420,8 +420,8 @@ mod tests {
         let frame_line = FrameLine::from_slice(&color);
         frame_line
             .as_bytes()
-            .into_iter()
-            .zip(color.into_iter())
+            .iter()
+            .zip(color.iter())
             .for_each(|(a, b)| {
                 assert_eq!(a, b);
             });
@@ -453,8 +453,8 @@ mod tests {
         let pixel_frame = PixelFrame::new(&color_frame);
         pixel_frame
             .0
-            .into_iter()
-            .zip(color_frame.into_iter())
+            .iter()
+            .zip(color_frame.iter())
             .for_each(|(a, b)| {
                 assert_eq!(a, b);
             });

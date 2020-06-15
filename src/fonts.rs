@@ -363,7 +363,7 @@ mod tests {
             PixelColor::BLUE,
             PixelColor::YELLOW,
         );
-        for (idx, px) in px_array.into_iter().enumerate() {
+        for (idx, px) in px_array.iter().enumerate() {
             assert_eq!(*px, BOX_FONT_BG[idx]);
         }
     }
@@ -373,7 +373,7 @@ mod tests {
         let font_set = FontCollection::new();
         let font = font_set.get('M').unwrap();
         let px_array = font_to_pixel_color_array(&font.byte_array(), PixelColor::BLUE);
-        for (idx, px) in px_array.into_iter().enumerate() {
+        for (idx, px) in px_array.iter().enumerate() {
             assert_eq!(*px, BASIC_FONT[idx]);
         }
     }
