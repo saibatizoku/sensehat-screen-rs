@@ -1,14 +1,15 @@
 //! 8x8 font collection
 use super::{
-    color::{BackgroundColor, StrokeColor}, FrameLine, PixelColor, PixelFrame,
+    color::{BackgroundColor, StrokeColor},
+    FrameLine, PixelColor, PixelFrame,
 };
 
+use super::error::ScreenError;
 pub use font8x8::{
     FontUnicode, UnicodeFonts, BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, GREEK_FONTS, HIRAGANA_FONTS,
     LATIN_FONTS,
 };
 use std::collections::HashMap;
-use super::error::ScreenError;
 
 lazy_static! {
     /// A `static HashMap<char, FontUnicode>` that holds the entire set of fonts supported
@@ -26,14 +27,15 @@ lazy_static! {
 }
 
 fn default_hashmap() -> HashMap<char, FontUnicode> {
-    BASIC_FONTS.iter()
-               .chain(LATIN_FONTS.iter())
-               .chain(BLOCK_FONTS.iter())
-               .chain(BOX_FONTS.iter())
-               .chain(GREEK_FONTS.iter())
-               .chain(HIRAGANA_FONTS.iter())
-               .map(|x| (x.0, *x))
-               .collect()
+    BASIC_FONTS
+        .iter()
+        .chain(LATIN_FONTS.iter())
+        .chain(BLOCK_FONTS.iter())
+        .chain(BOX_FONTS.iter())
+        .chain(GREEK_FONTS.iter())
+        .chain(HIRAGANA_FONTS.iter())
+        .map(|x| (x.0, *x))
+        .collect()
 }
 
 // A set of font symbols that can be printed on a `Screen`.
@@ -66,10 +68,11 @@ impl FontCollection {
 
     /// Sanitize a `&str` and create a new `FontString`.
     pub fn sanitize_str(&self, s: &str) -> Result<FontString, ScreenError> {
-        let valid = s.chars()
-                     .filter(|c| self.0.contains_key(c))
-                     .map(|sym| *self.get(sym).unwrap())
-                     .collect::<Vec<FontUnicode>>();
+        let valid = s
+            .chars()
+            .filter(|c| self.0.contains_key(c))
+            .map(|sym| *self.get(sym).unwrap())
+            .collect::<Vec<FontUnicode>>();
         Ok(FontString(valid))
     }
 }
@@ -103,14 +106,16 @@ impl FontString {
 
     /// Returns a `Vec<FontFrame>` for each inner font.
     pub fn font_frames(&self, stroke: PixelColor, bg: PixelColor) -> Vec<FontFrame> {
-        self.0.iter()
+        self.0
+            .iter()
             .map(|font| FontFrame::new(*font, stroke, bg))
             .collect::<Vec<FontFrame>>()
     }
 
     /// Returns a `Vec<PixelFrame>` for each inner font.
     pub fn pixel_frames(&self, stroke: PixelColor, bg: PixelColor) -> Vec<PixelFrame> {
-        self.font_frames(stroke, bg).into_iter()
+        self.font_frames(stroke, bg)
+            .into_iter()
             .map(|f| f.into())
             .collect::<Vec<PixelFrame>>()
     }
@@ -130,16 +135,20 @@ pub struct FontFrame {
 impl FontFrame {
     /// Create a new font frame with a `stroke` color, and a `background` color.
     pub fn new(font: FontUnicode, stroke: PixelColor, background: PixelColor) -> Self {
-        FontFrame { font,
-                    stroke,
-                    background, }
+        FontFrame {
+            font,
+            stroke,
+            background,
+        }
     }
 
     /// The `PixelFrame` for this font.
     pub fn pixel_frame(&self) -> PixelFrame {
-        let pixels = font_to_pixel_color_array_with_bg(&self.font.byte_array(),
-                                                       self.stroke,
-                                                       self.background);
+        let pixels = font_to_pixel_color_array_with_bg(
+            &self.font.byte_array(),
+            self.stroke,
+            self.background,
+        );
         pixels.into()
     }
 }
@@ -169,10 +178,11 @@ impl StrokeColor for FontFrame {
 }
 
 // Render a font symbol with a stroke color and a background color.
-fn font_to_pixel_color_array_with_bg(symbol: &[u8; 8],
-                                     color: PixelColor,
-                                     background: PixelColor)
-                                     -> [PixelColor; 64] {
+fn font_to_pixel_color_array_with_bg(
+    symbol: &[u8; 8],
+    color: PixelColor,
+    background: PixelColor,
+) -> [PixelColor; 64] {
     let mut pixels = [background; 64];
     for (row_idx, encoded_row) in symbol.iter().enumerate() {
         for col_idx in 0..8 {
@@ -210,42 +220,46 @@ mod tests {
     const GRN: PixelColor = PixelColor::GREEN;
     const BLU: PixelColor = PixelColor::BLUE;
     const YLW: PixelColor = PixelColor::YELLOW;
-    const BASIC_FONT: [PixelColor; 64] = [ BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
-                                           BLU, BLU, BLU, BLK, BLU, BLU, BLU, BLK, //
-                                           BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
-                                           BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
-                                           BLU, BLU, BLK, BLU, BLK, BLU, BLU, BLK, //
-                                           BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
-                                           BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
-                                           BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
-                                          ];
-    const BOX_FONT: [PixelColor; 64] = [ BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
-                                         BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
-                                         BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
-                                         BLK, BLK, BLK, GRN, GRN, GRN, GRN, GRN, //
-                                         GRN, GRN, GRN, GRN, GRN, GRN, GRN, GRN, //
-                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
-                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
-                                         BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
-                                        ];
-    const BOX_FONT_BG: [PixelColor; 64] = [ YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
-                                            YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
-                                            YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
-                                            YLW, YLW, YLW, BLU, BLU, BLU, BLU, BLU, //
-                                            BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLU, //
-                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
-                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
-                                            YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
-                                           ];
-    const HIRAGANA_FONT: [PixelColor; 64] = [ BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
-                                              BLK, RED, RED, RED, RED, RED, RED, BLK, //
-                                              BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
-                                              BLK, BLK, RED, RED, RED, RED, BLK, BLK, //
-                                              BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
-                                              BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
-                                              BLK, BLK, BLK, RED, RED, RED, BLK, BLK, //
-                                              BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
-                                           ];
+    const BASIC_FONT: [PixelColor; 64] = [
+        BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+        BLU, BLU, BLU, BLK, BLU, BLU, BLU, BLK, //
+        BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
+        BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLK, //
+        BLU, BLU, BLK, BLU, BLK, BLU, BLU, BLK, //
+        BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+        BLU, BLU, BLK, BLK, BLK, BLU, BLU, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+    ];
+    const BOX_FONT: [PixelColor; 64] = [
+        BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+        BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+        BLK, BLK, BLK, GRN, BLK, BLK, BLK, BLK, //
+        BLK, BLK, BLK, GRN, GRN, GRN, GRN, GRN, //
+        GRN, GRN, GRN, GRN, GRN, GRN, GRN, GRN, //
+        BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+    ];
+    const BOX_FONT_BG: [PixelColor; 64] = [
+        YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+        YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+        YLW, YLW, YLW, BLU, YLW, YLW, YLW, YLW, //
+        YLW, YLW, YLW, BLU, BLU, BLU, BLU, BLU, //
+        BLU, BLU, BLU, BLU, BLU, BLU, BLU, BLU, //
+        YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+        YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+        YLW, YLW, YLW, YLW, YLW, YLW, YLW, YLW, //
+    ];
+    const HIRAGANA_FONT: [PixelColor; 64] = [
+        BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
+        BLK, RED, RED, RED, RED, RED, RED, BLK, //
+        BLK, BLK, BLK, RED, BLK, BLK, BLK, BLK, //
+        BLK, BLK, RED, RED, RED, RED, BLK, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, RED, BLK, //
+        BLK, BLK, BLK, RED, RED, RED, BLK, BLK, //
+        BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, //
+    ];
 
     #[test]
     fn font_collection_sanitizes_text_by_filtering_known_unicode_points() {
@@ -307,16 +321,26 @@ mod tests {
         let hir_font = font_set.get('ち').unwrap();
         let box_font = font_set.get('┶').unwrap();
         let ft_frames = font_string.font_frames(PixelColor::YELLOW, PixelColor::BLACK);
-        assert_eq!(ft_frames,
-                   vec![FontFrame { font: *bas_font,
-                                    stroke: PixelColor::YELLOW,
-                                    background: PixelColor::BLACK, },
-                        FontFrame { font: *hir_font,
-                                    stroke: PixelColor::YELLOW,
-                                    background: PixelColor::BLACK, },
-                        FontFrame { font: *box_font,
-                                    stroke: PixelColor::YELLOW,
-                                    background: PixelColor::BLACK, },]);
+        assert_eq!(
+            ft_frames,
+            vec![
+                FontFrame {
+                    font: *bas_font,
+                    stroke: PixelColor::YELLOW,
+                    background: PixelColor::BLACK,
+                },
+                FontFrame {
+                    font: *hir_font,
+                    stroke: PixelColor::YELLOW,
+                    background: PixelColor::BLACK,
+                },
+                FontFrame {
+                    font: *box_font,
+                    stroke: PixelColor::YELLOW,
+                    background: PixelColor::BLACK,
+                },
+            ]
+        );
     }
 
     #[test]
@@ -324,17 +348,21 @@ mod tests {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("MM").unwrap();
         let px_frames = font_string.pixel_frames(PixelColor::BLUE, PixelColor::BLACK);
-        assert_eq!(px_frames,
-                   vec![PixelFrame::from(BASIC_FONT), PixelFrame::from(BASIC_FONT),]);
+        assert_eq!(
+            px_frames,
+            vec![PixelFrame::from(BASIC_FONT), PixelFrame::from(BASIC_FONT),]
+        );
     }
 
     #[test]
     fn fn_font_to_pixel_color_array_with_bg_creates_new_array() {
         let font_set = FontCollection::new();
         let font = font_set.get('┶').unwrap();
-        let px_array = font_to_pixel_color_array_with_bg(&font.byte_array(),
-                                                         PixelColor::BLUE,
-                                                         PixelColor::YELLOW);
+        let px_array = font_to_pixel_color_array_with_bg(
+            &font.byte_array(),
+            PixelColor::BLUE,
+            PixelColor::YELLOW,
+        );
         for (idx, px) in px_array.into_iter().enumerate() {
             assert_eq!(*px, BOX_FONT_BG[idx]);
         }
@@ -371,10 +399,14 @@ mod tests {
         let font_set = FontCollection::new();
         let letter_a = font_set.get('a').unwrap();
         let font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
-        assert_eq!(font_frame,
-                   FontFrame { font: *letter_a,
-                               stroke: PixelColor::WHITE,
-                               background: PixelColor::BLACK });
+        assert_eq!(
+            font_frame,
+            FontFrame {
+                font: *letter_a,
+                stroke: PixelColor::WHITE,
+                background: PixelColor::BLACK
+            }
+        );
     }
 
     #[test]
@@ -401,10 +433,14 @@ mod tests {
         let letter_a = font_set.get('a').unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_background_color(PixelColor::RED);
-        assert_eq!(font_frame,
-                   FontFrame { font: *letter_a,
-                               stroke: PixelColor::WHITE,
-                               background: PixelColor::RED });
+        assert_eq!(
+            font_frame,
+            FontFrame {
+                font: *letter_a,
+                stroke: PixelColor::WHITE,
+                background: PixelColor::RED
+            }
+        );
     }
 
     #[test]
@@ -421,10 +457,14 @@ mod tests {
         let letter_a = font_set.get('a').unwrap();
         let mut font_frame = FontFrame::new(letter_a.clone(), PixelColor::WHITE, PixelColor::BLACK);
         font_frame.set_stroke_color(PixelColor::YELLOW);
-        assert_eq!(font_frame,
-                   FontFrame { font: *letter_a,
-                               stroke: PixelColor::YELLOW,
-                               background: PixelColor::BLACK });
+        assert_eq!(
+            font_frame,
+            FontFrame {
+                font: *letter_a,
+                stroke: PixelColor::YELLOW,
+                background: PixelColor::BLACK
+            }
+        );
     }
 
     #[test]

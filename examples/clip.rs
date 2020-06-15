@@ -18,26 +18,27 @@ fn main() {
     let letters = "a e i o u ";
     let letter_color = PixelColor::YELLOW.dim(0.5);
 
-    let frames = letters.chars()
-                        .map(|sym| {
-                                 let font = FONT_COLLECTION.get(sym).unwrap();
-                                 font_to_pixel_frame(&font.byte_array(), letter_color)
-                             })
-                        .collect::<Vec<PixelFrame>>();
+    let frames = letters
+        .chars()
+        .map(|sym| {
+            let font = FONT_COLLECTION.get(sym).unwrap();
+            font_to_pixel_frame(&font.byte_array(), letter_color)
+        })
+        .collect::<Vec<PixelFrame>>();
 
     // create a sequence of clips that will scroll each character-whitespace pair
     // from appearing to move from right to left.
-    let frame_reel: Vec<PixelFrame> = frames.chunks(2).fold(Vec::new(), |mut v, chunk| {
-        match chunk.len() {
-            2 => {
-                let clip = chunk[0].build_clip(&chunk[1]);
-                for i in 0..=8 {
-                    v.push(clip.offset(Offset::left(i)));
-                }
-                v
+    let frame_reel: Vec<PixelFrame> = frames.chunks(2).fold(Vec::new(), |mut v, chunk| match chunk
+        .len()
+    {
+        2 => {
+            let clip = chunk[0].build_clip(&chunk[1]);
+            for i in 0..=8 {
+                v.push(clip.offset(Offset::left(i)));
             }
-            _ => panic!("this frame reel will only display &str of even length (divisible by 2)"),
+            v
         }
+        _ => panic!("this frame reel will only display &str of even length (divisible by 2)"),
     });
 
     for frame in &frame_reel {

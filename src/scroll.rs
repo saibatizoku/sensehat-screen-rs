@@ -24,9 +24,11 @@ impl FrameSequence {
     fn new(scroll: &Scroll, direction: FrameDirection) -> Self {
         let position = 0usize;
         let clips = scroll.clips();
-        FrameSequence { clips,
-                        direction,
-                        position, }
+        FrameSequence {
+            clips,
+            direction,
+            position,
+        }
     }
 
     /// Returns the number of positions that the frame sequence can render as pixel frames.
@@ -202,9 +204,11 @@ mod tests {
 
     #[test]
     fn scroll_has_len_method_returns_the_number_of_pixel_frames() {
-        let scroll = Scroll::new(&font_pixel_frames("áàäeéìiöòó",
-                                                    PixelColor::WHITE,
-                                                    PixelColor::BLUE));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "áàäeéìiöòó",
+            PixelColor::WHITE,
+            PixelColor::BLUE,
+        ));
         assert_eq!(scroll.len(), 10);
     }
 
@@ -212,40 +216,56 @@ mod tests {
     fn scrolls_create_right_to_left_frame_sequence() {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.right_to_left();
-        assert_eq!(sequence,
-                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
-                                   direction: FrameDirection::RightToLeft,
-                                   position: 0, });
+        assert_eq!(
+            sequence,
+            FrameSequence {
+                clips: vec![BLK.build_clip(&RED)],
+                direction: FrameDirection::RightToLeft,
+                position: 0,
+            }
+        );
     }
 
     #[test]
     fn scrolls_create_left_to_right_frame_sequence() {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.left_to_right();
-        assert_eq!(sequence,
-                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
-                                   direction: FrameDirection::LeftToRight,
-                                   position: 0, });
+        assert_eq!(
+            sequence,
+            FrameSequence {
+                clips: vec![BLK.build_clip(&RED)],
+                direction: FrameDirection::LeftToRight,
+                position: 0,
+            }
+        );
     }
 
     #[test]
     fn scrolls_create_top_to_bottom_frame_sequence() {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.top_to_bottom();
-        assert_eq!(sequence,
-                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
-                                   direction: FrameDirection::TopToBottom,
-                                   position: 0, });
+        assert_eq!(
+            sequence,
+            FrameSequence {
+                clips: vec![BLK.build_clip(&RED)],
+                direction: FrameDirection::TopToBottom,
+                position: 0,
+            }
+        );
     }
 
     #[test]
     fn scrolls_create_bottom_to_top_frame_sequence() {
         let scroll = Scroll::new(SCROLL_ONE);
         let sequence = scroll.bottom_to_top();
-        assert_eq!(sequence,
-                   FrameSequence { clips: vec![BLK.build_clip(&RED)],
-                                   direction: FrameDirection::BottomToTop,
-                                   position: 0, });
+        assert_eq!(
+            sequence,
+            FrameSequence {
+                clips: vec![BLK.build_clip(&RED)],
+                direction: FrameDirection::BottomToTop,
+                position: 0,
+            }
+        );
     }
 
     #[test]
@@ -264,15 +284,22 @@ mod tests {
 
     #[test]
     fn frame_sequence_positions_method_returns_number_of_pixel_frame_positions() {
-        let scroll =
-            Scroll::new(&font_pixel_frames("bas  bas  ", PixelColor::YELLOW, PixelColor::BLACK));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "bas  bas  ",
+            PixelColor::YELLOW,
+            PixelColor::BLACK,
+        ));
         let sequence = scroll.left_to_right();
         assert_eq!(sequence.positions(), 72);
     }
 
     #[test]
     fn frame_sequence_iterator_count_equals_number_of_positions_plus_one() {
-        let scroll = Scroll::new(&font_pixel_frames("bas", PixelColor::YELLOW, PixelColor::BLACK));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "bas",
+            PixelColor::YELLOW,
+            PixelColor::BLACK,
+        ));
         let seq = scroll.left_to_right();
         let positions_plus_one = seq.positions() + 1;
         assert_eq!(seq.count(), positions_plus_one);
@@ -280,7 +307,11 @@ mod tests {
 
     #[test]
     fn frame_sequence_implements_iterator_of_pixel_frames_left_to_right() {
-        let scroll = Scroll::new(&font_pixel_frames("bás", PixelColor::YELLOW, PixelColor::BLACK));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "bás",
+            PixelColor::YELLOW,
+            PixelColor::BLACK,
+        ));
 
         let mut seq = scroll.left_to_right();
         let first_frame = seq.nth(0).unwrap();
@@ -288,38 +319,52 @@ mod tests {
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(1))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(2))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(3))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(4))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(5)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(5))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(6))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::right(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::right(7))
+        );
 
         let mut seq = scroll.left_to_right();
         let eighth_frame = seq.nth(8).unwrap();
@@ -327,38 +372,52 @@ mod tests {
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(1))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(2))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(3))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(4))
+        );
 
         let mut seq = scroll.left_to_right();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(5)));
+        assert_eq!(
+            twelfth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(5))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(6))
+        );
 
         let mut seq = scroll.left_to_right();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::right(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::right(7))
+        );
 
         let mut seq = scroll.left_to_right();
         let last_frame = seq.nth(16).unwrap();
@@ -367,7 +426,11 @@ mod tests {
 
     #[test]
     fn frame_sequence_implements_iterator_of_pixel_frames_right_to_left() {
-        let scroll = Scroll::new(&font_pixel_frames("áàä", PixelColor::WHITE, PixelColor::BLUE));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "áàä",
+            PixelColor::WHITE,
+            PixelColor::BLUE,
+        ));
 
         let mut seq = scroll.right_to_left();
         let first_frame = seq.nth(0).unwrap();
@@ -375,38 +438,52 @@ mod tests {
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(1))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(2))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(3))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(4))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(5)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(5))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(6))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::left(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::left(7))
+        );
 
         let mut seq = scroll.right_to_left();
         let eighth_frame = seq.nth(8).unwrap();
@@ -414,38 +491,52 @@ mod tests {
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(1))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(2))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(3))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(4))
+        );
 
         let mut seq = scroll.right_to_left();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(5)));
+        assert_eq!(
+            twelfth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(5))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(6))
+        );
 
         let mut seq = scroll.right_to_left();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::left(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::left(7))
+        );
 
         let mut seq = scroll.right_to_left();
         let last_frame = seq.nth(16).unwrap();
@@ -454,7 +545,11 @@ mod tests {
 
     #[test]
     fn frame_sequence_implements_iterator_of_pixel_frames_top_to_bottom() {
-        let scroll = Scroll::new(&font_pixel_frames("bás", PixelColor::YELLOW, PixelColor::BLACK));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "bás",
+            PixelColor::YELLOW,
+            PixelColor::BLACK,
+        ));
 
         let mut seq = scroll.top_to_bottom();
         let first_frame = seq.nth(0).unwrap();
@@ -462,38 +557,52 @@ mod tests {
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(1))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(2))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(3))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(4))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(5)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(5))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(6))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::bottom(7))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let eighth_frame = seq.nth(8).unwrap();
@@ -501,38 +610,52 @@ mod tests {
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(1))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(2))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(3))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(4))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(5)));
+        assert_eq!(
+            twelfth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(5))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(6))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::bottom(7))
+        );
 
         let mut seq = scroll.top_to_bottom();
         let last_frame = seq.nth(16).unwrap();
@@ -541,7 +664,11 @@ mod tests {
 
     #[test]
     fn frame_sequence_implements_iterator_of_pixel_frames_bottom_to_top() {
-        let scroll = Scroll::new(&font_pixel_frames("áàä", PixelColor::WHITE, PixelColor::BLUE));
+        let scroll = Scroll::new(&font_pixel_frames(
+            "áàä",
+            PixelColor::WHITE,
+            PixelColor::BLUE,
+        ));
 
         let mut seq = scroll.bottom_to_top();
         let first_frame = seq.nth(0).unwrap();
@@ -549,38 +676,52 @@ mod tests {
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(1).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(1))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(2).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(2))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(3).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(3))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(4).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(4))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(5).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(5)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(5))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(6).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(6))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(7).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[0].build_clip(&scroll[1]).offset(Offset::top(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[0].build_clip(&scroll[1]).offset(Offset::top(7))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let eighth_frame = seq.nth(8).unwrap();
@@ -588,38 +729,52 @@ mod tests {
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(9).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(1)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(1))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(10).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(2)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(2))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(11).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(3)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(3))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(12).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(4)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(4))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let twelfth_frame = seq.nth(13).unwrap();
-        assert_eq!(twelfth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(5)));
+        assert_eq!(
+            twelfth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(5))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(14).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(6)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(6))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let nth_frame = seq.nth(15).unwrap();
-        assert_eq!(nth_frame,
-                   scroll[1].build_clip(&scroll[2]).offset(Offset::top(7)));
+        assert_eq!(
+            nth_frame,
+            scroll[1].build_clip(&scroll[2]).offset(Offset::top(7))
+        );
 
         let mut seq = scroll.bottom_to_top();
         let last_frame = seq.nth(16).unwrap();

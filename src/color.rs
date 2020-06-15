@@ -53,37 +53,53 @@ impl fmt::Debug for PixelColor {
 }
 
 impl PixelColor {
-    pub const BLACK: PixelColor = PixelColor { red: 0,
-                                               green: 0,
-                                               blue: 0, };
+    pub const BLACK: PixelColor = PixelColor {
+        red: 0,
+        green: 0,
+        blue: 0,
+    };
 
-    pub const RED: PixelColor = PixelColor { red: 0xFF,
-                                             green: 0,
-                                             blue: 0, };
+    pub const RED: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0,
+        blue: 0,
+    };
 
-    pub const BLUE: PixelColor = PixelColor { red: 0,
-                                              green: 0,
-                                              blue: 0xFF, };
+    pub const BLUE: PixelColor = PixelColor {
+        red: 0,
+        green: 0,
+        blue: 0xFF,
+    };
 
-    pub const GREEN: PixelColor = PixelColor { red: 0,
-                                               green: 0xFF,
-                                               blue: 0, };
+    pub const GREEN: PixelColor = PixelColor {
+        red: 0,
+        green: 0xFF,
+        blue: 0,
+    };
 
-    pub const WHITE: PixelColor = PixelColor { red: 0xFF,
-                                               green: 0xFF,
-                                               blue: 0xFF, };
+    pub const WHITE: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0xFF,
+        blue: 0xFF,
+    };
 
-    pub const YELLOW: PixelColor = PixelColor { red: 0xFF,
-                                                green: 0xFF,
-                                                blue: 0, };
+    pub const YELLOW: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0xFF,
+        blue: 0,
+    };
 
-    pub const CYAN: PixelColor = PixelColor { red: 0,
-                                              green: 0xFF,
-                                              blue: 0xFF, };
+    pub const CYAN: PixelColor = PixelColor {
+        red: 0,
+        green: 0xFF,
+        blue: 0xFF,
+    };
 
-    pub const MAGENTA: PixelColor = PixelColor { red: 0xFF,
-                                                 green: 0,
-                                                 blue: 0xFF, };
+    pub const MAGENTA: PixelColor = PixelColor {
+        red: 0xFF,
+        green: 0,
+        blue: 0xFF,
+    };
 
     /// Create a new LED pixel color.
     pub fn new(red: u8, green: u8, blue: u8) -> Self {
@@ -122,9 +138,11 @@ impl PixelColor {
         fn scale_byte(b: u8, scale: f32) -> u8 {
             (f32::from(b) * scale) as u8
         }
-        PixelColor { red: scale_byte(self.red, scale),
-                     green: scale_byte(self.green, scale),
-                     blue: scale_byte(self.blue, scale), }
+        PixelColor {
+            red: scale_byte(self.red, scale),
+            green: scale_byte(self.green, scale),
+            blue: scale_byte(self.blue, scale),
+        }
     }
 }
 
@@ -314,28 +332,40 @@ mod tests {
     #[test]
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
         // black 5-bit, 6-bit, 5-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0x00, 0x00]),
-                   PixelColor::new(0x00, 0x00, 0x00));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0x00, 0x00]),
+            PixelColor::new(0x00, 0x00, 0x00)
+        );
         // white 5-bit, 6-bit, 5-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
-                   PixelColor::new(0xF8, 0xFC, 0xF8));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
+            PixelColor::new(0xF8, 0xFC, 0xF8)
+        );
         // 100% green - 6-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0xE0, 0x07]),
-                   PixelColor::new(0x00, 0xFC, 0x00));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0xE0, 0x07]),
+            PixelColor::new(0x00, 0xFC, 0x00)
+        );
     }
 
     #[cfg(feature = "big-endian")]
     #[test]
     fn color_pixel_encodes_rgb_into_2_bytes_rgb565_with_losses() {
         // black 5-bit, 6-bit, 5-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0x00, 0x00]),
-                   PixelColor::new(0x00, 0x00, 0x00));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0x00, 0x00]),
+            PixelColor::new(0x00, 0x00, 0x00)
+        );
         // white 5-bit, 6-bit, 5-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
-                   PixelColor::new(0xF8, 0xFC, 0xF8));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0xFF, 0xFF]),
+            PixelColor::new(0xF8, 0xFC, 0xF8)
+        );
         // 100% green - 6-bit resolution
-        assert_eq!(PixelColor::from_rgb565_bytes([0x07, 0xE0]),
-                   PixelColor::new(0x00, 0xFC, 0x00));
+        assert_eq!(
+            PixelColor::from_rgb565_bytes([0x07, 0xE0]),
+            PixelColor::new(0x00, 0xFC, 0x00)
+        );
     }
 
     #[cfg(not(feature = "big-endian"))]
