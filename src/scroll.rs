@@ -106,9 +106,13 @@ impl Scroll {
     }
 
     /// Return the number of pixel frames in the scroll.
-    #[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
     pub fn len(&self) -> usize {
         self.0.len()
+    }
+
+    /// Returns `true` if the scroll has no pixel frames.
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
     }
 
     /// Returns a `FrameSequence` iterator that moves the frames from the right to the left.

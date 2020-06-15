@@ -144,11 +144,8 @@ impl FontFrame {
 
     /// The `PixelFrame` for this font.
     pub fn pixel_frame(&self) -> PixelFrame {
-        let pixels = font_to_pixel_color_array_with_bg(
-            &self.font.byte_array(),
-            self.stroke,
-            self.background,
-        );
+        let pixels =
+            font_to_pixel_color_array_with_bg(self.font.byte_array(), self.stroke, self.background);
         pixels.into()
     }
 }
@@ -179,7 +176,7 @@ impl StrokeColor for FontFrame {
 
 // Render a font symbol with a stroke color and a background color.
 fn font_to_pixel_color_array_with_bg(
-    symbol: &[u8; 8],
+    symbol: [u8; 8],
     color: PixelColor,
     background: PixelColor,
 ) -> [PixelColor; 64] {
@@ -195,18 +192,18 @@ fn font_to_pixel_color_array_with_bg(
 }
 
 // Render a font symbol with a `PixelColor` into a `[PixelColor; 64]`.
-fn font_to_pixel_color_array(symbol: &[u8; 8], color: PixelColor) -> [PixelColor; 64] {
+fn font_to_pixel_color_array(symbol: [u8; 8], color: PixelColor) -> [PixelColor; 64] {
     font_to_pixel_color_array_with_bg(symbol, color, Default::default())
 }
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
-pub fn font_to_pixel_frame(symbol: &[u8; 8], color: PixelColor) -> PixelFrame {
+pub fn font_to_pixel_frame(symbol: [u8; 8], color: PixelColor) -> PixelFrame {
     let pixels = font_to_pixel_color_array(symbol, color);
     PixelFrame::new(&pixels)
 }
 
 /// Render a font symbol with a `PixelColor` into a `FrameLine`.
-pub fn font_to_frame(symbol: &[u8; 8], color: PixelColor) -> FrameLine {
+pub fn font_to_frame(symbol: [u8; 8], color: PixelColor) -> FrameLine {
     let pixels = font_to_pixel_color_array(symbol, color);
     FrameLine::from_pixels(&pixels)
 }
