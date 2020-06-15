@@ -12,7 +12,7 @@ license = "MIT"
 build = "build.rs"
 
 [dependencies]
-framebuffer = { version = "0.1", optional = true }
+framebuffer = { version = "0.2", optional = true }
 font8x8 = { version = "0.2.5", optional = true }
 lazy_static = "1.0"
 serde = { version = "1.0", optional = true }
