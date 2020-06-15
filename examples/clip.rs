@@ -22,7 +22,7 @@ fn main() {
         .chars()
         .map(|sym| {
             let font = FONT_COLLECTION.get(sym).unwrap();
-            font_to_pixel_frame(&font.byte_array(), letter_color)
+            font_to_pixel_frame(font.byte_array(), letter_color)
         })
         .collect::<Vec<PixelFrame>>();
 
