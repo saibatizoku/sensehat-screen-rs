@@ -356,7 +356,7 @@ mod tests {
         let font_set = FontCollection::new();
         let font = font_set.get('┶').unwrap();
         let px_array = font_to_pixel_color_array_with_bg(
-            &font.byte_array(),
+            font.byte_array(),
             PixelColor::BLUE,
             PixelColor::YELLOW,
         );
@@ -369,7 +369,7 @@ mod tests {
     fn fn_font_to_pixel_color_array_creates_new_array() {
         let font_set = FontCollection::new();
         let font = font_set.get('M').unwrap();
-        let px_array = font_to_pixel_color_array(&font.byte_array(), PixelColor::BLUE);
+        let px_array = font_to_pixel_color_array(font.byte_array(), PixelColor::BLUE);
         for (idx, px) in px_array.iter().enumerate() {
             assert_eq!(*px, BASIC_FONT[idx]);
         }
@@ -379,7 +379,7 @@ mod tests {
     fn fn_font_to_pixel_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
         let chi_font = font_set.get('ち').unwrap();
-        let px_frame = font_to_pixel_frame(&chi_font.byte_array(), PixelColor::RED);
+        let px_frame = font_to_pixel_frame(chi_font.byte_array(), PixelColor::RED);
         assert_eq!(px_frame, PixelFrame::from(HIRAGANA_FONT));
     }
 
@@ -387,7 +387,7 @@ mod tests {
     fn fn_font_to_frame_takes_a_byte_array_and_pixel_color() {
         let font_set = FontCollection::new();
         let box_font = font_set.get('┶').unwrap();
-        let px_frame_line = font_to_frame(&box_font.byte_array(), PixelColor::GREEN);
+        let px_frame_line = font_to_frame(box_font.byte_array(), PixelColor::GREEN);
         assert_eq!(px_frame_line, PixelFrame::from(BOX_FONT).frame_line());
     }
 
