@@ -210,8 +210,8 @@ impl PixelFrame {
     /// Create a new `PixelFrame` from a `[[PixelColor; 8]; 8]`, of 8 rows with 8 `PixelColor`s.
     pub fn from_rows(rows: &[[PixelColor; 8]; 8]) -> Self {
         let mut pixels = [PixelColor::default(); 64];
-        for (row_idx, row) in rows.into_iter().enumerate() {
-            for (col_idx, &px) in row.into_iter().enumerate() {
+        for (row_idx, row) in rows.iter().enumerate() {
+            for (col_idx, &px) in row.iter().enumerate() {
                 pixels[row_idx * 8 + col_idx] = px;
             }
         }
@@ -221,8 +221,8 @@ impl PixelFrame {
     /// Create a new `PixelFrame` from a `[[PixelColor; 8]; 8]`, of 8 columns with 8 `PixelColor`s.
     pub fn from_columns(columns: &[[PixelColor; 8]; 8]) -> Self {
         let mut pixels = [PixelColor::default(); 64];
-        for (col_idx, col) in columns.into_iter().enumerate() {
-            for (row_idx, &px) in col.into_iter().enumerate() {
+        for (col_idx, col) in columns.iter().enumerate() {
+            for (row_idx, &px) in col.iter().enumerate() {
                 pixels[row_idx * 8 + col_idx] = px;
             }
         }
