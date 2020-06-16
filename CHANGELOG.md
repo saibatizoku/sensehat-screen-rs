@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [v0.2.4] - 2020-06-15
+### Changed
+- Update framebuffer to v0.2.0.
+- Run `cargo fmt` throughout.
+- Removes `FontString::to_string` and implements `fmt::Display` as suggested
+  by the `clippy::inherent_to_string_shadow_display` lint.
+
+### Removed
+- `rustfmt.toml`
+- `clippy::into_iter_on_ref` lint.
+- `clippy::len_without_is_empty` lint.
+- `clippy::trivially_copy_pass_by_ref` lint.
+- `clippy::inherent_to_string_shadow_display` lint. This removes `FontString::to_string`
+  and implements `fmt::Display`.
+
 ## [v0.2.3] - 2019-06-07
 ### Changed
 - Version for font8x8 to v0.2.5. Addresses https://github.com/rust-lang/rust/issues/61478
