@@ -100,11 +100,6 @@ impl FontString {
         self.0.iter().map(|font| font.char()).collect::<Vec<char>>()
     }
 
-    /// Render the font string as a `String`.
-    pub fn to_string(&self) -> String {
-        self.0.iter().map(|font| font.char()).collect::<String>()
-    }
-
     /// Returns a `Vec<FontFrame>` for each inner font.
     pub fn font_frames(&self, stroke: PixelColor, bg: PixelColor) -> Vec<FontFrame> {
         self.0
