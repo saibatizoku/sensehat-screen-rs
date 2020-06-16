@@ -10,6 +10,7 @@ pub use font8x8::{
     LATIN_FONTS,
 };
 use std::collections::HashMap;
+use std::fmt;
 
 lazy_static! {
     /// A `static HashMap<char, FontUnicode>` that holds the entire set of fonts supported
@@ -118,6 +119,16 @@ impl FontString {
             .into_iter()
             .map(|f| f.into())
             .collect::<Vec<PixelFrame>>()
+    }
+}
+
+impl fmt::Display for FontString {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{}",
+            self.0.iter().map(|font| font.char()).collect::<String>()
+        )
     }
 }
 
@@ -262,18 +273,18 @@ mod tests {
     fn font_collection_sanitizes_text_by_filtering_known_unicode_points() {
         let font_set = FontCollection::new();
         let valid_text = font_set.sanitize_str("hola niño @¶øþ¥").unwrap();
-        assert_eq!(valid_text.to_string(), "hola niño @¶øþ¥");
+        assert_eq!(format!("{}", valid_text), "hola niño @¶øþ¥");
     }
 
     #[test]
     fn font_collection_sanitizes_text_by_removing_symbols_not_in_set() {
         let font_set = FontCollection::new();
         let invalid_text = font_set.sanitize_str("ŧ←→ł").unwrap();
-        assert_eq!(invalid_text.to_string(), "");
+        assert_eq!(format!("{}", invalid_text), "");
 
         let font_set = FontCollection::from_hashmap(HashMap::new());
         let invalid_text = font_set.sanitize_str("hola niño @¶øþ¥").unwrap();
-        assert_eq!(invalid_text.to_string(), "");
+        assert_eq!(format!("{}", invalid_text), "");
     }
 
     #[test]
@@ -304,10 +315,10 @@ mod tests {
     }
 
     #[test]
-    fn font_string_to_string_method_returns_string() {
+    fn font_string_implements_display_trait() {
         let font_set = FontCollection::new();
         let font_string = font_set.sanitize_str("┷│││┯").unwrap();
-        assert_eq!(font_string.to_string(), "┷│││┯".to_string());
+        assert_eq!(format!("{}", font_string), "┷│││┯".to_string());
     }
 
     #[test]
