@@ -51,7 +51,7 @@ impl PixelFrame {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use PixelColor;
+    use crate::PixelColor;
 
     const DARK: PixelColor = PixelColor::BLACK;
     const BLUE: PixelColor = PixelColor::BLUE;

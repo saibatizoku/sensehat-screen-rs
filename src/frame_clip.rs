@@ -368,7 +368,7 @@ impl Clip {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use color::PixelColor;
+    use crate::color::PixelColor;
 
     const DARK: PixelColor = PixelColor::BLACK;
     const BLUE: PixelColor = PixelColor::BLUE;
