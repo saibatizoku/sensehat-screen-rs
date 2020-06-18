@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [v0.2.5] - 2020-06-17
+### Changed
+- Updated minimal rust version to v1.32.0
+- Ran `cargo fix --edition`, with minor changes to `src/fram_clip.rs`,
+  `src/frame_offset.rs`, and `src/frame_rotate.rs`.
+
+### Added
+- `edition = "2018"` under `[package]` in Cargo.toml.
+- `1.32.0` toolchain to .travis.yml
+
 ## [v0.2.4] - 2020-06-15
 ### Changed
 - Update framebuffer to v0.2.0.
