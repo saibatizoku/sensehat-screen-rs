@@ -12,7 +12,7 @@ This library provides a thread-safe, strong-typed, high-level API for the LED ma
 
 # Requirements
 
-This crate supports Rust stable version v1.26.0 and higher, and is tested on nightly continuously.
+This crate supports Rust stable version v1.32.0 and higher, and is tested on nightly continuously.
 
 # Changelog
 
