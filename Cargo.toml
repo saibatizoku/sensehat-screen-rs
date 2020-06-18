@@ -10,6 +10,7 @@ repository = "https://github.com/saibatizoku/sensehat-screen-rs"
 readme = "README.md"
 license = "MIT"
 build = "build.rs"
+edition = "2018"
 
 [dependencies]
 framebuffer = { version = "0.2", optional = true }
