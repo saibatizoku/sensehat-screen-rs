@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [v0.2.6] - 2021-01-25
+### Changed
+- Update font8x8 to v0.2.7.
+
 ## [v0.2.5] - 2020-06-17
 ### Changed
 - Updated minimal rust version to v1.32.0
